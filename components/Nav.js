@@ -1,6 +1,8 @@
 import React from "react";
+import Link from "next/link";
+import Hamburger from "../components/Hamburger";
 
-const Nav = () => (
+const Nav = (props) => (
   <nav>
     <style jsx>
       {`
@@ -15,7 +17,10 @@ const Nav = () => (
         }
       `}
     </style>
-    <h3>Aaron Goidel</h3>
+    <Link href="/">
+      <h3 style={{ cursor: "pointer" }}>Aaron Goidel</h3>
+    </Link>
+    <Hamburger active={props.menuOpen} onClick={props.onClickMenuIcon} />
   </nav>
 );
 

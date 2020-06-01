@@ -2,8 +2,11 @@ import Head from "next/head";
 import Nav from "../components/Nav";
 import Button from "../components/Button";
 import globalStyles from "../styles/global.js";
+import { useState } from "react";
 
 export default function Home() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <div className="container">
       <Head>
@@ -11,7 +14,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Nav />
+      <Nav onClickMenuIcon={() => setMenuOpen(!menuOpen)} menuOpen={menuOpen} />
       <div className="hero">
         <div className="hero-container">
           <div className="text-container">
