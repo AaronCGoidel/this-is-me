@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Nav from "../components/Nav";
 import Button from "../components/Button";
+import globalStyles from "../styles/global.js";
 
 export default function Home() {
   return (
@@ -19,21 +20,14 @@ export default function Home() {
             </span>
           </div>
           <div className="buttons">
-            <Button text={"About Me"} dest={""} />
-            <Button text={"Projects"} dest={""} />
-            <Button text={"CV - Contact"} dest={""} />
+            <Button text={"About Me"} dest={"/about-me"} />
+            <Button text={"Projects"} dest={"/projects"} />
+            <Button text={"CV - Contact"} dest={"/contact"} />
           </div>
         </div>
       </div>
 
       <style jsx>{`
-        .container {
-          min-height: 100vh;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-        }
-
         .hero {
           display: flex;
           flex: 1;
@@ -91,32 +85,9 @@ export default function Home() {
         }
       `}</style>
 
-      <style jsx global>{`
-        :root {
-          --background-dark: #f2f2f2;
-        }
-        html {
-          font-size: calc(1em + 0.2vw);
-        }
-        body {
-          padding: 0;
-          margin: 0;
-        }
-
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-          font-family: "Libre Baskerville", serif;
-          font-weight: normal;
-        }
-
-        p {
-          font-family: "Noto Sans", sans-serif;
-        }
-      `}</style>
+      <style jsx global>
+        {globalStyles}
+      </style>
     </div>
   );
 }
