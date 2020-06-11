@@ -18,7 +18,6 @@ const Nav = (props) => (
           align-items: center;
           justify-content: space-between;
           padding: 0 15px;
-          // box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.45);
         }
 
         .hero {
@@ -27,9 +26,9 @@ const Nav = (props) => (
         }
       `}
     </style>
-    <Link href="/">
+    <div onClick={props.onClickLogo}>
       <h3 style={{ cursor: "pointer" }}>Aaron Goidel</h3>
-    </Link>
+    </div>
     <Hamburger active={props.menuOpen} onClick={props.onClickMenuIcon} />
   </nav>
 );

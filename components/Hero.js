@@ -2,7 +2,7 @@ import Button from "../components/Button";
 import globalStyles from "../styles/global.js";
 
 const Hero = (props) => (
-  <div className="section hero parallax">
+  <div ref={props.heroRef} className="section hero parallax">
     <div className="hero-container">
       <div className="text-container">
         <span className="hero-text">
@@ -10,9 +10,18 @@ const Hero = (props) => (
         </span>
       </div>
       <div className="buttons">
-        <Button text={"About Me"} dest={"/about-me"} />
-        <Button text={"Projects"} dest={"/projects"} />
-        <Button text={"CV - Contact"} dest={"/contact"} />
+        <Button
+          text={"About Me"}
+          onClick={() => props.onClick(props.refs[0])}
+        />
+        <Button
+          text={"Projects"}
+          onClick={() => props.onClick(props.refs[1])}
+        />
+        <Button
+          text={"CV - Contact"}
+          onClick={() => props.onClick(props.refs[2])}
+        />
       </div>
     </div>
     <style jsx>{`

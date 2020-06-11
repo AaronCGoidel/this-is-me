@@ -33,6 +33,7 @@ export default css.global`
   }
 
   .section {
+    padding-top: 5vh;
     display: flex;
     height: 100vh;
   }

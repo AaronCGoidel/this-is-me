@@ -2,16 +2,25 @@ import Head from "next/head";
 import Nav from "../components/Nav";
 import Button from "../components/Button";
 import globalStyles from "../styles/global.js";
-import { useState, useEffect } from "react";
 import Hero from "../components/Hero";
+import About from "../components/About";
+import Projects from "../components/Projects";
+import Contact from "../components/Contact";
 
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
-    this.listener = null;
     this.state = {
       scrollStatus: "hero",
       menuOpen: false,
+    };
+
+    this.heroRef = React.createRef();
+    this.aboutRef = React.createRef();
+    this.projRef = React.createRef();
+    this.cvRef = React.createRef();
+    this.scroll = (ref) => {
+      ref.current.scrollIntoView({ behavior: "smooth" });
     };
   }
 
@@ -36,6 +45,7 @@ export default class Home extends React.Component {
         </Head>
 
         <Nav
+          onClickLogo={() => this.scroll(this.heroRef)}
           onClickMenuIcon={() =>
             this.setState({ menuOpen: !this.state.menuOpen })
           }
@@ -44,12 +54,17 @@ export default class Home extends React.Component {
         />
 
         <div className="parallax-wrapper">
-          <Hero />
+          <Hero
+            heroRef={this.heroRef}
+            onClick={this.scroll}
+            refs={[this.aboutRef, this.projRef, this.cvRef]}
+          />
 
-          {/* ABOUT ME */}
-          <div className="section">
-            <h1>Hello, World.</h1>
-          </div>
+          <About aboutRef={this.aboutRef} />
+
+          <Projects projRef={this.projRef} />
+
+          <Contact cvRef={this.cvRef} />
         </div>
 
         {/* STYLE */}
