@@ -18,6 +18,7 @@
     "next": "9.4.4",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "smoothscroll-polyfill": "^0.4.4",
     "styled-jsx": "^3.3.0"
   }
 }

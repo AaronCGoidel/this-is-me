@@ -26,8 +26,8 @@ const Nav = (props) => (
         }
       `}
     </style>
-    <div onClick={props.onClickLogo}>
-      <h3 style={{ cursor: "pointer" }}>Aaron Goidel</h3>
+    <div style={{ cursor: "pointer" }} onClick={props.onClickLogo}>
+      <h3>Aaron Goidel</h3>
     </div>
     <Hamburger active={props.menuOpen} onClick={props.onClickMenuIcon} />
   </nav>

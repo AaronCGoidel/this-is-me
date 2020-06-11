@@ -6,6 +6,7 @@ import Hero from "../components/Hero";
 import About from "../components/About";
 import Projects from "../components/Projects";
 import Contact from "../components/Contact";
+import smoothscroll from "smoothscroll-polyfill";
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -25,6 +26,8 @@ export default class Home extends React.Component {
   }
 
   componentDidMount() {
+    smoothscroll.polyfill();
+
     this.io = new IntersectionObserver(
       (entries) => {
         console.log(entries);
