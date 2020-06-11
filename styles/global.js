@@ -31,4 +31,9 @@ export default css.global`
     display: flex;
     flex-direction: column;
   }
+
+  .section {
+    display: flex;
+    height: 100vh;
+  }
 `;
