@@ -27,16 +27,6 @@ export default class Home extends React.Component {
 
   componentDidMount() {
     smoothscroll.polyfill();
-
-    this.io = new IntersectionObserver(
-      (entries) => {
-        console.log(entries);
-      },
-      { threshold: 1.0 }
-    );
-    const elements = Array.from(document.querySelectorAll(".section"));
-    // elements.forEach((element) => this.io.observe(element));
-    this.io.observe(elements[1]);
   }
 
   render() {

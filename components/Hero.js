@@ -3,6 +3,7 @@ import globalStyles from "../styles/global.js";
 
 const Hero = (props) => (
   <div ref={props.heroRef} className="section hero parallax">
+    <div className="backdrop" />
     <div className="hero-container">
       <div className="text-container">
         <span className="hero-text">
@@ -24,14 +25,16 @@ const Hero = (props) => (
         />
       </div>
     </div>
+
     <style jsx>{`
-      .parallax::after {
+      .backdrop {
         content: " ";
-        position: absolute;
+        position: fixed;
         top: 0;
         right: 0;
         bottom: 0;
         left: 0;
+        background-image: url("https://placekitten.com/g/1000/800");
 
         // transform: translateZ(-1px) scale(1.5);
         background-attachment: fixed;
@@ -45,27 +48,19 @@ const Hero = (props) => (
         align-items: center;
       }
 
-      .hero::after {
-        background-color: var(--background-dark);
-        background-image: url("https://placekitten.com/g/1000/800");
-
-        background-repeat: no-repeat;
-      }
-
       .hero-container {
         width: 37vw;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: stretch;
+        position: relative;
+        z-index: 1;
       }
 
       @media (max-width: 600px) {
         .hero-container {
           width: 100vw;
-        }
-        .hero::after {
-          background-image: url("https://placekitten.com/g/400/1000");
         }
       }
 
