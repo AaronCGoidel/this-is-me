@@ -1,11 +1,18 @@
 {
   "name": "this-is-me",
-  "version": "0.1.0",
+  "description": "My personal portfolio site",
+  "version": "0.1.2",
+  "author": {
+    "name": "Aaron Goidel",
+    "email": "acgoidel@gmail.com",
+    "url": "https://aarongoidel.com"
+  },
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "export": "next export"
   },
   "dependencies": {
     "next": "9.4.4",
