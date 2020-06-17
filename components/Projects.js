@@ -8,11 +8,11 @@ const Projects = (props) => (
     </div>
     <div className="contents">
       <ProjectItem
-        link={"/"}
+        link={"https://github.com/AaronCGoidel/this-is-me"}
         img={"/thumbnails/personal.jpg"}
         title={"My Portfolio"}
         blurb={
-          "The static site generator for the very website you're looking at right now. I use this as a way to share my work so I may hopefully find work."
+          "The static site generator for the very website you're looking at right now. I use this as a way to share my work and résumé with the world."
         }
       />
       <ProjectItem
@@ -21,6 +21,14 @@ const Projects = (props) => (
         title={"SafeSend"}
         blurb={
           "A web app which applies two-factor-authentication and strong cryptography to securely send messages. Go try it out for yourself by clicking on the icon."
+        }
+      />
+      <ProjectItem
+        link={"https://www.mka.org/student-life/publications/academy-news"}
+        img={"/thumbnails/AN.png"}
+        title={"The Academy News"}
+        blurb={
+          "I spearheaded the project to bring my high school's newspaper into the 21st century as the publication's first web editor. Since I left the school, the project has gone largely unmaintained, however, you can visit the site by clicking on the icon."
         }
       />
       <ProjectItem
@@ -41,6 +49,22 @@ const Projects = (props) => (
         title={"Registrar"}
         blurb={
           "A smart system for organizing my vinyl records. Registrar is a web app which scrapes the internet for information on any album, such as track lists and album covers. It implements custom search and sorting features so that I can browse my records on my phone. Click the icon for screenshots."
+        }
+      />
+      <ProjectItem
+        link={"https://lhd-2018.herokuapp.com/"}
+        img={"/thumbnails/cards.jpg"}
+        title={"Cards Against, Together"}
+        blurb={
+          'A reimagined party game experience for the modern day. I took the famous game "Cards Against Humanity" and built a version for the web. Where mine differs is in the fact that the players all need to be together to play. By leveraging socket connections, each player uses their phone to join a room which is made on a host computer. The phones each act as the player\'s hand while the computer acts as the table, where all communal information is displayed. Click the icon to try it.'
+        }
+      />
+      <ProjectItem
+        link={"https://github.com/AaronCGoidel/SlothLang"}
+        img={"/thumbnails/sloth.png"}
+        title={"SlothLang"}
+        blurb={
+          'SlothLang is an esoteric programming language I wrote to better understand the nature of programming languages better. It has the simple, yet highly impractical syntax of repeating the word "sloth" many many times to specify instructions to the computer. Check out the code behind the project, as well as the documentation and some example programs by clicking on the icon.'
         }
       />
     </div>

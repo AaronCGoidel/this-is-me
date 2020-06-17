@@ -2,7 +2,7 @@ import React from "react";
 import Projects from "./Projects";
 
 const ProjectItem = (props) => (
-  <a className="item" href={props.link ? props.link : null}>
+  <a className="item" href={props.link ? props.link : null} target="_blank">
     <img className="thumbnail" src={props.img} />
     <div className="text">
       <h2>{props.title}</h2>

@@ -93,7 +93,7 @@ const Hero = (props) => (
         margin: 1em 0;
       }
 
-      @media (max-width: 950px) {
+      @media (max-width: 600px) {
         .backdrop {
           background-position: -300px 0;
         }
