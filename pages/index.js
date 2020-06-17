@@ -45,7 +45,14 @@ export default class Home extends React.Component {
 
     this.io = new IntersectionObserver(
       (entries) => {
-        this.setState({ inHero: !this.state.inHero });
+        entries.forEach((entry) => {
+          console.log(entry.intersectionRatio);
+          if (entry.intersectionRatio < 0.85) {
+            this.setState({ inHero: false });
+          } else {
+            this.setState({ inHero: true });
+          }
+        });
       },
       { threshold: 0.85 }
     );
