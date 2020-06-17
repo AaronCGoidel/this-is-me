@@ -23,6 +23,12 @@ const Contact = (props) => (
           width: 50vw;
           margin: 10px 0;
         }
+
+        @media (max-width: 1000px) {
+          object {
+            width: 90vw;
+          }
+        }
       `}
     </style>
     <style jsx global>

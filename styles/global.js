@@ -71,29 +71,28 @@ export default css.global`
 
   .section h1 {
     font-size: 4em;
+    margin: 0;
   }
 
   .heading {
     position: relative;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 50%,
+      #ffd0ae 50%
+    );
+    display: inline;
+    margin: 0;
+    width: 40vw;
   }
 
-  .highlight {
-    position: absolute;
-    top: 5.8em;
-    // left: 2em;
-    width: 25em;
-    height: 1.5em;
-
-    background: rgba(19, 210, 222, 0.7);
-  }
-
-  @media (max-width: 700px) {
+  @media (max-width: 1024px) {
     .section h1 {
-      font-size: 3em;
+      font-size: 2.3em;
     }
 
-    .highlight {
-      top: 4em;
+    .heading {
+      width: 70vw;
     }
   }
 `;

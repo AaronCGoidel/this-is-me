@@ -60,12 +60,6 @@ const Hero = (props) => (
         z-index: 1;
       }
 
-      @media (max-width: 1000px) {
-        .hero-container {
-          width: 100vw;
-        }
-      }
-
       .hero-text {
         font-family: Noto Sans;
         line-height: 6.6rem;
@@ -83,16 +77,14 @@ const Hero = (props) => (
           font-size: 3.4rem;
           line-height: 5.3rem;
         }
-      }
-
-      @media (max-width: 700px) {
-        .backdrop {
-          background-position: -300px 0;
-        }
 
         .hero-text {
           font-size: 2.6rem;
           line-height: 4.1rem;
+        }
+
+        .hero-container {
+          width: 100vw;
         }
       }
 
@@ -102,6 +94,12 @@ const Hero = (props) => (
         align-items: center;
         justify-content: space-between;
         margin: 1em 0;
+      }
+
+      @media (max-width: 950px) {
+        .backdrop {
+          background-position: -300px 0;
+        }
       }
     `}</style>
 
