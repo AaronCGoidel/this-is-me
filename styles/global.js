@@ -4,6 +4,7 @@ export default css.global`
   :root {
     --background-dark: #f2f2f2;
     --accent: #ffd0ae;
+    --success: #02c39a;
   }
   html {
     font-size: calc(1em + 0.2vw);
@@ -36,7 +37,7 @@ export default css.global`
   .section {
     padding: 0 4vw;
     display: flex;
-    min-height: 100vh;
+    // min-height: 100vh;
     background-color: #fff;
     display: flex;
     flex-direction: column;
@@ -70,7 +71,7 @@ export default css.global`
       var(--accent) 50%
     );
     display: inline;
-    margin: 0;
+    margin: 15px 0;
     width: 40vw;
   }
 
