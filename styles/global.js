@@ -33,8 +33,23 @@ export default css.global`
   }
 
   .section {
-    // margin: 1vh 0;
+    margin: 8vh 4vw;
     display: flex;
     height: 100vh;
+  }
+
+  @mixin hideTapHighlightColor() {
+    //Prevent highlight color when element is tapped
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  }
+
+  @mixin hardwareAccel() {
+    //Improve performance on mobile/tablet devices
+    transform: translateZ(0);
+  }
+
+  @mixin improveAntiAlias() {
+    //Improve aliasing on mobile/tablet devices
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
   }
 `;

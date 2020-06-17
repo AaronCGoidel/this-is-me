@@ -2,25 +2,32 @@ import React from "react";
 import Link from "next/link";
 
 const Button = (props) => (
-  <div className="button" onClick={props.onClick}>
+  <div className="button grow" onClick={props.onClick}>
     <p>{props.text}</p>
     <style jsx>{`
       .button {
         cursor: pointer;
         background-color: #fff;
-        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.35);
         transition-duration: 0.4s;
-        border-radius: 5px;
-        flex: 1 1 0px;
-        margin: 0.25em 0.5em;
+        flex: 0.3 0.3 0px;
         text-align: center;
         padding: 0.5vh 2vw;
       }
 
-      .button:hover,
-      .button:focus,
-      .button:active {
-        box-shadow: 0px 4px 7px 0px rgba(0, 0, 0, 0.55);
+      .grow {
+        display: inline-block;
+        transition-duration: $defaultDuration;
+        transition-property: transform;
+
+        @include hideTapHighlightColor();
+        @include hardwareAccel();
+        @include improveAntiAlias();
+      }
+
+      .grow:hover,
+      .grow:focus,
+      .grow:active {
+        transform: scale(1.08);
       }
 
       p {

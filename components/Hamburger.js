@@ -16,16 +16,17 @@ const Hamburger = (props) => (
       .bar1,
       .bar2,
       .bar3 {
-        border-radius: 5px;
+        // border-radius: 5px;
         width: 29px;
-        height: 4px;
+        height: 2px;
         background-color: #000;
-        margin: 5px 0;
+        margin: 7px 0;
         transition: 0.4s;
       }
 
       .active .bar1 {
         transform: rotate(-45deg) translate(-5px, 5px);
+        // transform: translate(0, 9px);
       }
 
       .active .bar2 {
@@ -34,6 +35,7 @@ const Hamburger = (props) => (
 
       .active .bar3 {
         transform: rotate(45deg) translate(-8px, -8px);
+        // transform: translate(0, -9px);
       }
     `}</style>
   </div>

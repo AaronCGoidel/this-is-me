@@ -7,7 +7,7 @@ const Hero = (props) => (
     <div className="hero-container">
       <div className="text-container">
         <span className="hero-text">
-          This is the text for the landing page.
+          Hi. My name is Aaron and I build websites.
         </span>
       </div>
       <div className="buttons">
@@ -15,14 +15,8 @@ const Hero = (props) => (
           text={"About Me"}
           onClick={() => props.onClick(props.refs[0])}
         />
-        <Button
-          text={"Projects"}
-          onClick={() => props.onClick(props.refs[1])}
-        />
-        <Button
-          text={"CV - Contact"}
-          onClick={() => props.onClick(props.refs[2])}
-        />
+        <Button text={"My Work"} onClick={() => props.onClick(props.refs[1])} />
+        <Button text={"Contact"} onClick={() => props.onClick(props.refs[2])} />
       </div>
     </div>
 
@@ -34,11 +28,12 @@ const Hero = (props) => (
         right: 0;
         bottom: 0;
         left: 0;
-        background-image: url("https://placekitten.com/g/1000/800");
 
-        // transform: translateZ(-1px) scale(1.5);
+        background-image: url("/BG.jpg");
+        background-repeat: no-repeat;
+
         background-attachment: fixed;
-        background-size: 100%;
+        background-size: cover;
 
         z-index: -1;
       }
@@ -58,7 +53,7 @@ const Hero = (props) => (
         z-index: 1;
       }
 
-      @media (max-width: 600px) {
+      @media (max-width: 1000px) {
         .hero-container {
           width: 100vw;
         }
@@ -66,34 +61,40 @@ const Hero = (props) => (
 
       .hero-text {
         font-family: Noto Sans;
-        font-size: 4.5rem;
         line-height: 6.6rem;
         letter-spacing: 1px;
-        font-size: 4.5rem;
+        font-size: 4.2rem;
         box-decoration-break: slice;
         color: #000;
         background: #fff;
-        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.35);
-        border-radius: 5px;
         box-decoration-break: clone;
         padding: 0 0.2em;
       }
 
       @media (max-width: 1286px) {
         .hero-text {
-          font-size: 3rem;
-          line-height: 4.4rem;
+          font-size: 3.4rem;
+          line-height: 5.3rem;
         }
       }
 
-      .text-container {
-        margin: 0.5em;
+      @media (max-width: 700px) {
+        .backdrop {
+          background-position: -300px 0;
+        }
+
+        .hero-text {
+          font-size: 2.6rem;
+          line-height: 4.1rem;
+        }
       }
 
       .buttons {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
+        justify-content: space-between;
+        margin: 1em 0;
       }
     `}</style>
 
