@@ -48,7 +48,8 @@ const ProjectItem = (props) => (
             width: 80vw;
           }
           .thumbnail {
-            width: 70vw;
+            width: 80vw;
+            height: 48vw;
           }
         }
       `}
