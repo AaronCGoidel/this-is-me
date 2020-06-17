@@ -84,6 +84,7 @@ export default class Home extends React.Component {
           onClickLink={this.scroll}
           menuOpen={this.state.menuOpen}
           inHero={this.state.inHero}
+          inMenu={this.state.menuOpen}
           refs={[this.aboutRef, this.projRef, this.cvRef]}
         />
         {/* {this.state.menuOpen ? <Menu /> : null} */}

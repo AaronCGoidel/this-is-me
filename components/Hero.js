@@ -15,7 +15,10 @@ const Hero = (props) => (
           text={"About Me"}
           onClick={() => props.onClick(props.refs[0])}
         />
-        <Button text={"My Work"} onClick={() => props.onClick(props.refs[1])} />
+        <Button
+          text={"My Projects"}
+          onClick={() => props.onClick(props.refs[1])}
+        />
         <Button text={"Résumé"} onClick={() => props.onClick(props.refs[2])} />
       </div>
     </div>

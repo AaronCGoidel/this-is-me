@@ -11,7 +11,7 @@ const Nav = (props) => {
         onClick={props.onClickLink}
         refs={props.refs}
       />
-      <nav className={`${!props.inHero ? "scrolled" : ""}`}>
+      <nav className={`${!props.inHero || props.menuOpen ? "dark" : ""}`}>
         <style jsx>
           {`
             nav {
@@ -30,7 +30,7 @@ const Nav = (props) => {
               transition: all 150ms ease-in;
             }
 
-            .scrolled {
+            .dark {
               border-bottom: 1px solid #e0e0e0;
               background-color: #fff;
               color: #000;
@@ -70,7 +70,7 @@ const Nav = (props) => {
               onClick={() => props.onClickLink(props.refs[1])}
               className="nav-button"
             >
-              <h4>My Work</h4>
+              <h4>My Projects</h4>
             </div>
             <div
               onClick={() => props.onClickLink(props.refs[2])}
@@ -83,7 +83,7 @@ const Nav = (props) => {
           <Hamburger
             active={props.menuOpen}
             onClick={props.onClickMenuIcon}
-            light={props.inHero}
+            light={props.inHero && !props.menuOpen}
           />
         )}
       </nav>
