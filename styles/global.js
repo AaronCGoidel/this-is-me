@@ -73,9 +73,27 @@ export default css.global`
     font-size: 4em;
   }
 
+  .heading {
+    position: relative;
+  }
+
+  .highlight {
+    position: absolute;
+    top: 5.8em;
+    // left: 2em;
+    width: 25em;
+    height: 1.5em;
+
+    background: rgba(19, 210, 222, 0.7);
+  }
+
   @media (max-width: 700px) {
     .section h1 {
       font-size: 3em;
+    }
+
+    .highlight {
+      top: 4em;
     }
   }
 `;

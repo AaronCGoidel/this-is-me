@@ -3,7 +3,7 @@ import Projects from "./Projects";
 
 const ProjectItem = (props) => (
   <div className="item">
-    <div className="thumbnail" />
+    <img className="thumbnail" />
     <div className="text">
       <h2>{props.title}</h2>
       <p>{props.blurb}</p>
@@ -16,25 +16,29 @@ const ProjectItem = (props) => (
           flex-wrap: wrap;
           margin: 10px;
           align-items: center;
+          width: 70vw;
         }
 
         .thumbnail {
-          width: 270px;
+          width: 20vw;
           height: 212px;
           background-color: #c4c4c4;
         }
 
         .text {
-          width: 50vw;
+          width: 45vw;
           margin: 0 1vw;
         }
 
         @media (max-width: 700px) {
+          .item {
+            width: 88vw;
+          }
           .text {
             width: 100vw;
           }
           .thumbnail {
-            flex: 1;
+            width: 100vw;
           }
         }
       `}
