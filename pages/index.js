@@ -56,8 +56,7 @@ export default class Home extends React.Component {
       },
       { threshold: 0.85 }
     );
-    const elements = Array.from(document.querySelectorAll(".section"));
-    this.io.observe(elements[0]);
+    this.io.observe(document.querySelector(".hero"));
   }
 
   componentWillUnmount() {

@@ -35,8 +35,10 @@ export default css.global`
   .section {
     padding: 0 4vw;
     display: flex;
-    height: 100vh;
+    min-height: 100vh;
     background-color: #fff;
+    display: flex;
+    flex-direction: column;
   }
 
   @mixin hideTapHighlightColor() {

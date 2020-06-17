@@ -2,7 +2,7 @@ import Button from "../components/Button";
 import globalStyles from "../styles/global.js";
 
 const Hero = (props) => (
-  <div ref={props.heroRef} className="section hero parallax">
+  <div ref={props.heroRef} className="hero parallax">
     <div className="backdrop" />
     <div className="hero-container">
       <div className="text-container">
@@ -41,7 +41,10 @@ const Hero = (props) => (
       .hero {
         justify-content: center;
         align-items: center;
-        background-color: transparent;
+
+        padding: 0 4vw;
+        display: flex;
+        height: 100vh;
       }
 
       .hero-container {

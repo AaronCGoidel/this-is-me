@@ -7,6 +7,7 @@ const Menu = (props) => (
     <h2 onClick={() => props.onClick(props.refs[0])}>About Me</h2>
     <h2 onClick={() => props.onClick(props.refs[1])}>My Projects</h2>
     <h2 onClick={() => props.onClick(props.refs[2])}>Contact</h2>
+    <h2>Résumé</h2>
     <style jsx>{`
       .menu {
         display: flex;
