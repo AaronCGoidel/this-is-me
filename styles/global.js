@@ -3,6 +3,7 @@ import css from "styled-jsx/css";
 export default css.global`
   :root {
     --background-dark: #f2f2f2;
+    --accent: #ffd0ae;
   }
   html {
     font-size: calc(1em + 0.2vw);
@@ -56,19 +57,6 @@ export default css.global`
     box-shadow: 0 0 1px rgba(0, 0, 0, 0);
   }
 
-  .overlay {
-    width: 100vw;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    background-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.9);
-    transition: 0.5s;
-    // transition-delay: .5s;
-    overflow-x: hidden;
-  }
-
   .section h1 {
     font-size: 4em;
     margin: 0;
@@ -79,7 +67,7 @@ export default css.global`
     background: linear-gradient(
       180deg,
       rgba(255, 255, 255, 0) 50%,
-      #ffd0ae 50%
+      var(--accent) 50%
     );
     display: inline;
     margin: 0;
@@ -94,5 +82,9 @@ export default css.global`
     .heading {
       width: 70vw;
     }
+  }
+
+  .contents {
+    margin: 4vh 0;
   }
 `;

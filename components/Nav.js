@@ -76,7 +76,7 @@ const Nav = (props) => {
               onClick={() => props.onClickLink(props.refs[2])}
               className="nav-button"
             >
-              <h4>Contact</h4>
+              <h4>Résumé</h4>
             </div>
           </div>
         ) : (
