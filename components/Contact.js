@@ -25,16 +25,13 @@ const Contact = (props) => (
     <style jsx>
       {`
         .box {
-          width: 90vw;
+          width: 60vw;
           display: flex;
           flex-direction: row;
           flex-wrap: wrap;
+          padding: 0 10px;
         }
-        @media (max-width: 1000px) {
-          .box {
-            width: 90vw;
-          }
-        }
+
         .col {
           flex: 0.5;
           height: 60vh;
@@ -47,9 +44,15 @@ const Contact = (props) => (
 
         object {
           height: 70vh;
-          width: 90vw;
+          width: 60vw;
           display: block;
           margin: 0;
+        }
+
+        @media (max-width: 1200px) {
+          object {
+            width: 90vw;
+          }
         }
       `}
     </style>
