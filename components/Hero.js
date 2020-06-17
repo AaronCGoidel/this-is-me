@@ -41,6 +41,7 @@ const Hero = (props) => (
       .hero {
         justify-content: center;
         align-items: center;
+        background-color: transparent;
       }
 
       .hero-container {
