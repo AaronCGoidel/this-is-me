@@ -2,7 +2,7 @@ import globalStyles from "../styles/global.js";
 
 const Contact = (props) => (
   <div ref={props.cvRef} className="section">
-    <h1>CV - Contact</h1>
+    <h1>Contact</h1>
 
     <style jsx global>
       {globalStyles}

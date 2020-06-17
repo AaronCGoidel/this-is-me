@@ -6,13 +6,14 @@ import Hero from "../components/Hero";
 import About from "../components/About";
 import Projects from "../components/Projects";
 import Contact from "../components/Contact";
+import Menu from "../components/Menu";
 import smoothscroll from "smoothscroll-polyfill";
 
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      inHero: true,
+      inHero: false,
       menuOpen: false,
       width: 0,
     };
@@ -46,7 +47,7 @@ export default class Home extends React.Component {
       (entries) => {
         this.setState({ inHero: !this.state.inHero });
       },
-      { threshold: 1.0 }
+      { threshold: 0.85 }
     );
     const elements = Array.from(document.querySelectorAll(".section"));
     this.io.observe(elements[0]);
@@ -76,10 +77,10 @@ export default class Home extends React.Component {
           }
           onClickLink={this.scroll}
           menuOpen={this.state.menuOpen}
-          loc={this.state.scrollStatus}
+          inHero={this.state.inHero}
           refs={[this.aboutRef, this.projRef, this.cvRef]}
         />
-
+        {/* {this.state.menuOpen ? <Menu /> : null} */}
         <div ref={this.wrapper} className="wrapper">
           <Hero
             heroRef={this.heroRef}

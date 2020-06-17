@@ -5,9 +5,9 @@ const Hamburger = (props) => (
     className={`menu-button-container ${props.active ? "active" : ""}`}
     onClick={props.onClick}
   >
-    <div className="bar1" />
-    <div className="bar2" />
-    <div className="bar3" />
+    <div className={`bar1 ${props.light ? "light" : ""}`} />
+    <div className={`bar2 ${props.light ? "light" : ""}`} />
+    <div className={`bar3 ${props.light ? "light" : ""}`} />
     <style jsx>{`
       .menu-button-container {
         cursor: pointer;
@@ -16,12 +16,15 @@ const Hamburger = (props) => (
       .bar1,
       .bar2,
       .bar3 {
-        // border-radius: 5px;
         width: 29px;
         height: 2px;
         background-color: #000;
         margin: 7px 0;
         transition: 0.4s;
+      }
+
+      .light {
+        background-color: #fff;
       }
 
       .active .bar1 {

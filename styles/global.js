@@ -33,7 +33,7 @@ export default css.global`
   }
 
   .section {
-    margin: 8vh 4vw;
+    margin: 0 4vw;
     display: flex;
     height: 100vh;
   }
@@ -51,5 +51,28 @@ export default css.global`
   @mixin improveAntiAlias() {
     //Improve aliasing on mobile/tablet devices
     box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  }
+
+  .overlay {
+    width: 100vw;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.9);
+    transition: 0.5s;
+    // transition-delay: .5s;
+    overflow-x: hidden;
+  }
+
+  .section h1 {
+    font-size: 4em;
+  }
+
+  @media (max-width: 700px) {
+    .section h1 {
+      font-size: 3em;
+    }
   }
 `;
