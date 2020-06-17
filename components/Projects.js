@@ -12,7 +12,7 @@ const Projects = (props) => (
         img={"/thumbnails/personal.jpg"}
         title={"My Portfolio"}
         blurb={
-          "The static site generator for the very website you're looking at right now. I use this as a way to share my work and résumé with the world."
+          "The static site generator for the very website you're looking at right now. I use this as a way to share my work and résumé with the world. You can check out the code for this site by clicking on the icon."
         }
       />
       <ProjectItem
@@ -64,7 +64,7 @@ const Projects = (props) => (
         img={"/thumbnails/sloth.png"}
         title={"SlothLang"}
         blurb={
-          'SlothLang is an esoteric programming language I wrote to better understand the nature of programming languages better. It has the simple, yet highly impractical syntax of repeating the word "sloth" many many times to specify instructions to the computer. Check out the code behind the project, as well as the documentation and some example programs by clicking on the icon.'
+          'SlothLang is an esoteric programming language I wrote to better understand the nature of programming languages. It has the simple, yet highly impractical syntax of repeating the word "sloth" many many times to specify instructions to the computer. Check out the code behind the project, as well as the documentation and some example programs by clicking on the icon.'
         }
       />
     </div>
