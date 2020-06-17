@@ -14,7 +14,7 @@ const ProjectItem = (props) => (
           display: flex;
           flex-direction: row;
           flex-wrap: wrap;
-          margin: 10px;
+          margin: 50px 10px;
           padding: 10px;
           align-items: center;
           width: 70vw;
@@ -39,7 +39,7 @@ const ProjectItem = (props) => (
         @media (max-width: 700px) {
           .item {
             width: 88vw;
-            margin: 100px 0;
+            margin: 30px 0;
             flex-direction: column;
             // align-items: center;
             justify-content: center;
