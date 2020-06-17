@@ -11,7 +11,6 @@ const About = (props) => (
         and am working designing and developing cross-platform websites.
       </p>
       <br />
-      <br />
       <p>
         I work to make clean, simple, websites which focus on content and ease
         of use. All of my products are dynamic, meaning they will impress on all
