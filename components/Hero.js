@@ -12,14 +12,20 @@ const Hero = (props) => (
       </div>
       <div className="buttons">
         <Button
+          hero
           text={"About Me"}
           onClick={() => props.onClick(props.refs[0])}
         />
         <Button
+          hero
           text={"My Projects"}
           onClick={() => props.onClick(props.refs[1])}
         />
-        <Button text={"Résumé"} onClick={() => props.onClick(props.refs[2])} />
+        <Button
+          hero
+          text={"Résumé"}
+          onClick={() => props.onClick(props.refs[2])}
+        />
       </div>
     </div>
 

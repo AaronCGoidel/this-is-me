@@ -1,5 +1,6 @@
 import globalStyles from "../styles/global.js";
 import Form from "./Form";
+import { AiOutlineDownload } from "react-icons/ai";
 
 const Contact = (props) => (
   <div ref={props.cvRef} className="section">
@@ -11,6 +12,7 @@ const Contact = (props) => (
         <div>Want a copy?</div>
         <a href="/Goidel_CV.pdf" download>
           Download my resume [PDF]
+          <AiOutlineDownload />
         </a>
 
         <object data="/Goidel_CV.pdf">

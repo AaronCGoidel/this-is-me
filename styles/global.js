@@ -34,6 +34,10 @@ export default css.global`
     flex-direction: column;
   }
 
+  // .contents {
+  //   width: 100vw;
+  // }
+
   .section {
     padding: 0 4vw;
     display: flex;

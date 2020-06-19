@@ -2,20 +2,33 @@ import React from "react";
 import Link from "next/link";
 
 const Button = (props) => (
-  <div className="button grow" onClick={props.onClick}>
+  <a
+    className={`button grow ${props.secondary ? "secondary" : ""} ${
+      props.hero ? "in-hero" : ""
+    }`}
+    onClick={props.onClick}
+    href={props.href ? props.href : null}
+  >
+    {props.children}
     <p>{props.text}</p>
     <style jsx>{`
       .button {
+        text-decoration: none;
+        display: block;
         cursor: pointer;
         background-color: #fff;
         transition-duration: 0.4s;
-        flex: 0.3 0.3 0px;
         text-align: center;
-        padding: 0.5vh 2vw;
+        padding: 0.5vh 0.8vw;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 150px;
+        margin: 20px;
       }
 
       .grow {
-        display: inline-block;
         transition-duration: $defaultDuration;
         transition-property: transform;
 
@@ -32,12 +45,22 @@ const Button = (props) => (
 
       p {
         font-style: normal;
-        color: #000000;
         white-space: nowrap;
         margin: 10px 0;
       }
+
+      .in-hero {
+        margin: 0;
+        padding: 0.5vh 2vw;
+        flex: 0.3 0.3 0px;
+      }
+
+      .secondary {
+        color: #fff;
+        background-color: #000;
+      }
     `}</style>
-  </div>
+  </a>
 );
 
 export default Button;

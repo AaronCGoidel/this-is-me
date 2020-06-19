@@ -1,4 +1,6 @@
 import globalStyles from "../styles/global.js";
+import Button from "./Button";
+import { AiOutlineMail } from "react-icons/ai";
 
 const About = (props) => (
   <div ref={props.aboutRef} className="section">
@@ -23,12 +25,31 @@ const About = (props) => (
         cooking and I am always listening to or making music.
       </p>
     </div>
+    <div className="centered">
+      <h3>Have an idea for a website you want done?</h3>
+      <h3>I am currently accepting new projects.</h3>
+      <Button secondary text={"Email Me"} href="mailto:acgoidel@gmail.com">
+        <AiOutlineMail style={{ margin: "10px" }} />
+      </Button>
+    </div>
     <style jsx>{`
+      h3 {
+        margin: 10px;
+        text-align: center;
+      }
       p {
         margin: 10px;
       }
       .bio {
         width: 80vw;
+      }
+
+      .centered {
+        margin: 10vh 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
       }
 
       @media (max-width: );

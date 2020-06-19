@@ -49,12 +49,14 @@ export default class Home extends React.Component {
           // console.log(entry.intersectionRatio);
           if (entry.intersectionRatio < 0.85) {
             this.setState({ inHero: false });
+            if (entry.intersectionRatio <= 0.08) {
+            }
           } else {
             this.setState({ inHero: true });
           }
         });
       },
-      { threshold: 0.85 }
+      { threshold: [0.85, 0.08] }
     );
     this.io.observe(document.querySelector(".hero"));
   }
