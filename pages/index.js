@@ -25,6 +25,7 @@ export default class Home extends React.Component {
     this.wrapper = React.createRef();
 
     this.scroll = (ref) => {
+      this.setState({ menuOpen: false });
       const yOffset = -(window.innerHeight * 0.08);
       const y =
         -this.heroRef.current.getBoundingClientRect().top +
