@@ -34,11 +34,11 @@ const Projects = (props) => (
         }
       />
       <ProjectItem
-        link={"https://www.mka.org/student-life/publications/academy-news"}
-        img={"/thumbnails/AN.png"}
-        title={"The Academy News"}
+        link={"http://fairuoft.com/"}
+        img={"/thumbnails/fairuoft.png"}
+        title={"Fair UofT"}
         blurb={
-          "I spearheaded the project to bring my high school's newspaper into the 21st century as the publication's first web editor. Since I left the school, the project has gone largely unmaintained, however, you can visit the site by clicking on the icon."
+          "A website to allow students to send email petitions directly to the deans across the University of Toronto to lobby for reduced fees during remote learning due to Covid-19. While running, hundreds of petitions were sent."
         }
       />
       <ProjectItem
@@ -65,6 +65,14 @@ const Projects = (props) => (
         title={"Cards Against, Together"}
         blurb={
           'A reimagined party game experience for the modern day. I took the famous game "Cards Against Humanity" and built a version for the web. Where mine differs is in the fact that the players all need to be together to play. By leveraging socket connections, each player uses their phone to join a room which is made on a host computer. The phones each act as the player\'s hand while the computer acts as the table, where all communal information is displayed. Click the icon to try it.'
+        }
+      />
+      <ProjectItem
+        link={"https://www.mka.org/student-life/publications/academy-news"}
+        img={"/thumbnails/AN.png"}
+        title={"The Academy News"}
+        blurb={
+          "I spearheaded the project to bring my high school's newspaper into the 21st century as the publication's first web editor. Since I left the school, the project has gone largely unmaintained, however, you can visit the site by clicking on the icon."
         }
       />
     </div>
