@@ -21,5 +21,13 @@
     "react-icons": "^3.10.0",
     "smoothscroll-polyfill": "^0.4.4",
     "styled-jsx": "^3.3.0"
+  },
+  "devDependencies": {
+    "gray-matter": "^4.0.2",
+    "remark-highlight.js": "^6.0.0",
+    "remark-html": "^12.0.0",
+    "remark-parse": "^8.0.3",
+    "unified": "^9.2.0",
+    "uuid": "^8.3.0"
   }
 }
