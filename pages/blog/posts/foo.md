@@ -1,8 +1,16 @@
 ---
 title: Foo Bar
+desc: Quis nulla tempor proident ullamco sit laborum culpa veniam.
+author: Aaron Goidel
 slug: foo
-date: "15-09-2020"
+date: "2020-09-15"
 ---
+
+```css
+h1 {
+  color: red;
+}
+```
 
 In amet culpa exercitation et officia proident proident voluptate eu. Eiusmod duis minim in ipsum. Mollit veniam incididunt aliquip occaecat tempor do exercitation excepteur ut.
 
