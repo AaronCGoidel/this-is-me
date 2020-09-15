@@ -1,24 +1,59 @@
 import React from "react";
 import Link from "next/link";
 import PostListing from "../../components/PostListing";
+import useScrollPosition from "../../lib/scrollHook";
 
 function BlogIndex(props) {
+  const scrollPos = useScrollPosition();
   return (
-    <div>
-      <div className="section padded">
-        <p>Blog</p>
-        <h1>
-          Blog title
-          <br /> here
-        </h1>
-      </div>
-      <div className="blog-content section">
-        {props.blogs.map((blog, idx) => {
-          return <PostListing key={blog.id} blog={blog} />;
-        })}
+    <div className="wrapper">
+      <div className="group">
+        <div
+          className="section padded background"
+          style={{
+            opacity: `${1 - scrollPos / 10}`,
+          }}
+        >
+          <p>Blog</p>
+          <h1>
+            Blog title
+            <br /> here
+          </h1>
+        </div>
+        <div className="blog-content section foreground">
+          {props.blogs.map((blog, idx) => {
+            return <PostListing key={blog.id} blog={blog} />;
+          })}
+        </div>
       </div>
 
       <style jsx>{`
+        div {
+          box-sizing: border-box;
+        }
+
+        .group {
+          position: relative;
+          transform-style: preserve-3d;
+        }
+
+        .background {
+          transform: translateZ(-1px) scale(2);
+          top: calc(250px - 50vh);
+          position: absolute;
+        }
+
+        .foreground {
+          position: absolute;
+        }
+
+        .wrapper {
+          height: 100vh;
+          overflow-x: hidden;
+          overflow-y: auto;
+          perspective: 1px;
+        }
+
         .section {
           padding: 0;
           text-align: center;
