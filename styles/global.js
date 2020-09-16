@@ -68,15 +68,15 @@ export default css.global`
   }
 
   .heading {
-    position: relative;
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0) 50%,
-      var(--accent) 50%
-    );
-    display: inline;
     margin: 15px 0;
     width: 40vw;
+
+    display: inline-block;
+
+    background-image: linear-gradient(120deg, #00c9ff 0%, #92fe9d 100%);
+    background-repeat: no-repeat;
+    background-size: 100% 1em;
+    background-position: 0 88%;
   }
 
   @media (max-width: 1024px) {

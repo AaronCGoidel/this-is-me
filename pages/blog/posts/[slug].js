@@ -4,12 +4,13 @@ import globalStyles from "../../../styles/global";
 import useScrollPosition from "../../../lib/scrollHook";
 import ScrollIndicator from "../../../components/ScrollInicator";
 import useDimensions from "../../../lib/dimHook";
+import BackArrow from "../../../components/BackArrow";
 
 function Post(props) {
   const scrollPos = useScrollPosition();
   const [contentRef, { height }] = useDimensions();
   return (
-    <div>
+    <div className="blog-post">
       <Head>
         <title>{`${props.blog.title} | Aaron Goidel`}</title>
         <link rel="icon" href="/favicon.ico" />
@@ -70,16 +71,27 @@ function Post(props) {
         :global(h1, h2, h3, h4, h5) {
           display: inline-block;
 
-          background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+          background-image: linear-gradient(120deg, #00c9ff 0%, #92fe9d 100%);
           background-repeat: no-repeat;
           background-size: 100% 0.4em;
           background-position: 0 88%;
+        }
+
+        :global(a) {
+          color: #00c9ff;
+          text-decoration: none;
+        }
+
+        .blog-post {
+          background-color: #fff;
         }
 
         body {
           font-weight: 400;
           font-size: 16px;
           line-height: 1.8;
+
+          background-color: #fff;
         }
 
         .content {
@@ -127,6 +139,10 @@ function Post(props) {
         p {
           color: blue;
           margin-bottom: 5em;
+        }
+
+        :global(html) {
+          ${false ? "filter: invert(1) hue-rotate(-50deg);" : ""}
         }
       `}</style>
       <style jsx global>

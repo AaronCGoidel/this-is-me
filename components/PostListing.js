@@ -13,7 +13,12 @@ const PostListing = (props) => (
       <div className="listing">
         <h3>{props.blog.title}</h3>
         {/* <p>{props.blog.desc}</p> */}
-        <p className="date">{formatDate(props.blog.date)}</p>
+        <div className="info-container">
+          <p className="tag read-time">
+            ~{Math.ceil(props.blog.wcount / 200)} mim. read
+          </p>
+          <p className="tag date">{formatDate(props.blog.date)}</p>
+        </div>
       </div>
     </Link>
 
@@ -40,16 +45,35 @@ const PostListing = (props) => (
           margin: 0;
         }
 
-        .date {
+        .info-container {
+          // display: flex;
+          // flex-direction: colxumn;
+        }
+
+        .info {
+          // display: block;
+          max-width: 400px;
+        }
+
+        .tag {
           font-weight: 500;
           font-size: 14px;
           display: inline-block;
 
           padding: 4px 12px;
-          background-color: var(--accent);
+        }
+
+        .date {
+          // background-color: #
+          color: #fff;
+          background-image: linear-gradient(30deg, #84fab0 0%, #8fd3f4 100%);
           border-radius: 2px;
 
           margin-bottom: 0;
+        }
+
+        .read-time {
+          // float: right;
         }
       `}
     </style>

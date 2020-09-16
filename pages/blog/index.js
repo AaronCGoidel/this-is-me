@@ -15,7 +15,7 @@ function BlogIndex(props) {
 
       <div className="wrapper">
         <nav>
-          <BackArrow />
+          <BackArrow link={"/"} text={"Home"} />
         </nav>
         <div
           className="section padded hero"
@@ -24,7 +24,7 @@ function BlogIndex(props) {
             opacity: `${1 - scrollPos / 240}`,
           }}
         >
-          <p>Blog</p>
+          <p style={{ color: "#8fd3f4" }}>Blog</p>
           <h1>
             Blog title
             <br /> here
@@ -38,7 +38,7 @@ function BlogIndex(props) {
 
         <style jsx>{`
           .blog {
-            display: block;
+            display: flex;
             width: 100%;
             height: 100vh;
           }
@@ -55,14 +55,14 @@ function BlogIndex(props) {
           }
 
           .section {
-            padding: 0 1rem;
+            padding: 0;
             text-align: center;
 
             width: 100%;
           }
 
           .padded {
-            padding: 140px 1rem 100px 1rem;
+            padding: 140px 0rem 100px;
           }
 
           .hero {
@@ -111,7 +111,6 @@ export async function getStaticProps() {
       const { data } = matter(rawContent);
       return { ...data, id: uuid() };
     });
-
   return {
     props: { blogs },
   };

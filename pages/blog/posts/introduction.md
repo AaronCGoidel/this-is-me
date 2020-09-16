@@ -1,9 +1,10 @@
 ---
 title: Hello, World
-desc: A little bit about me.
+desc: A little bit about me. Nisi amet irure laboris aliqua sunt laborum nisi id consequat minim nisi.
 author: Aaron Goidel
 slug: introduction
 date: "2020-09-16"
+wcount: 628
 ---
 
 Much in the computer science spirit, let’s start this blog off with a `Hello, World.` A simple introduction to get us going.

@@ -2,25 +2,25 @@ import React from "react";
 import Link from "next/link";
 
 const BackArrow = (props) => (
-  <Link href="/">
+  <Link href={props.link}>
     <div className="arrow-container">
       <svg className="arrow" width="1.5rem" height="1.5rem" viewBox="0 0 50 80">
         <polyline
           fill="none"
           stroke="#000000"
-          stroke-width="1"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           points="45.63,75.8 0.375,38.087 45.63,0.375 "
         />
       </svg>
-      <h3>Back</h3>
+      <h3>{props.text}</h3>
       <style jsx>{`
         .arrow-container {
           display: flex;
           align-items: center;
           cursor: pointer;
-          width: 8rem;
+          max-width: 8rem;
         }
         svg {
           padding: 5px;
