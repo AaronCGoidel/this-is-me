@@ -1,5 +1,6 @@
 import React from "react";
 import Head from "next/head";
+import globalStyles from "../../../styles/global";
 
 function Post(props) {
   return (
@@ -17,17 +18,52 @@ function Post(props) {
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script>
       </Head>
-
-      <h1>{props.blog.title}</h1>
-      {props.blog.subtitle && <h2>{props.blog.subtitle}</h2>}
-      <section
-        dangerouslySetInnerHTML={{ __html: props.blog.content }}
-      ></section>
+      <div className="content">
+        <h1>{props.blog.title}</h1>
+        {props.blog.subtitle && <h2>{props.blog.subtitle}</h2>}
+        <section
+          dangerouslySetInnerHTML={{ __html: props.blog.content }}
+        ></section>
+      </div>
       <style jsx>{`
+        * {
+          margin: 0;
+        }
+
+        body {
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 1.8;
+        }
+
+        .content {
+          position: relative;
+          max-width: 610px;
+          margin: 0 auto;
+          padding: 60px 30px 90px;
+        }
+
+        h1 {
+          font-size: 2.6em;
+          line-height: 1.3;
+        }
+
+        #__next > div > div > section > p:nth-child(1) {
+          color: red;
+        }
+
+        p {
+          color: blue;
+          margin-bottom: 5em;
+        }
+
         blockquote p {
           background-color: red;
         }
       `}</style>
+      <style jsx global>
+        {globalStyles}
+      </style>
     </div>
   );
 }

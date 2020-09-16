@@ -6,10 +6,9 @@ const Menu = (props) => (
     <div className="heading">
       <h1>Menu</h1>
     </div>
-
-    <h2 onClick={() => props.onClick(props.refs[0])}>About Me</h2>
-    <h2 onClick={() => props.onClick(props.refs[1])}>My Projects</h2>
-    <h2 onClick={() => props.onClick(props.refs[2])}>Résumé</h2>
+    {props.refs.map((ref, idx) => {
+      return <h2 onClick={() => props.onClick(ref.link)}>{ref.name}</h2>;
+    })}
     <style jsx>{`
       h1 {
         margin: 0;

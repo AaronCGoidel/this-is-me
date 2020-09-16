@@ -36,6 +36,7 @@ const PostListing = (props) => (
 
         h3 {
           font-size: 1.5rem;
+          font-weight: normal;
           margin: 0;
         }
 

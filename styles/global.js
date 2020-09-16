@@ -21,11 +21,11 @@ export default css.global`
   h5,
   h6 {
     font-family: "Libre Baskerville", serif;
-    font-weight: normal;
+    font-weight: 700;
   }
 
   p {
-    font-family: "Noto Sans", sans-serif;
+    font-family: "Nunito", sans-serif;
   }
 
   .container {
