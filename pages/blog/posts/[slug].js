@@ -26,7 +26,7 @@ function Post(props) {
 
       <header>
         <div className="header-content">
-          <h2>
+          <h2 className="header-title">
             {props.blog.title} <span>by Aaron Goidel</span>
           </h2>
         </div>
@@ -69,6 +69,7 @@ function Post(props) {
 
         :global(h1, h2, h3, h4, h5) {
           display: inline-block;
+
           background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
           background-repeat: no-repeat;
           background-size: 100% 0.4em;
@@ -88,16 +89,24 @@ function Post(props) {
           padding: 100px 0;
         }
 
+        .header-title {
+          background: white;
+          // background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 80%);
+          // -webkit-background-clip: text;
+          // -webkit-text-fill-color: transparent;
+        }
+
         h1 {
           font-size: 2.6em;
           line-height: 1.3;
         }
 
         h2 span {
-          color: #00000055;
+          color: #777777;
           font-size: 1.1rem;
-          background-color: white;
-          padding-left: 0.2rem;
+          // -webkit-text-fill-color: #777777;
+          // background-color: white;
+          // padding-left: 0.2rem;
         }
 
         header {
