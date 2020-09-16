@@ -25,7 +25,9 @@ function Post(props) {
       </Head>
       <header>
         <div className="header-content">
-          <h2>Title</h2>
+          <h2>
+            {props.blog.title} <span>by Aaron Goidel</span>
+          </h2>
         </div>
         <ScrollIndicator scrollPos={scrollPos} height={height} />
       </header>
@@ -57,6 +59,11 @@ function Post(props) {
         h1 {
           font-size: 2.6em;
           line-height: 1.3;
+        }
+
+        h2 span {
+          color: #00000055;
+          font-size: 1.2rem;
         }
 
         header {
