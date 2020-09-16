@@ -1,16 +1,22 @@
 import React from "react";
+import Head from "next/head";
 
 function Post(props) {
   return (
     <div>
-      <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/vs2015.min.css"
-        integrity="sha512-w8aclkBlN3Ha08SMwFKXFJqhSUx2qlvTBFLLelF8sm4xQnlg64qmGB/A6pBIKy0W8Bo51yDMDtQiPLNRq1WMcQ=="
-        crossOrigin="anonymous"
-      />
-      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
-      <script>hljs.initHighlightingOnLoad();</script>
+      <Head>
+        <title>{`${props.blog.title} | Aaron Goidel`}</title>
+        <link rel="icon" href="/favicon.ico" />
+
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/vs2015.min.css"
+          integrity="sha512-w8aclkBlN3Ha08SMwFKXFJqhSUx2qlvTBFLLelF8sm4xQnlg64qmGB/A6pBIKy0W8Bo51yDMDtQiPLNRq1WMcQ=="
+          crossOrigin="anonymous"
+        />
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+      </Head>
 
       <h1>{props.blog.title}</h1>
       {props.blog.subtitle && <h2>{props.blog.subtitle}</h2>}
