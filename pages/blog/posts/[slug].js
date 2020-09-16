@@ -11,10 +11,17 @@ function Post(props) {
       />
       <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
       <script>hljs.initHighlightingOnLoad();</script>
+
       <h1>{props.blog.title}</h1>
+      {props.blog.subtitle && <h2>{props.blog.subtitle}</h2>}
       <section
         dangerouslySetInnerHTML={{ __html: props.blog.content }}
       ></section>
+      <style jsx>{`
+        blockquote p {
+          background-color: red;
+        }
+      `}</style>
     </div>
   );
 }

@@ -6,6 +6,9 @@ slug: introduction
 date: "2020-09-16"
 ---
 
+> hello
+> goodbye
+
 Much in the computer science spirit, let’s start this blog off with a `Hello, World.` A simple introduction to get us going.
 
 My name is **[Aaron](https://aarongoidel.com)**, I am currently in my second year as a computer science major with minors in linguistics and mathematics.
