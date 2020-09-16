@@ -23,6 +23,7 @@ function Post(props) {
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script>
       </Head>
+
       <header>
         <div className="header-content">
           <h2>
@@ -31,6 +32,7 @@ function Post(props) {
         </div>
         <ScrollIndicator scrollPos={scrollPos} height={height} />
       </header>
+
       <div className="content" ref={contentRef}>
         <h1>{props.blog.title}</h1>
         {props.blog.subtitle && <h2>{props.blog.subtitle}</h2>}
@@ -41,6 +43,36 @@ function Post(props) {
       <style jsx>{`
         * {
           // margin: 0;
+        }
+
+        :global(code) {
+          background-color: #f6f8fa;
+          border-radius: 5px;
+          padding: 0 0.5rem;
+        }
+
+        :global(.hljs) {
+          // width: 80%;
+          padding: 0.75rem;
+        }
+
+        :global(blockquote) {
+          margin: 0;
+          border-left: 3px solid #7a7a7a;
+          font-style: italic;
+          padding: 1.33em;
+          text-align: left;
+          background-color: #00000011;
+          // border-radius: 5px;
+          margin: 0 2rem;
+        }
+
+        :global(h1, h2, h3, h4, h5) {
+          display: inline-block;
+          background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+          background-repeat: no-repeat;
+          background-size: 100% 0.4em;
+          background-position: 0 88%;
         }
 
         body {
@@ -63,7 +95,9 @@ function Post(props) {
 
         h2 span {
           color: #00000055;
-          font-size: 1.2rem;
+          font-size: 1.1rem;
+          background-color: white;
+          padding-left: 0.2rem;
         }
 
         header {
@@ -84,10 +118,6 @@ function Post(props) {
         p {
           color: blue;
           margin-bottom: 5em;
-        }
-
-        blockquote p {
-          background-color: red;
         }
       `}</style>
       <style jsx global>
