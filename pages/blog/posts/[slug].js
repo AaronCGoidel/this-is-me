@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Head from "next/head";
 import globalStyles from "../../../styles/global";
+import useScrollPosition from "../../../lib/scrollHook";
+import ScrollIndicator from "../../../components/ScrollInicator";
+import useDimensions from "../../../lib/dimHook";
 
 function Post(props) {
+  const scrollPos = useScrollPosition();
+  const [contentRef, { height }] = useDimensions();
   return (
     <div>
       <Head>
@@ -18,7 +23,13 @@ function Post(props) {
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script>
       </Head>
-      <div className="content">
+      <header>
+        <div className="header-content">
+          <h2>Title</h2>
+        </div>
+        <ScrollIndicator scrollPos={scrollPos} height={height} />
+      </header>
+      <div className="content" ref={contentRef}>
         <h1>{props.blog.title}</h1>
         {props.blog.subtitle && <h2>{props.blog.subtitle}</h2>}
         <section
@@ -27,7 +38,7 @@ function Post(props) {
       </div>
       <style jsx>{`
         * {
-          margin: 0;
+          // margin: 0;
         }
 
         body {
@@ -38,9 +49,9 @@ function Post(props) {
 
         .content {
           position: relative;
-          max-width: 610px;
+          width: clamp(60%, 80%, 610px);
           margin: 0 auto;
-          padding: 60px 30px 90px;
+          padding: 100px 0;
         }
 
         h1 {
@@ -48,8 +59,19 @@ function Post(props) {
           line-height: 1.3;
         }
 
-        #__next > div > div > section > p:nth-child(1) {
-          color: red;
+        header {
+          position: fixed;
+          top: 0;
+          left: 0;
+          z-index: 1;
+          width: 100%;
+          background: #fff;
+          border-bottom: 1px solid #ccc;
+        }
+
+        .header-content {
+          width: clamp(60%, 80%, 610px);
+          margin: 0 auto;
         }
 
         p {
