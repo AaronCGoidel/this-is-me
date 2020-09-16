@@ -64,9 +64,9 @@ const PostListing = (props) => (
         }
 
         .date {
-          // background-color: #
           color: #fff;
-          background-image: linear-gradient(30deg, #84fab0 0%, #8fd3f4 100%);
+          background-color: #8fd3f4;
+          // background-image: linear-gradient(30deg, #84fab0 0%, #8fd3f4 100%);
           border-radius: 2px;
 
           margin-bottom: 0;

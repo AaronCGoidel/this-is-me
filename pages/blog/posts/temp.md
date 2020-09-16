@@ -1,5 +1,5 @@
 ---
-title: Some title here
+title: Some title here Some title here Some title
 author: Aaron Goidel
 slug: temp
 date: "2020-01-01"
