@@ -30,8 +30,6 @@ const PostListing = (props) => (
         }
 
         .listing {
-          position: relative;
-          display: inline-block;
           text-align: center;
           cursor: pointer;
         }
@@ -42,7 +40,6 @@ const PostListing = (props) => (
         }
 
         .date {
-          position: relative;
           font-weight: 500;
           font-size: 14px;
           display: inline-block;

@@ -6,65 +6,53 @@ import useScrollPosition from "../../lib/scrollHook";
 function BlogIndex(props) {
   const scrollPos = useScrollPosition();
   return (
-    <div className="wrapper">
-      <div className="group">
-        <div
-          className="section padded background"
-          style={{
-            opacity: `${1 - scrollPos / 10}`,
-          }}
-        >
-          <p>Blog</p>
-          <h1>
-            Blog title
-            <br /> here
-          </h1>
-        </div>
-        <div className="blog-content section foreground">
-          {props.blogs.map((blog, idx) => {
-            return <PostListing key={blog.id} blog={blog} />;
-          })}
-        </div>
+    <div id="wrapper" className="wrapper">
+      <div
+        id="head"
+        className="section padded hero"
+        style={{
+          top: `${scrollPos / 2}px`,
+          opacity: `${1 - scrollPos / 240}`,
+        }}
+      >
+        <p>Blog</p>
+        <h1>
+          Blog title
+          <br /> here
+        </h1>
+      </div>
+      <div id="posts" className="blog-content section">
+        {props.blogs.map((blog, idx) => {
+          return <PostListing key={blog.id} blog={blog} />;
+        })}
       </div>
 
       <style jsx>{`
-        div {
-          box-sizing: border-box;
-        }
-
-        .group {
-          position: relative;
-          transform-style: preserve-3d;
-        }
-
-        .background {
-          transform: translateZ(-1px) scale(2);
-          top: calc(250px - 50vh);
-          position: absolute;
-        }
-
-        .foreground {
-          position: absolute;
+        * {
         }
 
         .wrapper {
-          height: 100vh;
-          overflow-x: hidden;
-          overflow-y: auto;
-          perspective: 1px;
         }
 
         .section {
           padding: 0;
           text-align: center;
-          overflow: hidden;
-          position: relative;
+
           width: 100%;
-          display: block;
         }
 
         .padded {
           padding: 140px 0 100px 0;
+        }
+
+        .hero {
+          position: relative;
+        }
+
+        .blog-content {
+          position: relative;
+
+          z-index: 2;
         }
 
         p {
