@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Nav from "../components/Nav";
-import Button from "../components/Button";
+import Router from "next/router";
 import globalStyles from "../styles/global.js";
 import Hero from "../components/Hero";
 import About from "../components/About";
@@ -36,6 +36,14 @@ export default class Home extends React.Component {
 
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
   }
+
+  handleNav = (ref) => {
+    if (typeof ref === "object") {
+      this.scroll(ref);
+    } else {
+      Router.push("/blog");
+    }
+  };
 
   componentDidMount() {
     window.scrollTo(100, 100);
@@ -84,11 +92,16 @@ export default class Home extends React.Component {
           onClickMenuIcon={() =>
             this.setState({ menuOpen: !this.state.menuOpen })
           }
-          onClickLink={this.scroll}
+          onClickLink={this.handleNav}
           menuOpen={this.state.menuOpen}
           inHero={this.state.inHero}
           inMenu={this.state.menuOpen}
-          refs={[this.aboutRef, this.projRef, this.cvRef]}
+          refs={[
+            { name: "About Me", link: this.aboutRef },
+            { name: "My Projects", link: this.projRef },
+            { name: "Résumé", link: this.cvRef },
+            { name: "Blog", link: "/blog" },
+          ]}
         />
         {/* {this.state.menuOpen ? <Menu /> : null} */}
         <div ref={this.wrapper} className="wrapper">

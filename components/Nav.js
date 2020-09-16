@@ -60,24 +60,16 @@ const Nav = (props) => {
 
         {props.width > 550 ? (
           <div className="buttons">
-            <div
-              onClick={() => props.onClickLink(props.refs[0])}
-              className="nav-button"
-            >
-              <h4>About Me</h4>
-            </div>
-            <div
-              onClick={() => props.onClickLink(props.refs[1])}
-              className="nav-button"
-            >
-              <h4>My Projects</h4>
-            </div>
-            <div
-              onClick={() => props.onClickLink(props.refs[2])}
-              className="nav-button"
-            >
-              <h4>Résumé</h4>
-            </div>
+            {props.refs.map((link, idx) => {
+              return (
+                <div
+                  onClick={() => props.onClickLink(link.link)}
+                  className="nav-button"
+                >
+                  <h4>{link.name}</h4>
+                </div>
+              );
+            })}
           </div>
         ) : (
           <Hamburger

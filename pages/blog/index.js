@@ -1,20 +1,23 @@
 import React from "react";
 import Head from "next/head";
-import Link from "next/link";
 import PostListing from "../../components/PostListing";
 import useScrollPosition from "../../lib/scrollHook";
+import BackArrow from "../../components/BackArrow";
 
 function BlogIndex(props) {
   const scrollPos = useScrollPosition();
   return (
-    <div>
+    <div className="blog">
       <Head>
         <title>Blog | Aaron Goidel</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div id="wrapper" className="wrapper">
+
+      <div className="wrapper">
+        <nav>
+          <BackArrow />
+        </nav>
         <div
-          id="head"
           className="section padded hero"
           style={{
             top: `${scrollPos / 2}px`,
@@ -27,28 +30,39 @@ function BlogIndex(props) {
             <br /> here
           </h1>
         </div>
-        <div id="posts" className="blog-content section">
+        <div className="blog-content section">
           {props.blogs.map((blog, idx) => {
             return <PostListing key={blog.id} blog={blog} />;
           })}
         </div>
 
         <style jsx>{`
-          * {
+          .blog {
+            display: block;
+            width: 100%;
+            height: 100vh;
+          }
+
+          nav {
+            width: 100%;
+            height 4rem;
+            position: fixed;
+            z-index: 4;
           }
 
           .wrapper {
+            display: block;
           }
 
           .section {
-            padding: 0;
+            padding: 0 1rem;
             text-align: center;
 
             width: 100%;
           }
 
           .padded {
-            padding: 140px 0 100px 0;
+            padding: 140px 1rem 100px 1rem;
           }
 
           .hero {
