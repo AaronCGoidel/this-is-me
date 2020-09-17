@@ -1,6 +1,5 @@
 ---
 title: Hello, World
-desc: A little bit about me. Nisi amet irure laboris aliqua sunt laborum nisi id consequat minim nisi.
 author: Aaron Goidel
 slug: introduction
 date: "2020-09-16"

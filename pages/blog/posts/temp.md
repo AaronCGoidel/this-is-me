@@ -2,7 +2,8 @@
 title: Some title here Some title here Some title
 author: Aaron Goidel
 slug: temp
-date: "2020-01-01"
+date: "2020-09-23"
+wcount: 0
 ---
 
 Excepteur do excepteur exercitation nostrud elit qui occaecat aute et fugiat non adipisicing nostrud amet. Deserunt incididunt esse ad mollit id et Lorem eu exercitation ut. Veniam consectetur velit id sit mollit aliqua magna commodo sit minim pariatur cillum.

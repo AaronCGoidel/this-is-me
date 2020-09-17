@@ -118,7 +118,8 @@ export async function getStaticProps() {
       });
       const { data } = matter(rawContent);
       return { ...data, id: uuid() };
-    });
+    })
+    .sort((a, b) => (a.date < b.date ? 1 : -1));
   return {
     props: { blogs },
   };

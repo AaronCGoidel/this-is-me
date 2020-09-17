@@ -11,7 +11,6 @@ function Post(props) {
   const {
     query: { dark },
   } = useRouter();
-
   const scrollPos = useScrollPosition();
   const [contentRef, { height }] = useDimensions();
   return (
@@ -40,7 +39,9 @@ function Post(props) {
       </header>
 
       <div className="content" ref={contentRef}>
-        <h1>{props.blog.title}</h1>
+        <h1>
+          <span className="title">{props.blog.title}</span>
+        </h1>
         {props.blog.subtitle && <h2>{props.blog.subtitle}</h2>}
         <section
           dangerouslySetInnerHTML={{ __html: props.blog.content }}
@@ -81,7 +82,7 @@ function Post(props) {
           background-position: 0 88%;
         }
 
-        :global(h1) {
+        .title {
           display: inline;
         }
 
