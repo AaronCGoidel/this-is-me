@@ -12,7 +12,7 @@ function Post(props) {
     query: { dark },
   } = useRouter();
   const scrollPos = useScrollPosition();
-  const [contentRef, { height }] = useDimensions();
+  const [contentRef, contentDim] = useDimensions();
   const [headerRef, headerDim] = useDimensions();
   return (
     <div className="blog-post">
@@ -36,7 +36,7 @@ function Post(props) {
             {props.blog.title} <span>by Aaron Goidel</span>
           </h2>
         </div>
-        <ScrollIndicator scrollPos={scrollPos} height={height} />
+        <ScrollIndicator scrollPos={scrollPos} height={contentDim?.height} />
       </header>
 
       <div className="content" ref={contentRef}>
@@ -120,7 +120,7 @@ function Post(props) {
           position: relative;
           width: clamp(60%, 80%, 610px);
           margin: 0 auto;
-          padding: calc(${headerDim.height}px + 2rem) 0;
+          padding: calc(${headerDim?.height}px + 2rem) 0;
         }
 
         .header-title {

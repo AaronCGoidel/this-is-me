@@ -57,6 +57,7 @@ function BlogIndex(props) {
 
         .wrapper {
           display: block;
+          padding-bottom: 6rem;
         }
 
         .section {
