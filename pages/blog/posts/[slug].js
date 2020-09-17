@@ -48,6 +48,8 @@ function Post(props) {
           dangerouslySetInnerHTML={{ __html: props.blog.content }}
         ></section>
       </div>
+
+      <footer></footer>
       <style jsx>{`
         * {
           // margin: 0;

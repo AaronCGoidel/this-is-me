@@ -32,7 +32,7 @@ const PostListing = (props) => {
           {/* <p>{props.blog.desc}</p> */}
           <div className="info-container">
             <p className="tag read-time">
-              ~{Math.ceil(props.blog.wcount / 200)} mim. read
+              ~{Math.max(Math.ceil(props.blog.wcount / 200), 1)} mim. read
             </p>
             <p className="tag date">{formatDate(props.blog.date)}</p>
           </div>
