@@ -35,7 +35,7 @@ function Post(props) {
       </header>
 
       <div className="content" ref={contentRef}>
-        <h1>{props.blog.title}</h1>
+        <h1>Do incididunt sit labore dolore eu mollit.</h1>
         {props.blog.subtitle && <h2>{props.blog.subtitle}</h2>}
         <section
           dangerouslySetInnerHTML={{ __html: props.blog.content }}
@@ -53,7 +53,6 @@ function Post(props) {
         }
 
         :global(.hljs) {
-          // width: 80%;
           padding: 0.75rem;
         }
 
@@ -61,7 +60,7 @@ function Post(props) {
           margin: 0;
           border-left: 3px solid #7a7a7a;
           font-style: italic;
-          padding: 1.33em;
+          padding: 0.5rem 1.33em;
           text-align: left;
           background-color: #00000011;
           // border-radius: 5px;
@@ -77,9 +76,18 @@ function Post(props) {
           background-position: 0 88%;
         }
 
+        :global(h1) {
+          display: inline;
+        }
+
         :global(a) {
           color: #00c9ff;
           text-decoration: none;
+          transition: all 250ms ease-in-out;
+        }
+
+        :global(a:hover) {
+          text-decoration: underline;
         }
 
         .blog-post {
