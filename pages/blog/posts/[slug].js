@@ -13,6 +13,7 @@ function Post(props) {
   } = useRouter();
   const scrollPos = useScrollPosition();
   const [contentRef, { height }] = useDimensions();
+  const [headerRef, headerDim] = useDimensions();
   return (
     <div className="blog-post">
       <Head>
@@ -29,7 +30,7 @@ function Post(props) {
         <script>hljs.initHighlightingOnLoad();</script>
       </Head>
 
-      <header>
+      <header ref={headerRef}>
         <div className="header-content">
           <h2 className="header-title">
             {props.blog.title} <span>by Aaron Goidel</span>
@@ -39,9 +40,9 @@ function Post(props) {
       </header>
 
       <div className="content" ref={contentRef}>
-        <h1>
-          <span className="title">{props.blog.title}</span>
-        </h1>
+        <div className="title-wrapper">
+          <h1 className="title">{props.blog.title}</h1>
+        </div>
         {props.blog.subtitle && <h2>{props.blog.subtitle}</h2>}
         <section
           dangerouslySetInnerHTML={{ __html: props.blog.content }}
@@ -56,6 +57,10 @@ function Post(props) {
           background-color: #f6f8fa;
           border-radius: 5px;
           padding: 0 0.5rem;
+        }
+
+        :global(section) {
+          margin-top: 2rem;
         }
 
         :global(.hljs) {
@@ -113,7 +118,7 @@ function Post(props) {
           position: relative;
           width: clamp(60%, 80%, 610px);
           margin: 0 auto;
-          padding: 100px 0;
+          padding: calc(${headerDim.height}px + 2rem) 0;
         }
 
         .header-title {
@@ -144,6 +149,7 @@ function Post(props) {
           width: 100%;
           background: #fff;
           border-bottom: 1px solid #ccc;
+          // height: 5rem;
         }
 
         .header-content {
