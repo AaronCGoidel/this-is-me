@@ -26,7 +26,7 @@ const PostListing = (props) => {
       ref={listingRef}
       className={`listing-container fade-in ${isVisible ? "is-visible" : ""}`}
     >
-      <Link href={`/blog/posts/${props.blog.slug}`}>
+      <Link href={`/blog/posts/${props.blog.slug}?dark=${props.params.dark}`}>
         <div className="listing">
           <h3>{props.blog.title}</h3>
           {/* <p>{props.blog.desc}</p> */}

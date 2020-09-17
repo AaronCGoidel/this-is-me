@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import PostListing from "../../components/PostListing";
 import useScrollPosition from "../../lib/scrollHook";
@@ -6,6 +6,7 @@ import BackArrow from "../../components/BackArrow";
 
 function BlogIndex(props) {
   const scrollPos = useScrollPosition();
+  const [darkMode, setDarkMode] = useState(false);
   return (
     <div className="blog">
       <Head>
@@ -32,64 +33,71 @@ function BlogIndex(props) {
         </div>
         <div className="blog-content section">
           {props.blogs.map((blog, idx) => {
-            return <PostListing key={blog.id} blog={blog} />;
+            return (
+              <PostListing
+                key={blog.id}
+                blog={blog}
+                params={{ dark: darkMode }}
+              />
+            );
           })}
         </div>
-
-        <style jsx>{`
-          .blog {
-            display: flex;
-            width: 100%;
-            height: 100vh;
-          }
-
-          nav {
-            width: 100%;
-            height 4rem;
-            position: fixed;
-            z-index: 4;
-          }
-
-          .wrapper {
-            display: block;
-          }
-
-          .section {
-            padding: 0;
-            text-align: center;
-
-            width: 100%;
-          }
-
-          .padded {
-            padding: 140px 0rem 100px;
-          }
-
-          .hero {
-            position: relative;
-          }
-
-          .blog-content {
-            position: relative;
-
-            z-index: 2;
-          }
-
-          p {
-            font-size: 22px;
-            margin-top: 0;
-            margin-bottom: 1rem;
-          }
-
-          h1 {
-            margin: 0;
-            padding: 0;
-            font-size: 5rem;
-            font-weight: 300;
-            line-height: 1.1;
-          }
-        `}</style>
       </div>
+      <style jsx>{`
+        .blog {
+          min-height: 100vh;
+          background: #fff;
+        }
+        nav {
+          width: 100%;
+          height 4rem;
+          position: fixed;
+          z-index: 4;
+        }
+
+        .wrapper {
+          display: block;
+        }
+
+        .section {
+          padding: 0;
+          text-align: center;
+
+          width: 100%;
+        }
+
+        .padded {
+          padding: 140px 0rem 100px;
+        }
+
+        .hero {
+          position: relative;
+        }
+
+        .blog-content {
+          position: relative;
+
+          z-index: 2;
+        }
+
+        p {
+          font-size: 22px;
+          margin-top: 0;
+          margin-bottom: 1rem;
+        }
+
+        h1 {
+          margin: 0;
+          padding: 0;
+          font-size: 5rem;
+          font-weight: 300;
+          line-height: 1.1;
+        }
+
+        :global(html) {
+          ${darkMode ? "filter: invert(1) hue-rotate(-50deg);" : ""}
+        }
+        `}</style>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import globalStyles from "../../../styles/global";
 import useScrollPosition from "../../../lib/scrollHook";
 import ScrollIndicator from "../../../components/ScrollInicator";
@@ -7,6 +8,10 @@ import useDimensions from "../../../lib/dimHook";
 import BackArrow from "../../../components/BackArrow";
 
 function Post(props) {
+  const {
+    query: { dark },
+  } = useRouter();
+
   const scrollPos = useScrollPosition();
   const [contentRef, { height }] = useDimensions();
   return (
@@ -35,7 +40,7 @@ function Post(props) {
       </header>
 
       <div className="content" ref={contentRef}>
-        <h1>Do incididunt sit labore dolore eu mollit.</h1>
+        <h1>{props.blog.title}</h1>
         {props.blog.subtitle && <h2>{props.blog.subtitle}</h2>}
         <section
           dangerouslySetInnerHTML={{ __html: props.blog.content }}
@@ -91,6 +96,7 @@ function Post(props) {
         }
 
         .blog-post {
+          min-height: 100vh;
           background-color: #fff;
         }
 
@@ -150,7 +156,7 @@ function Post(props) {
         }
 
         :global(html) {
-          ${false ? "filter: invert(1) hue-rotate(-50deg);" : ""}
+          ${dark == "true" ? "filter: invert(1) hue-rotate(-50deg);" : ""}
         }
       `}</style>
       <style jsx global>
