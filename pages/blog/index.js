@@ -25,10 +25,10 @@ function BlogIndex(props) {
             opacity: `${1 - scrollPos / 240}`,
           }}
         >
-          <p style={{ color: "#8fd3f4" }}>Blog</p>
+          <p style={{ color: "#8fd3f4" }}>Aaron Goidel</p>
           <h1>
-            Blog title
-            <br /> here
+            The Untitled
+            <br /> Blog
           </h1>
         </div>
         <div className="blog-content section">
