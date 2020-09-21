@@ -2,7 +2,7 @@
 title: Hello, World
 author: Aaron Goidel
 slug: introduction
-date: "2020-09-16"
+date: "2020-09-15"
 wcount: 628
 ---
 
