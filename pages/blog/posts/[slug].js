@@ -85,7 +85,7 @@ function Post(props) {
         }
 
         :global(h1, h2, h3, h4, h5) {
-          display: inline-block;
+          display: inline;
 
           background-image: linear-gradient(120deg, #00c9ff 0%, #92fe9d 100%);
           background-repeat: no-repeat;
@@ -128,6 +128,7 @@ function Post(props) {
         }
 
         .header-title {
+          display: block;
           background: white;
           // background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 80%);
           // -webkit-background-clip: text;
@@ -180,6 +181,11 @@ function Post(props) {
 
         :global(html) {
           ${dark == "true" ? "filter: invert(1) hue-rotate(-50deg);" : ""}
+        }
+
+        footer {
+          // height: 30vh;
+          // border-top: 1px solid #ccc;
         }
       `}</style>
       <style jsx global>
