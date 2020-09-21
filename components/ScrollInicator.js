@@ -2,7 +2,8 @@ import React from "react";
 import useWindowDimensions from "../lib/windowSizeHook";
 
 const percent = (scrollPos, docHeight, winHeight) => {
-  return (scrollPos / (docHeight - winHeight)) * 100;
+  let progress = (scrollPos / (docHeight - winHeight)) * 100;
+  return progress;
 };
 
 const ScrollIndicator = (props) => {

@@ -40,7 +40,10 @@ function Post(props) {
             </Link>
           </h2>
         </div>
-        <ScrollIndicator scrollPos={scrollPos} height={contentDim.height} />
+        <ScrollIndicator
+          scrollPos={scrollPos}
+          height={contentDim.height + headerDim.height}
+        />
       </header>
 
       <div className="content" ref={contentRef}>
@@ -124,7 +127,7 @@ function Post(props) {
           position: relative;
           width: clamp(60%, 80%, 610px);
           margin: 0 auto;
-          padding: calc(${headerDim.height}px + 2rem) 0;
+          padding-top: calc(${headerDim.height}px + 2rem);
         }
 
         .header-title {
