@@ -13,7 +13,7 @@ const ScrollIndicator = (props) => {
         .indicator {
           height: 2px;
           margin-bottom: -2px;
-          background: blue;
+          background: #5851ec;
           width: ${percent(props.scrollPos, props.height, height)}%;
         }
       `}</style>

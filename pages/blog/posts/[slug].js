@@ -6,6 +6,7 @@ import useScrollPosition from "../../../lib/scrollHook";
 import ScrollIndicator from "../../../components/ScrollInicator";
 import useDimensions from "../../../lib/dimHook";
 import BackArrow from "../../../components/BackArrow";
+import Link from "next/link";
 
 function Post(props) {
   const {
@@ -33,7 +34,10 @@ function Post(props) {
       <header ref={headerRef}>
         <div className="header-content">
           <h2 className="header-title">
-            {props.blog.title} <span>by Aaron Goidel</span>
+            {props.blog.title}{" "}
+            <Link href="/blog">
+              <span className="author">by Aaron Goidel</span>
+            </Link>
           </h2>
         </div>
         <ScrollIndicator scrollPos={scrollPos} height={contentDim.height} />
@@ -138,9 +142,18 @@ function Post(props) {
         h2 span {
           color: #777777;
           font-size: 1.1rem;
+          cursor: pointer;
           // -webkit-text-fill-color: #777777;
           // background-color: white;
           // padding-left: 0.2rem;
+        }
+
+        .author {
+          transition: color 0.25s ease-in-out;
+        }
+
+        .author:hover {
+          color: #5851ec;
         }
 
         header {
@@ -152,6 +165,7 @@ function Post(props) {
           background: #fff;
           border-bottom: 1px solid #ccc;
           // height: 5rem;
+          // padding 0
         }
 
         .header-content {
