@@ -2,7 +2,7 @@
 title: Thoughts Regarding the Online Learning Experience
 author: Aaron Goidel
 slug: online-learning
-date: "2020-09-21"
+date: "2020-09-21 00:00:00"
 wcount: 452
 ---
 

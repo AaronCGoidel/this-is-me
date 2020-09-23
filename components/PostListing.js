@@ -34,9 +34,7 @@ const PostListing = (props) => {
             <p className="tag read-time">
               ~{Math.max(Math.ceil(props.blog.wcount / 200), 1)} min. read
             </p>
-            <p className="tag date">
-              {formatDate(`${props.blog.date} 00:00:00`)}
-            </p>
+            <p className="tag date">{formatDate(`${props.blog.date}`)}</p>
           </div>
         </div>
       </Link>
