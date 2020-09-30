@@ -96,6 +96,10 @@ function Post(props) {
           background-position: 0 88%;
         }
 
+        :global(img) {
+          max-width: 100%;
+        }
+
         .title {
           display: inline;
         }
