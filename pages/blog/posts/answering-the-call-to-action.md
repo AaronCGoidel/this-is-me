@@ -2,8 +2,8 @@
 title: Answering the Call to Action
 author: Aaron Goidel
 slug: answering-the-call-to-action
-date: "2020-10-13 19:39:47"
-wcount: 502
+date: "2020-10-13 19:54:25"
+wcount: 500
 ---
 
 > Hard work beats talent when talent doesn't work hard.
@@ -20,16 +20,16 @@ While the authors give specific recommendations of practices, they are really at
 
 # Proactive is Pragmatic
 
-The book emphasizes big-picture thinking, active engagement, proactive self-education, and critical assessment of goals. To push these points, the authors give examples from the professional world. It is clear from the reading that working hard to patch smaller issues early and often is key ensuring project success. They argue that the way to achieve goals is not to wait for opportunities, but to create them for yourself. This is proactivity.
+The book emphasizes big-picture thinking, active engagement, proactive self-education, and critical assessment of goals. To push these points, the authors give examples from the professional world. It is clear from the reading that working hard to patch smaller issues early and often is key to ensuring project success. They argue that the way to achieve goals is not to wait for opportunities, but to create them for yourself. This is proactivity.
 
 Obviously familiar with the nature of coders, the authors impress the value of not letting the perfect be the enemy of the good. This hits on the message of perspective. That being analytical in determining priorities keeps things moving. Further, when discussing communication, most emphasis is placed on planning, not execution. The best communications have been planned to take structure, audience, and timing into account. Being active and putting in more work up front is paramount to success.
 
-No matter the aspect, the common thread which binds these lessons is proactivity. It is clear that, whether it be communication, staying current in your field, or building a specification, putting in work up front and being an active problem solver is at the core of pragmatic programming. Nowhere is this idea more apparent than in the authors' take on...
+The common thread which binds these lessons is proactivity. It is clear that, whether it be communication, staying current in your field, or building a specification, putting in work up front and being an active problem solver is at the core of pragmatic programming. Nowhere is this idea more apparent than in the authors' take on...
 
 # Responsibility
 
 To a pragmatic programmer, responsibility is about taking charge. The authors argue, there's no place for excuses. Agreeing to take on responsibility means anticipating issues and being swift and efficient in fixing them when they arise&mdash;which they will. Whether or not avoiding a problem was in your control, being responsible means mitigating damages and offering solutions, not casting blame.
 
-The authors create an inextricable link between responsibility and proactivity. One should always be prepared with a sense of possible risks and action plans to avoid them. Taking action, proposing practical solutions is another example. Both of these require more forethought and perspective than does casting blame. However, these are the hallmark traits of true responsibility.
+The authors describe an inextricable link between responsibility and proactivity. One should always be prepared with a sense of possible risks and an action plan to avoid them. Taking action, proposing practical solutions is another example. Both of these require more forethought and perspective than does casting blame. However, these are the hallmark traits of true responsibility.
 
 Being pragmatic is about finding and capitalizing on opportunities. It is about staying on top of work and always thinking ahead in order to make meaningful contributions efficiently.
