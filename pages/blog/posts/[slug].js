@@ -100,6 +100,12 @@ function Post(props) {
           max-width: 100%;
         }
 
+        :global(img) {
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
         .title {
           display: inline;
         }
@@ -184,10 +190,6 @@ function Post(props) {
         p {
           color: blue;
           margin-bottom: 5em;
-        }
-
-        :global(html) {
-          ${dark == "true" ? "filter: invert(1) hue-rotate(-50deg);" : ""}
         }
 
         footer {
