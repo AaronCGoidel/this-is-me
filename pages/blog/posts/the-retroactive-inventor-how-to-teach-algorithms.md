@@ -20,13 +20,13 @@ I could never do as good a job as the video at explaining these concepts&mdash;n
 
 Let's breakdown _how_ this topic is being conveyed. We will see how the presenter makes concepts approachable through his choices of medium and structure.
 
-## Breaking Down the Format
+### Breaking Down the Format
 
 The talk includes simple animations of the concepts at work accompanied by explanation from the presenter. 3Blue1Brown takes the form of an invisible narrator; though, sometimes he appears as an anthropomorphized `pi`. In removing himself from the content, 3Blue1Brown places emphasis on the material, not on himself.
 
 The content is well explained, with the animations providing clear interpretations of the complex mathematical concepts. By putting a minimal number of words on screen, and instead focusing on supplemental animations, the presenter provides an effective multimedia presentation. The animations highlight a concrete form of what is being explained and do not distract from the content. Together, the explanation and graphics create a captivating presentation, good for auditory and visual learners alike.
 
-## Video Structure and Flow
+### Video Structure and Flow
 
 The presentation starts off with a real-world example of where error correction is useful. 3Blue1Brown hooks the audience by presenting the question: how can DVD a be read accurately when scratched? He illustrates how the naive approach, storing 3 copies of a file, takes far too much space to be effective. He then draws the viewer in by contrasting the 66% memory cost of this method with the 3.5% cost of the Hamming method.
 
