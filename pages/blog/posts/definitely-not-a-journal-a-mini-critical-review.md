@@ -1,5 +1,5 @@
 ---
-title: Definitely Not a Journal: a Mini Critical Review
+title: "Definitely Not a Journal: A Mini Critical Review"
 author: Aaron Goidel
 slug: definitely-not-a-journal-a-mini-critical-review
 date: "2020-11-17 18:52:36"
