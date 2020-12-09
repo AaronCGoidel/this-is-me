@@ -33,7 +33,7 @@ function Post(props) {
 
       <header ref={headerRef}>
         <div className="header-content">
-          <h2 className="header-title">
+          <h2 className={`header-title ${scrollPos > 30 && "smaller"}`}>
             {props.blog.title}{" "}
             <Link href="/blog">
               <span className="author">by Aaron Goidel</span>
@@ -143,9 +143,14 @@ function Post(props) {
         .header-title {
           display: block;
           background: white;
+          transition: font-size 0.5s ease-in-out;
           // background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 80%);
           // -webkit-background-clip: text;
           // -webkit-text-fill-color: transparent;
+        }
+
+        .smaller {
+          font-size: 0.9rem;
         }
 
         h1 {
