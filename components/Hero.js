@@ -38,7 +38,7 @@ const Hero = (props) => (
         bottom: 0;
         left: 0;
 
-        background-image: url("/BG.jpg");
+        background-image: url("/bg.webp");
         background-repeat: no-repeat;
 
         background-attachment: fixed;
