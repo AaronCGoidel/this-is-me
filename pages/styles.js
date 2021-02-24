@@ -60,3 +60,5 @@ export const Buttons = styled.div`
   flex-wrap: wrap;
   justify-content: center;
 `;
+
+export default Main;
