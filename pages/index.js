@@ -1,7 +1,8 @@
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import HeroButton from "../components/HeroButton";
 import Modal from "../components/Modal";
+import Card from "../components/Card";
 import { Main, Splash, Letter, Buttons } from "./styles";
 
 const WaveText = ({ text }) => (
@@ -13,8 +14,9 @@ const WaveText = ({ text }) => (
 );
 
 export default function Home() {
-  const [modalOpen, setModalOpen] = useState(0);
-
+  const [modalState, setModalState] = useState(0);
+  const modal = useRef(null);
+  const pages = [];
   return (
     <div>
       <Head>
@@ -28,31 +30,35 @@ export default function Home() {
       </Head>
 
       <Main>
-        <Modal
-          isOpen={modalOpen}
-          handleClose={() => {
-            setModalOpen(0);
-          }}
-        ></Modal>
-
         <WaveText text={"Aaron"} />
         <WaveText text={"Goidel"} />
         <Buttons>
           <HeroButton
             onClick={() => {
-              setModalOpen(1);
+              setModalState(1);
             }}
           >
             About
           </HeroButton>
           <HeroButton
             onClick={() => {
-              setModalOpen(2);
+              setModalState(2);
             }}
           >
             Work
           </HeroButton>
         </Buttons>
+
+        <Modal
+          modalRef={modal}
+          full={modalState == 1}
+          open={modalState}
+          handleClose={() => {
+            setModalState(0);
+          }}
+        >
+          <Card img={"/vercel.svg"} container={modal} />
+        </Modal>
       </Main>
     </div>
   );

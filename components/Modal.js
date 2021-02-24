@@ -11,21 +11,41 @@ const Overlay = styled(motion.div)`
   width: 100%;
   height: 100%;
 
+  background: rgba(0, 0, 0, 0.4);
+
   z-index: 1;
 `;
 
 const ModalContainer = styled(motion.div)`
-  width: 100vw;
-  height: 100vh;
+  width: ${({ full }) => (full ? "100vw" : "70vw")};
+  height: ${({ full }) => (full ? "100vh" : "80vh")};
 
   background-color: white;
 
-  transform: translate(-50%, -50%);
+  ${({ full }) =>
+    !full &&
+    `
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -40vh;
+  margin-left: -35vw;
+
+  border-radius: 18px;
+  `}
+
+  @media (max-width: 780px) {
+    width: 100vw;
+    height: 100vh;
+    position: static;
+    margin: 0;
+    border-radius: 0;
+  }
 `;
 
 const CloseButton = styled.svg`
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
 
   position: absolute;
   right: 18px;
@@ -35,48 +55,52 @@ const CloseButton = styled.svg`
 `;
 
 const CloseBtn = ({ handleClose }) => (
-  <CloseButton onClick={handleClose} viewBox="0 0 20.39 20.39">
+  <CloseButton onClick={handleClose} viewBox="0 0 20 20">
     <title>close</title>
     <line
-      x1="19.39"
-      y1="19.39"
-      x2="1"
-      y2="1"
+      x1="18"
+      y1="18"
+      x2="2"
+      y2="2"
       fill="none"
       stroke={colors.main}
       strokeLinecap="round"
       strokeMiterlimit="10"
-      strokeWidth="2"
+      strokeWidth="3"
     />
     <line
-      x1="1"
-      y1="19.39"
-      x2="19.39"
-      y2="1"
+      x1="2"
+      y1="18"
+      x2="18"
+      y2="2"
       fill="none"
       stroke={colors.main}
       strokeLinecap="round"
       strokeMiterlimit="10"
-      strokeWidth="2"
+      strokeWidth="3"
     />
   </CloseButton>
 );
 
-const Modal = ({ handleClose, children, isOpen }) => {
+const Modal = ({ handleClose, children, open, full, modalRef }) => {
+  const modalIn = {
+    scaleX: [0, 0.5, 1],
+    scaleY: [0, 0.001, 1],
+    // rotate: [-40, -20, 0],
+  };
+
   return (
     <AnimatePresence>
-      {isOpen && (
-        <Overlay initial={"initial"} animate={"isOpen"} exit={"exit"}>
+      {open && (
+        <Overlay initial={"initial"} animate={"open"} exit={"exit"}>
           <ModalContainer
-            animate={{
-              scaleX: [0, 0.75, 1],
-              scaleY: [0, 0.001, 1],
-              borderRadius: [40, 12, 0],
-            }}
+            ref={modalRef}
+            full={full}
+            animate={modalIn}
             exit={{
-              scaleX: [1, 0.75, 0],
+              scaleX: [1, 0.5, 0],
               scaleY: [1, 0.001, 0],
-              borderRadius: [0, 12, 40],
+              // rotate: [0, -20, -40],
             }}
           >
             <CloseBtn handleClose={handleClose} />
