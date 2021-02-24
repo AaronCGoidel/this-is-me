@@ -1,137 +1,59 @@
 import Head from "next/head";
-import Nav from "../components/Nav";
-import Router from "next/router";
-import globalStyles from "../styles/global.js";
-import Hero from "../components/Hero";
-import About from "../components/About";
-import Projects from "../components/Projects";
-import Contact from "../components/Contact";
-import Menu from "../components/Menu";
-import smoothscroll from "smoothscroll-polyfill";
+import { useEffect, useState } from "react";
+import HeroButton from "../components/HeroButton";
+import Modal from "../components/Modal";
+import { Main, Splash, Letter, Buttons } from "./styles";
 
-export default class Home extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      inHero: false,
-      menuOpen: false,
-      width: 0,
-    };
+const WaveText = ({ text }) => (
+  <Splash>
+    {[...text].map((letter) => {
+      return <Letter key={letter}>{letter}</Letter>;
+    })}
+  </Splash>
+);
 
-    this.heroRef = React.createRef();
-    this.aboutRef = React.createRef();
-    this.projRef = React.createRef();
-    this.cvRef = React.createRef();
-    this.wrapper = React.createRef();
+export default function Home() {
+  const [modalOpen, setModalOpen] = useState(0);
 
-    this.scroll = (ref) => {
-      this.setState({ menuOpen: false });
-      const yOffset = -(window.innerHeight * 0.08);
-      const y =
-        -this.heroRef.current.getBoundingClientRect().top +
-        ref.current.getBoundingClientRect().top +
-        yOffset;
-      this.wrapper.current.scrollTo({ top: y, behavior: "smooth" });
-    };
-
-    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
-  }
-
-  handleNav = (ref) => {
-    if (typeof ref === "object") {
-      this.scroll(ref);
-    } else {
-      Router.push("/blog");
-    }
-  };
-
-  componentDidMount() {
-    window.scrollTo(100, 100);
-    smoothscroll.polyfill();
-
-    this.updateWindowDimensions();
-    window.addEventListener("resize", this.updateWindowDimensions);
-
-    this.io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          // console.log(entry.intersectionRatio);
-          if (entry.intersectionRatio < 0.85) {
-            this.setState({ inHero: false });
-            if (entry.intersectionRatio <= 0.08) {
-            }
-          } else {
-            this.setState({ inHero: true });
-          }
-        });
-      },
-      { threshold: [0.85, 0.08] }
-    );
-    this.io.observe(document.querySelector(".hero"));
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.updateWindowDimensions);
-  }
-
-  updateWindowDimensions() {
-    this.setState({ width: window.innerWidth });
-  }
-
-  render() {
-    return (
-      <div className="container">
-        <Head>
-          <title>Aaron Goidel</title>
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-
-        <Nav
-          width={this.state.width}
-          onClickLogo={() => this.scroll(this.heroRef)}
-          onClickMenuIcon={() =>
-            this.setState({ menuOpen: !this.state.menuOpen })
-          }
-          onClickLink={this.handleNav}
-          menuOpen={this.state.menuOpen}
-          inHero={this.state.inHero}
-          inMenu={this.state.menuOpen}
-          refs={[
-            { name: "About Me", link: this.aboutRef },
-            { name: "My Projects", link: this.projRef },
-            { name: "Résumé", link: this.cvRef },
-            { name: "Blog", link: "/blog" },
-          ]}
+  return (
+    <div>
+      <Head>
+        <title>Aaron Goidel</title>
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"
+          rel="stylesheet"
         />
-        {/* {this.state.menuOpen ? <Menu /> : null} */}
-        <div ref={this.wrapper} className="wrapper">
-          <Hero
-            heroRef={this.heroRef}
-            onClick={this.scroll}
-            refs={[this.aboutRef, this.projRef, this.cvRef]}
-          />
+      </Head>
 
-          <About aboutRef={this.aboutRef} />
+      <Main>
+        <Modal
+          isOpen={modalOpen}
+          handleClose={() => {
+            setModalOpen(0);
+          }}
+        ></Modal>
 
-          <Projects projRef={this.projRef} />
-
-          <Contact cvRef={this.cvRef} />
-        </div>
-
-        {/* STYLE */}
-        <style jsx>{`
-          .wrapper {
-            height: 100vh;
-            overflow-x: hidden;
-            overflow-y: auto;
-            perspective: 2px;
-          }
-        `}</style>
-
-        <style jsx global>
-          {globalStyles}
-        </style>
-      </div>
-    );
-  }
+        <WaveText text={"Aaron"} />
+        <WaveText text={"Goidel"} />
+        <Buttons>
+          <HeroButton
+            onClick={() => {
+              setModalOpen(1);
+            }}
+          >
+            About
+          </HeroButton>
+          <HeroButton
+            onClick={() => {
+              setModalOpen(2);
+            }}
+          >
+            Work
+          </HeroButton>
+        </Buttons>
+      </Main>
+    </div>
+  );
 }
