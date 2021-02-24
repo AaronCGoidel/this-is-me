@@ -90,12 +90,7 @@ const Modal = ({ handleClose, children, open, full, modalRef }) => {
   return (
     <AnimatePresence>
       {open && (
-        <Overlay
-          initial={"initial"}
-          animate={"open"}
-          exit={"exit"}
-          onClick={handleClose}
-        >
+        <Overlay initial={"initial"} animate={"open"} exit={"exit"}>
           <ModalContainer
             ref={modalRef}
             full={full}

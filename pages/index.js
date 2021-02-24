@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useEffect, useRef, useState } from "react";
 import HeroButton from "../components/HeroButton";
 import Modal from "../components/Modal";
-import Card from "../components/Card";
+import Projects from "../components/Projects";
 import { Main, Splash, Letter, Buttons } from "./styles";
 
 const WaveText = ({ text }) => (
@@ -57,7 +57,7 @@ export default function Home() {
             setModalState(0);
           }}
         >
-          <Card img={"/vercel.svg"} container={modal} />
+          <Projects modal={modal} />
         </Modal>
       </Main>
     </div>

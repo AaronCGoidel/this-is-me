@@ -34,7 +34,7 @@ const Title = styled.h1`
 
 const Card = ({ img, title, container }) => {
   const x = useMotionValue(0);
-  const input = [0, 400, 800];
+  const input = [-200, 0, 200];
   const output = ["#ff0000", "#fff", "#00ff00"];
   const background = useTransform(x, input, output);
 
