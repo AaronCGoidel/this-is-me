@@ -12,8 +12,6 @@ const Overlay = styled(motion.div)`
   height: 100%;
 
   background: rgba(0, 0, 0, 0.4);
-
-  z-index: 1;
 `;
 
 const ModalContainer = styled(motion.div)`
@@ -92,7 +90,12 @@ const Modal = ({ handleClose, children, open, full, modalRef }) => {
   return (
     <AnimatePresence>
       {open && (
-        <Overlay initial={"initial"} animate={"open"} exit={"exit"}>
+        <Overlay
+          initial={"initial"}
+          animate={"open"}
+          exit={"exit"}
+          onClick={handleClose}
+        >
           <ModalContainer
             ref={modalRef}
             full={full}

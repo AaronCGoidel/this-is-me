@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import colors from "./colors";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useTransform } from "framer-motion";
 
 const CardContainer = styled(motion.div)`
   width: 10rem;
@@ -22,6 +22,7 @@ const CardContainer = styled(motion.div)`
 const Img = styled.img`
   width: 100%;
   height: 60%;
+  user-drag: none;
 `;
 
 const Title = styled.h1`
@@ -32,8 +33,17 @@ const Title = styled.h1`
 `;
 
 const Card = ({ img, title, container }) => {
+  const x = useMotionValue(0);
+  const input = [0, 400, 800];
+  const output = ["#ff0000", "#fff", "#00ff00"];
+  const background = useTransform(x, input, output);
+
   return (
-    <CardContainer drag dragConstraints={container}>
+    <CardContainer
+      drag={"x"}
+      dragConstraints={container}
+      style={{ x, background }}
+    >
       <Img src={img} />
       <Title>foo</Title>
     </CardContainer>
