@@ -1,4 +1,5 @@
-import React from "react";
+import { ST } from "next/dist/next-server/lib/utils";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import Card from "./Card";
 
@@ -10,29 +11,71 @@ const ProjectsContainer = styled.div`
 
 const Reject = styled.div`
   flex: 1;
-  background-color: red;
+  //   background-color: red;
 `;
 
 const Accept = styled.div`
   flex: 1;
-  background-color: green;
+  //   background-color: green;
 `;
 
 const Deck = styled.div`
-  flex: 1;
-  background-color: black;
+  flex: 0;
+  //   background-color: black;
 
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
-const Projects = ({ modal }) => {
+const Stamp = styled.span`
+  position: absolute;
+
+  color: #555;
+  font-size: 2rem;
+  font-weight: 700;
+  border: 0.25rem solid #555;
+  display: inline-block;
+  padding: 0.25rem 1rem;
+  text-transform: uppercase;
+  border-radius: 1rem;
+  font-family: "Courier";
+  -webkit-mask-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/8399/grunge.png");
+  -webkit-mask-size: 944px 604px;
+  mix-blend-mode: multiply;
+  top: 50px;
+
+  ${({ accept }) =>
+    accept &&
+    `
+    transform: rotate(12deg);
+    border-color: green;
+    color: green;
+
+    right: 20px;
+  `}
+
+  ${({ decline }) =>
+    decline &&
+    `
+    transform: rotate(-15deg);
+    border-color: red;
+    color: red;
+    left: 20px;
+  `}
+`;
+
+const Projects = () => {
+  const deck = useRef(null);
+  const [status, setStatus] = useState(0);
   return (
     <ProjectsContainer>
       <Reject></Reject>
-      <Deck>
-        <Card img={"/vercel.svg"} container={modal} />
+      <Deck ref={deck}>
+        {status == 1 && <Stamp accept>Read More</Stamp>}
+
+        {status == 2 && <Stamp decline>Maybe Later</Stamp>}
+        <Card img={"/vercel.svg"} container={deck} update={setStatus} />
       </Deck>
       <Accept></Accept>
     </ProjectsContainer>

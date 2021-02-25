@@ -15,7 +15,7 @@ const WaveText = ({ text }) => (
 
 export default function Home() {
   const [modalState, setModalState] = useState(0);
-  const modal = useRef(null);
+
   const pages = [];
   return (
     <div>
@@ -50,14 +50,13 @@ export default function Home() {
         </Buttons>
 
         <Modal
-          modalRef={modal}
           full={modalState == 1}
           open={modalState}
           handleClose={() => {
             setModalState(0);
           }}
         >
-          <Projects modal={modal} />
+          <Projects />
         </Modal>
       </Main>
     </div>

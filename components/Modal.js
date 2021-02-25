@@ -80,7 +80,7 @@ const CloseBtn = ({ handleClose }) => (
   </CloseButton>
 );
 
-const Modal = ({ handleClose, children, open, full, modalRef }) => {
+const Modal = ({ handleClose, children, open, full }) => {
   const modalIn = {
     scaleX: [0, 0.5, 1],
     scaleY: [0, 0.001, 1],
@@ -92,7 +92,6 @@ const Modal = ({ handleClose, children, open, full, modalRef }) => {
       {open && (
         <Overlay initial={"initial"} animate={"open"} exit={"exit"}>
           <ModalContainer
-            ref={modalRef}
             full={full}
             animate={modalIn}
             exit={{
