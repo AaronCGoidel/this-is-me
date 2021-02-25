@@ -24,6 +24,7 @@ const Deck = styled.div`
   //   background-color: black;
 
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 `;
@@ -65,6 +66,12 @@ const Stamp = styled.span`
   `}
 `;
 
+const Hint = styled.span`
+  font-size: 1.2rem;
+  position: absolute;
+  bottom: 5vh;
+`;
+
 const Projects = () => {
   const deck = useRef(null);
   const [status, setStatus] = useState(0);
@@ -76,6 +83,7 @@ const Projects = () => {
 
         {status == 2 && <Stamp decline>Maybe Later</Stamp>}
         <Card img={"/vercel.svg"} container={deck} update={setStatus} />
+        <Hint>Drag Me</Hint>
       </Deck>
       <Accept></Accept>
     </ProjectsContainer>

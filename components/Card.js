@@ -64,6 +64,8 @@ const Card = ({ img, title, container, update }) => {
 
   return (
     <CardContainer
+      animate={{ x: [0, -150, -150, 0, 0, 150, 150, 0] }}
+      transition={{ duration: 5, delay: 1 }}
       drag={"x"}
       dragConstraints={container}
       dragElastic={0.8}
