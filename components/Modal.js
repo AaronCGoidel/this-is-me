@@ -94,6 +94,7 @@ const Modal = ({ handleClose, children, open, full }) => {
           <ModalContainer
             full={full}
             animate={modalIn}
+            transition={{ duration: 0.5 }}
             exit={{
               scaleX: [1, 0.5, 0],
               scaleY: [1, 0.001, 0],
