@@ -1,92 +1,70 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import colors from "./colors";
-import { motion, useMotionValue, useTransform } from "framer-motion";
+import { motion, useAnimation, useMotionValue } from "framer-motion";
 
 const CardContainer = styled(motion.div)`
-  width: 10rem;
-  height: 15rem;
-  background-color: #fff;
-
-  @media (max-width: 780px) {
-    width: 12rem;
-    height: 18rem;
-  }
-  margin-bottom: .8rem;
-  padding: 0 0.5rem;
-
-  border-radius: 18px;
-  border: 1px solid #333;
-
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
-    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
-    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-
-  cursor: grab;
-
-  &:active {
-    cursor: grabbing;
-  
+  position: absolute;
 `;
 
-const Img = styled.img`
-  width: 100%;
-  height: 60%;
-  user-drag: none;
-`;
+const Card = ({ children, style, handleVote, id, ...props }) => {
+  const cardRef = useRef(null);
 
-const Title = styled.h1`
-  margin: 0;
-  font-size: 1.5rem;
-  //   padding: 0 0.5rem;
-  color: #000;
-`;
-
-const Card = ({ img, title, container, update }) => {
   const x = useMotionValue(0);
-  const input = [-200, 0, 200];
-  const output = ["#ff0000", "#fff", "#00ff00"];
-  const background = useTransform(x, input, output);
+  const controls = useAnimation();
 
-  const rotation = [-8, 0, 8];
-  const tilt = [-5, 0, 5];
-  const rotate = useTransform(x, input, rotation);
-  const rotateY = useTransform(x, input, tilt);
+  const [bounded, setBounded] = useState(true);
 
-  useEffect(
-    () =>
-      x.onChange((latest) => {
-        let dist = x.get();
-        if (dist < -120) {
-          update(2);
-        } else if (dist > 120) {
-          update(1);
-        } else {
-          update(0);
-        }
-      }),
-    []
-  );
+  const [dir, setDir] = useState();
+  const [vel, setVel] = useState();
+
+  const getVote = (child, parent) => {
+    const card = child.getBoundingClientRect();
+    const box = parent.getBoundingClientRect();
+
+    if (card.left > box.right) {
+      return true;
+    } else if (card.right < box.left) {
+      return false;
+    }
+    return undefined;
+  };
+
+  const getDir = () => {
+    return vel >= 1 ? "right" : vel <= -1 ? "left" : undefined;
+  };
+
+  const setHeading = () => {
+    setVel(x.getVelocity());
+    setDir(getDir());
+  };
+
+  useEffect(() => {
+    const unSubX = x.onChange(() => {
+      const child = cardRef.current;
+      const parent = child.parentNode;
+
+      const res = getVote(child, parent);
+      console.log(x.get());
+
+      res !== undefined && handleVote(res);
+    });
+
+    return () => unSubX();
+  });
 
   return (
     <CardContainer
-      animate={{ x: [0, -150, -150, 0, 0, 150, 150, 0] }}
-      transition={{ duration: 5, delay: 1 }}
-      drag={"x"}
-      dragConstraints={container}
-      dragElastic={0.8}
-      style={{ x, rotateY, rotate }}
-      whileDrag={{ rotateX: 20 }}
-      onDragEnd={() => {
-        let dist = x.get();
-        if (dist < -120) {
-        } else if (dist > 120) {
-        } else {
-        }
-      }}
+      ref={cardRef}
+      dragConstraints={bounded && { left: 0, right: 0, top: 0, bottom: 0 }}
+      dragElastic={1}
+      style={{ x }}
+      onDrag={setHeading}
+      animate={controls}
+      // onDragEnd={}
+      whileTap={{ scale: 1.1 }}
+      {...props}
     >
-      <Img src={img} />
-      <Title>foo</Title>
+      {children}
     </CardContainer>
   );
 };
