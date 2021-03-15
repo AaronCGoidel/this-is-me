@@ -30,7 +30,7 @@ const Item = styled.div`
 `;
 
 const Deck = styled(Stack)`
-  width: 250px;
+  width: 210px;
   background-color: red;
 `;
 
