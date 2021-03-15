@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import HeroButton from "../components/HeroButton";
 import Modal from "../components/Modal";
 import Projects from "../components/Projects";
+import About from "../components/About";
 import { Main, Splash, Letter, Buttons } from "./styles";
 
 const WaveText = ({ text }) => (
@@ -16,7 +17,7 @@ const WaveText = ({ text }) => (
 export default function Home() {
   const [modalState, setModalState] = useState(0);
 
-  const pages = [];
+  const pages = [null, <About />, <Projects />];
   return (
     <div>
       <Head>
@@ -56,7 +57,7 @@ export default function Home() {
             setModalState(0);
           }}
         >
-          <Projects />
+          {pages[modalState]}
         </Modal>
       </Main>
     </div>

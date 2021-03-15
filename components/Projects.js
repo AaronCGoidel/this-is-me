@@ -1,4 +1,4 @@
-import { ST } from "next/dist/next-server/lib/utils";
+import { motion } from "framer-motion";
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import Card from "./Card";
@@ -26,7 +26,12 @@ const Deck = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
+  padding-bottom: 2.5vh;
+
+  @media (max-width: 780px) {
+    padding-bottom: 18vh;
+  }
 `;
 
 const Stamp = styled.span`
@@ -66,10 +71,10 @@ const Stamp = styled.span`
   `}
 `;
 
-const Hint = styled.span`
+const Hint = styled(motion.span)`
   font-size: 1.2rem;
-  position: absolute;
-  bottom: 5vh;
+  // position: absolute;
+  // bottom: 5vh;
 `;
 
 const Projects = () => {
@@ -83,7 +88,18 @@ const Projects = () => {
 
         {status == 2 && <Stamp decline>Maybe Later</Stamp>}
         <Card img={"/vercel.svg"} container={deck} update={setStatus} />
-        <Hint>Drag Me</Hint>
+
+        <Hint
+          animate={status == 0 ? { scale: [1, 1.1, 1, 1.1, 1] } : {}}
+          transition={{
+            delay: 6.5,
+            duration: 1.5,
+            repeat: Infinity,
+            repeatDelay: 2,
+          }}
+        >
+          Drag Me
+        </Hint>
       </Deck>
       <Accept></Accept>
     </ProjectsContainer>
