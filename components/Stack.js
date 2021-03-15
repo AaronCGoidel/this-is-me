@@ -33,6 +33,8 @@ const Stack = ({ children, handleVote, ...props }) => {
         let onTop = index === stack.length - 1;
         return (
           <Card
+            first={item.props.first}
+            top={onTop}
             drag={onTop}
             key={item.key || index}
             handleVote={(res) => castVote(item, res)}

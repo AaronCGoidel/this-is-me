@@ -4,14 +4,20 @@ import { motion, useAnimation, useMotionValue } from "framer-motion";
 
 const CardContainer = styled(motion.div)`
   position: absolute;
+  ${({ top }) =>
+    top &&
+    `cursor: grab;
+  &:active {
+    cursor: grabbing;`}
 `;
 
-const Card = ({ children, style, handleVote, id, ...props }) => {
+const Card = ({ children, style, handleVote, id, top, first, ...props }) => {
   const cardRef = useRef(null);
 
   const x = useMotionValue(0);
   const controls = useAnimation();
 
+  const [vote, setVote] = useState(undefined);
   const [bounded, setBounded] = useState(true);
 
   const [dir, setDir] = useState();
@@ -44,7 +50,6 @@ const Card = ({ children, style, handleVote, id, ...props }) => {
       const parent = child.parentNode;
 
       const res = getVote(child, parent);
-      console.log(x.get());
 
       res !== undefined && handleVote(res);
     });
@@ -54,12 +59,14 @@ const Card = ({ children, style, handleVote, id, ...props }) => {
 
   return (
     <CardContainer
+      top={top}
       ref={cardRef}
       dragConstraints={bounded && { left: 0, right: 0, top: 0, bottom: 0 }}
       dragElastic={1}
       style={{ x }}
       onDrag={setHeading}
-      animate={controls}
+      animate={(controls, first && { x: [0, -150, -150, 0, 0, 150, 150, 0] })}
+      transition={{ duration: 5, delay: 1 }}
       // onDragEnd={}
       whileTap={{ scale: 1.1 }}
       {...props}

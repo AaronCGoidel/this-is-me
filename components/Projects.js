@@ -30,8 +30,7 @@ const Item = styled.div`
 `;
 
 const Deck = styled(Stack)`
-  width: 210px;
-  background-color: red;
+  width: 200px;
 `;
 
 const Projects = () => {
@@ -42,7 +41,9 @@ const Projects = () => {
       <Deck handleVote={(item, vote) => console.log(item.props, vote)}>
         <Item data-value="waffles">🧇</Item>
         <Item data-value="pancakes">🥞</Item>
-        <Item data-value="donuts">🍩</Item>
+        <Item first data-value="donuts">
+          🍩
+        </Item>
       </Deck>
     </ProjectsContainer>
   );
