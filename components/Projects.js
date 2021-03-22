@@ -16,6 +16,14 @@ const Projects = (props) => (
         }
       />
       <ProjectItem
+        link={"https://devpost.com/software/track-19-sczex8"}
+        img={"/thumbnails/track19.webp"}
+        title={"Track-19"}
+        blurb={
+          "A secure, smart Covid tracking app which uses your postal code to deliver up-to-date local Covid news and statistics. I wrote this app using Firebase for serverless auth and database and NextJS for an SSG on the frontend. This project won my school's Covid-centric hackathon. Click to learn more."
+        }
+      />
+      <ProjectItem
         link={"http://SafeSend.cf"}
         img={"/thumbnails/safesend.webp"}
         title={"SafeSend"}
