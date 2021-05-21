@@ -9,20 +9,25 @@ const About = (props) => (
     </div>
     <div className="contents bio">
       <p>
-        I am currently studying Computer Science at the University of Toronto
-        and am working designing and developing cross-platform websites.
+        I am currently studying{" "}
+        <span className="calledout">Computer Science</span> and{" "}
+        <span className="calledout">Linguistics</span> at the University of
+        Toronto. I work part-time as a backend engineer and am always tinkering
+        and reading. I am passionate about software as the tool to build a
+        better future.
       </p>
       <br />
       <p>
-        I work to make clean, simple, websites which focus on content and ease
-        of use. All of my products are dynamic, meaning they will impress on all
-        platforms, mobile and desktop.
+        My main interests in school are in computational linguistics as well as
+        languages and compilers. I have experience developing production
+        software in teams small to large.
       </p>
       <br />
       <p>
-        My interests are in web development as well as computational linguistics
-        and artificial intelligence. I have a love of all things food and
-        cooking and I am always listening to or making music.
+        I enjoy making small web projects as well as exploring many other areas
+        of computer science. These range from language design, to physics
+        simulations, to blockchain, and beyond. I have a love of all things food
+        and cooking and I am always listening to or making music.
       </p>
     </div>
     <div className="centered">
@@ -33,6 +38,10 @@ const About = (props) => (
       </Button>
     </div>
     <style jsx>{`
+      .calledout {
+        font-weight: bold;
+      }
+
       h3 {
         margin: 10px;
         text-align: center;

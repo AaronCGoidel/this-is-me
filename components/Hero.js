@@ -7,7 +7,7 @@ const Hero = (props) => (
     <div className="hero-container">
       <div className="text-container">
         <span className="hero-text">
-          Hi. My name is Aaron and I build websites.
+          Hey! I'm Aaron and I Love Asking Questions
         </span>
       </div>
       <div className="buttons">
