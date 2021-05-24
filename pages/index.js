@@ -1,137 +1,86 @@
-import Head from "next/head";
-import Nav from "../components/Nav";
-import Router from "next/router";
-import globalStyles from "../styles/global.js";
-import Hero from "../components/Hero";
-import About from "../components/About";
-import Projects from "../components/Projects";
-import Contact from "../components/Contact";
-import Menu from "../components/Menu";
-import smoothscroll from "smoothscroll-polyfill";
+import Link from "next/link";
+import Home from "../components/Home";
 
-export default class Home extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      inHero: false,
-      menuOpen: false,
-      width: 0,
-    };
+export default function Index() {
+  return (
+    <>
+      <Home />
+      <main>
+        <header>
+          <h1>Hi, I'm Aaron!</h1>
+        </header>
 
-    this.heroRef = React.createRef();
-    this.aboutRef = React.createRef();
-    this.projRef = React.createRef();
-    this.cvRef = React.createRef();
-    this.wrapper = React.createRef();
+        <section>
+          <h1>About Me</h1>
+          <p>
+            I am an Intensely passionate student, currently studying Computer
+            Science and Linguistics at the University of Toronto. I work
+            part-time as a backend engineer and am always tinkering and reading.
+            I am passionate about software as the tool to build a better future.
+          </p>
 
-    this.scroll = (ref) => {
-      this.setState({ menuOpen: false });
-      const yOffset = -(window.innerHeight * 0.08);
-      const y =
-        -this.heroRef.current.getBoundingClientRect().top +
-        ref.current.getBoundingClientRect().top +
-        yOffset;
-      this.wrapper.current.scrollTo({ top: y, behavior: "smooth" });
-    };
+          <p>
+            My main interests in school are in computational linguistics as well
+            as languages and compilers. I am a Technical Officer in the Computer
+            Science Student Community, helping students to bridge the gap
+            between theory and implementation by mentoring them during the
+            development process.
+          </p>
 
-    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
-  }
+          <p>
+            Out of school, I have experience developing production software in
+            teams small to large. I enjoy making small web projects as well as
+            exploring many other areas of computer science. These range from
+            language design, to physics simulations, to blockchain, and beyond.
+            I have a love of all things food and cooking and I am always
+            listening to or making music.
+          </p>
+        </section>
 
-  handleNav = (ref) => {
-    if (typeof ref === "object") {
-      this.scroll(ref);
-    } else {
-      Router.push("/blog");
-    }
-  };
+        <section className="right">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </p>
 
-  componentDidMount() {
-    window.scrollTo(100, 100);
-    smoothscroll.polyfill();
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+        </section>
 
-    this.updateWindowDimensions();
-    window.addEventListener("resize", this.updateWindowDimensions);
+        <section>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </p>
 
-    this.io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          // console.log(entry.intersectionRatio);
-          if (entry.intersectionRatio < 0.85) {
-            this.setState({ inHero: false });
-            if (entry.intersectionRatio <= 0.08) {
-            }
-          } else {
-            this.setState({ inHero: true });
-          }
-        });
-      },
-      { threshold: [0.85, 0.08] }
-    );
-    this.io.observe(document.querySelector(".hero"));
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.updateWindowDimensions);
-  }
-
-  updateWindowDimensions() {
-    this.setState({ width: window.innerWidth });
-  }
-
-  render() {
-    return (
-      <div className="container">
-        <Head>
-          <title>Aaron Goidel</title>
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-
-        <Nav
-          width={this.state.width}
-          onClickLogo={() => this.scroll(this.heroRef)}
-          onClickMenuIcon={() =>
-            this.setState({ menuOpen: !this.state.menuOpen })
-          }
-          onClickLink={this.handleNav}
-          menuOpen={this.state.menuOpen}
-          inHero={this.state.inHero}
-          inMenu={this.state.menuOpen}
-          refs={[
-            { name: "About Me", link: this.aboutRef },
-            { name: "My Projects", link: this.projRef },
-            { name: "Résumé", link: this.cvRef },
-            { name: "Blog", link: "/blog" },
-          ]}
-        />
-        {/* {this.state.menuOpen ? <Menu /> : null} */}
-        <div ref={this.wrapper} className="wrapper">
-          <Hero
-            heroRef={this.heroRef}
-            onClick={this.scroll}
-            refs={[this.aboutRef, this.projRef, this.cvRef]}
-          />
-
-          <About aboutRef={this.aboutRef} />
-
-          <Projects projRef={this.projRef} />
-
-          <Contact cvRef={this.cvRef} />
-        </div>
-
-        {/* STYLE */}
-        <style jsx>{`
-          .wrapper {
-            height: 100vh;
-            overflow-x: hidden;
-            overflow-y: auto;
-            perspective: 2px;
-          }
-        `}</style>
-
-        <style jsx global>
-          {globalStyles}
-        </style>
-      </div>
-    );
-  }
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+        </section>
+      </main>
+    </>
+  );
 }
