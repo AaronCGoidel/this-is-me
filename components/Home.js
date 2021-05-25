@@ -56,38 +56,17 @@ class Home extends Component {
       const saturn = gltf.scene;
       saturn.position.set(-10, -10, -10);
       saturn.scale.set(0.1, 0.1, 0.1);
-        
-      const saturn_b = saturn.clone()
-      saturn_b.position.set(-50, 50, -200);
-      saturn_b.rotateX(10)
 
-      scene.add(saturn, saturn_b);
+      const saturn_b = saturn.clone();
+      saturn_b.position.set(-50, 30, -200);
+      saturn_b.rotateX(10);
+
+      const saturn_c = saturn.clone();
+      saturn_c.position.set(185, -40, -300);
+      
+
+      scene.add(saturn, saturn_b, saturn_c);
     });
-
-    loader.load("./planet_ball.gltf", (gltf) => {
-        const earth = gltf.scene;
-        earth.position.set(185, -15, -300);
-        earth.scale.set(0.1, 0.1, 0.1);
-          
-        const earth_b = earth.clone()
-        earth_b.position.set(-100, -40, -200);
-        earth_b.rotateZ(10)
-  
-        scene.add(earth, earth_b);
-      });
-
-      loader.load("./double_ring.gltf", (gltf) => {
-        const earth = gltf.scene;
-        earth.position.set(200, -40, -189);
-        earth.scale.set(0.1, 0.1, 0.1);
-          
-        const earth_b = earth.clone()
-        earth_b.position.set(-70, -15, 50);
-        earth_b.rotateX(80)
-        earth_b.rotateZ(10)
-  
-        scene.add(earth, earth_b);
-      });
 
     // camera movement, window resizing, animation
 
@@ -98,7 +77,7 @@ class Home extends Component {
       camera.position.x = top * -0.003;
       camera.rotation.y = top * -0.0003;
 
-    //   console.log(camera.position)
+      //   console.log(camera.position)
     };
 
     document.body.onscroll = moveCamera;
