@@ -51,36 +51,25 @@ class Home extends Component {
 
     Array(400).fill().forEach(spawnStar);
 
-    // const spawnPlanet = () => {
-    //     const surface = new THREE.Mesh(
-    //         new THREE.SphereGeometry(3, 24, 24),
-    //         new THREE.MeshStandardMaterial({
-    //             color: 0xff0000,
-    //         })
-    //     )
-    //     surface.position.set(-10,-10,-10)
-
-    //     const rings = new THREE.Mesh(
-    //         new THREE.RingGeometry(5, 6, 32),
-    //         new THREE.MeshStandardMaterial({
-    //             color: 0x00ff00,
-    //         })
-    //     )
-    //     rings.position.set(-10,-10,-10)
-    //     rings.rotation.x += 1
-    //     scene.add(surface)
-    //     scene.add(rings)
-    // }
-    // spawnPlanet();
-    
-
     const loader = new GLTFLoader();
     loader.load("./saturn.gltf", (gltf) => {
-        const saturn = gltf.scene;
-        saturn.position.set(-10,-10,-10)
-        saturn.scale.set(.1,.1,.1)
+      const saturn = gltf.scene;
+      saturn.position.set(-10, -10, -10);
+      saturn.scale.set(0.1, 0.1, 0.1);
+        
+      const saturn_b = saturn.clone()
+      saturn_b.position.set(-50, 50, -200);
+      saturn_b.rotateX(10)
 
-        scene.add(saturn);
+      const saturn_c = saturn.clone()
+      saturn_c.position.set(185, -15, -300);
+      saturn_c.rotateY(10)
+
+      const saturn_d = saturn.clone()
+      saturn_d.position.set(-100, -40, -20);
+      saturn_d.rotateY(10)
+
+      scene.add(saturn, saturn_b, saturn_c, saturn_d);
     });
 
     // camera movement, window resizing, animation
@@ -91,6 +80,8 @@ class Home extends Component {
       camera.position.z = top * -0.06;
       camera.position.x = top * -0.003;
       camera.rotation.y = top * -0.0003;
+
+    //   console.log(camera.position)
     };
 
     document.body.onscroll = moveCamera;
