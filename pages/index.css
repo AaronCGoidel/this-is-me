@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
 
 body,
 div {
@@ -7,12 +7,14 @@ div {
   padding: 0;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   font-family: "Fredoka One", sans-serif;
 }
 
 p {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 canvas {
@@ -22,7 +24,7 @@ canvas {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background-color: #20143E;
+  background-color: #20143e;
 }
 
 header {
@@ -65,9 +67,9 @@ header {
 section {
   padding: 1rem;
 
-  background-color: #180F2E;
+  background-color: #180f2e;
   box-shadow: 0.2rem -0.2rem rgba(255, 0, 255, 0.75),
-  -0.25rem -0.25rem rgba(0, 255, 255, 0.75), 0 0.25rem rgba(255, 255, 0, 0.75);
+    -0.25rem -0.25rem rgba(0, 255, 255, 0.75), 0 0.25rem rgba(255, 255, 0, 0.75);
   border-radius: 15px;
 
   margin: 10rem 2rem;
@@ -80,7 +82,8 @@ section {
     width: 80vw;
     align-self: center;
   }
-  .left, .right {
+  .left,
+  .right {
     align-self: center;
   }
 }
@@ -97,4 +100,13 @@ section p {
   display: flex;
   flex-direction: row;
   overflow: scroll;
+}
+
+button {
+  background: rgb(0,255,255);
+  background: rgba(255, 0, 255, 1);
+  width: 150px;
+  height: 50px;
+  border: 0;
+  border-radius: 5px;
 }
