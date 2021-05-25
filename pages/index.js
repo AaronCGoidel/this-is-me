@@ -51,11 +51,11 @@ export default function Index() {
           </p>
           <div className="cards">
             
-              <ProjectCard img={"logo.png"} />
-              <ProjectCard img={"logo.png"} />
-              <ProjectCard img={"logo.png"} />
-              <ProjectCard img={"logo.png"} />
-              <ProjectCard img={"logo.png"} />
+              <ProjectCard img={"lady.jpg"} />
+              <ProjectCard img={"lady.jpg"} />
+              <ProjectCard img={"lady.jpg"} />
+              <ProjectCard img={"lady.jpg"} />
+              <ProjectCard img={"lady.jpg"} />
             
           </div>
         </section>
