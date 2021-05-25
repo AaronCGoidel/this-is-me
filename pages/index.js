@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Home from "../components/Home";
 import ProjectCard from "../components/ProjectCard";
-import BG from "../components/BG";
 
 export default function Index() {
   return (

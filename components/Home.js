@@ -61,16 +61,33 @@ class Home extends Component {
       saturn_b.position.set(-50, 50, -200);
       saturn_b.rotateX(10)
 
-      const saturn_c = saturn.clone()
-      saturn_c.position.set(185, -15, -300);
-      saturn_c.rotateY(10)
-
-      const saturn_d = saturn.clone()
-      saturn_d.position.set(-100, -40, -20);
-      saturn_d.rotateY(10)
-
-      scene.add(saturn, saturn_b, saturn_c, saturn_d);
+      scene.add(saturn, saturn_b);
     });
+
+    loader.load("./planet_ball.gltf", (gltf) => {
+        const earth = gltf.scene;
+        earth.position.set(185, -15, -300);
+        earth.scale.set(0.1, 0.1, 0.1);
+          
+        const earth_b = earth.clone()
+        earth_b.position.set(-100, -40, -200);
+        earth_b.rotateZ(10)
+  
+        scene.add(earth, earth_b);
+      });
+
+      loader.load("./double_ring.gltf", (gltf) => {
+        const earth = gltf.scene;
+        earth.position.set(200, -40, -189);
+        earth.scale.set(0.1, 0.1, 0.1);
+          
+        const earth_b = earth.clone()
+        earth_b.position.set(-70, -15, 50);
+        earth_b.rotateX(80)
+        earth_b.rotateZ(10)
+  
+        scene.add(earth, earth_b);
+      });
 
     // camera movement, window resizing, animation
 
