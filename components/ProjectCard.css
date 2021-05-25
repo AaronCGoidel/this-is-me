@@ -4,8 +4,6 @@
   }
 
 .image-card {
-    position: relative;
-    z-index: 10;
     width: var(--size);
     height: var(--size);
     border-radius: var(--radius);
@@ -13,7 +11,7 @@
     background-size: cover;
     margin: calc(var(--size) * 20 / 100);
   }
-.image-card::before {
+.image-card:before {
     content: "";
     position: absolute;
     width: 90%;

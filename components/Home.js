@@ -46,27 +46,41 @@ class Home extends Component {
         .fill()
         .map(() => MathUtils.randFloatSpread(400));
       star.position.set(x, y, z);
-      console.log("here");
       scene.add(star);
     };
 
     Array(400).fill().forEach(spawnStar);
 
-    const aaronPic = new THREE.TextureLoader().load("acg.png");
+    // const spawnPlanet = () => {
+    //     const surface = new THREE.Mesh(
+    //         new THREE.SphereGeometry(3, 24, 24),
+    //         new THREE.MeshStandardMaterial({
+    //             color: 0xff0000,
+    //         })
+    //     )
+    //     surface.position.set(-10,-10,-10)
 
-    const me = new THREE.Mesh(
-      new THREE.PlaneGeometry(5, 5),
-      new THREE.MeshBasicMaterial({ map: aaronPic, transparent: true })
-    );
-
-    me.position.set(7, 3, -8);
-    // scene.add(me);
+    //     const rings = new THREE.Mesh(
+    //         new THREE.RingGeometry(5, 6, 32),
+    //         new THREE.MeshStandardMaterial({
+    //             color: 0x00ff00,
+    //         })
+    //     )
+    //     rings.position.set(-10,-10,-10)
+    //     rings.rotation.x += 1
+    //     scene.add(surface)
+    //     scene.add(rings)
+    // }
+    // spawnPlanet();
+    
 
     const loader = new GLTFLoader();
-    loader.load("./flamingo.glb", (gltf) => {
-        const flamingo = gltf.scene;
-        flamingo.position.set(-10,-10,-10)
-      scene.add(flamingo);
+    loader.load("./saturn.gltf", (gltf) => {
+        const saturn = gltf.scene;
+        saturn.position.set(-10,-10,-10)
+        saturn.scale.set(.1,.1,.1)
+
+        scene.add(saturn);
     });
 
     // camera movement, window resizing, animation
@@ -96,8 +110,6 @@ class Home extends Component {
 
     var animate = function () {
       requestAnimationFrame(animate);
-      rotatePlane(me);
-
       renderer.render(scene, camera);
     };
     animate();
