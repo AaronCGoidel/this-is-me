@@ -63,7 +63,6 @@ class Home extends Component {
 
       const saturn_c = saturn.clone();
       saturn_c.position.set(185, -40, -300);
-      
 
       scene.add(saturn, saturn_b, saturn_c);
     });
