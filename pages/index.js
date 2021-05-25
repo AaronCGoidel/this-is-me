@@ -39,7 +39,7 @@ export default function Index() {
         </section>
 
         <section className="right">
-          <h1>My Projectsw</h1>
+          <h1>My Projects</h1>
           <p>
             Whether for school or work, for a hackathon, or just for fun, I am
             constantly working on projects I find interesting. Here are just a
