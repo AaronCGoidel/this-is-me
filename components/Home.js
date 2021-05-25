@@ -23,7 +23,7 @@ class Home extends Component {
     camera.position.setX(0);
     camera.position.setY(0);
 
-    renderer.setClearColor("#17164d");
+    renderer.setClearColor("#0E0D30");
 
     // setup light
 

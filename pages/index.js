@@ -39,6 +39,7 @@ export default function Index() {
         </section>
 
         <section className="right">
+        <h1>My Projectsw</h1>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
@@ -48,8 +49,15 @@ export default function Index() {
             pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
             culpa qui officia deserunt mollit anim id est laborum.
           </p>
-
-          <ProjectCard/>
+          <div className="cards">
+            
+              <ProjectCard img={"logo.png"} />
+              <ProjectCard img={"logo.png"} />
+              <ProjectCard img={"logo.png"} />
+              <ProjectCard img={"logo.png"} />
+              <ProjectCard img={"logo.png"} />
+            
+          </div>
         </section>
 
         <section>
