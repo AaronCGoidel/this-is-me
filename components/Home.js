@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import * as THREE from "three";
 import { MathUtils } from "three";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 class Home extends Component {
   componentDidMount() {
@@ -18,8 +19,9 @@ class Home extends Component {
     renderer.setPixelRatio(window.devicePixelRatio);
     this.mount.appendChild(renderer.domElement);
 
-    camera.position.setZ(30);
-    camera.position.setX(-3);
+    camera.position.setZ(0);
+    camera.position.setX(0);
+    camera.position.setY(0);
 
     renderer.setClearColor("#17164d");
 
@@ -53,21 +55,28 @@ class Home extends Component {
     const aaronPic = new THREE.TextureLoader().load("acg.png");
 
     const me = new THREE.Mesh(
-      new THREE.BoxGeometry(4, 4, 4),
-      new THREE.MeshBasicMaterial({ map: aaronPic })
+      new THREE.PlaneGeometry(5, 5),
+      new THREE.MeshBasicMaterial({ map: aaronPic, transparent: true })
     );
-    
-    me.position.set(10, 0, -10)
-    scene.add(me);
+
+    me.position.set(7, 3, -8);
+    // scene.add(me);
+
+    const loader = new GLTFLoader();
+    loader.load("./flamingo.glb", (gltf) => {
+        const flamingo = gltf.scene;
+        flamingo.position.set(-10,-10,-10)
+      scene.add(flamingo);
+    });
 
     // camera movement, window resizing, animation
 
     const moveCamera = () => {
       const top = document.body.getBoundingClientRect().top;
 
-      camera.position.z = top * -0.04;
-      camera.position.x = top * -0.002;
-      camera.rotation.y = top * -0.0002;
+      camera.position.z = top * -0.06;
+      camera.position.x = top * -0.003;
+      camera.rotation.y = top * -0.0003;
     };
 
     document.body.onscroll = moveCamera;
@@ -80,10 +89,15 @@ class Home extends Component {
 
     window.onresize = resizeCanvas;
 
+    const rotatePlane = (plane) => {
+      plane.rotation.y = Math.sin(Date.now() * 0.001) * Math.PI * 0.05;
+      plane.rotation.z = Math.sin(Date.now() * 0.001) * Math.PI * 0.05;
+    };
+
     var animate = function () {
       requestAnimationFrame(animate);
-    me.rotation.y += .005;
-    me.rotation.z +=.001;
+      rotatePlane(me);
+
       renderer.render(scene, camera);
     };
     animate();
