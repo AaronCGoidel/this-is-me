@@ -99,7 +99,7 @@ section p {
 .cards {
   display: flex;
   flex-direction: row;
-  overflow: scroll;
+  flex-wrap: wrap;
   scroll-snap-type: x mandatory;
 }
 
