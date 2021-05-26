@@ -3,7 +3,8 @@ const ProjectCard = ({ img }) => {
     <div className={"project-card"}>
       <img className={"card-img"} src={img}></img>
       <div className={"card-content"}>
-        <p>Foo</p>
+        <h3>Lectern</h3>
+        <p></p>
       </div>
     </div>
   );
