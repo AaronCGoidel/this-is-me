@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
-import {IoMdArrowRoundBack} from "react-icons/io"
+import { IoMdArrowRoundBack } from "react-icons/io";
 
 const ProjectPage = () => {
   const router = useRouter();
@@ -13,9 +13,15 @@ const ProjectPage = () => {
       layoutId={"proj-container"}
       className="project-container"
     >
-      <IoMdArrowRoundBack size={50} style={{position:"fixed", top: "1rem", left: "1rem", zIndex: 2}} onClick={()=>{router.back()}}/>
+      <IoMdArrowRoundBack
+        size={50}
+        style={{ position: "fixed", top: "1rem", left: "1rem", zIndex: 2 }}
+        onClick={() => {
+          router.back();
+        }}
+      />
       <div className="meta-info">
-        <motion.img layoutId="img" src={"/lady.jpg"} className="cover-img" />
+        <motion.img layoutId="img" src={"/logo.png"} className="cover-img" />
         <motion.h1 layoutId="title">Lectern</motion.h1>
         <motion.p>Foo bar</motion.p>
       </div>

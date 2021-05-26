@@ -49,11 +49,7 @@ export default function Index() {
               few of my favorites.
             </p>
             <div className="cards">
-              <ProjectCard img={"lady.jpg"} />
-              <ProjectCard img={"lady.jpg"} />
-              <ProjectCard img={"lady.jpg"} />
-              <ProjectCard img={"lady.jpg"} />
-              <ProjectCard img={"lady.jpg"} />
+              <ProjectCard proj={1} img={"logo.png"} />
             </div>
           </section>
 
