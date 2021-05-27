@@ -4,6 +4,7 @@ slug: lectern
 subtitle: An online learning community built on the blockchain
 cover: /lectern.png
 tags: ethereum, React, firebase
+links: lectern.tech, github.com/AaronCGoidel/lectern
 ---
 
 # Foo

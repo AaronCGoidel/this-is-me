@@ -4,24 +4,29 @@ slug: cookie
 subtitle: The world's smartest, most dynamic cookbook
 cover: /cookie.png
 tags: ReactNative, Graph Theory
+links: github.com/UpperMountain/dynamic-cookbook
 ---
 
-# Foo
+# What's this?
 
-Cupidatat ipsum sunt exercitation culpa ex. Do cillum incididunt amet duis veniam nulla dolor ut laborum exercitation enim labore. Mollit non ullamco consectetur voluptate consectetur cillum cupidatat fugiat non tempor qui do pariatur. Laborum quis cupidatat ipsum quis esse elit sit velit eiusmod id elit eiusmod. Aute proident culpa fugiat tempor non reprehenderit voluptate sunt nostrud aute. Ullamco ad Lorem et laboris fugiat est qui sunt aute. Minim nostrud officia ea voluptate culpa.
+Cookie is the world's smartest cookbook. Having realized that all online cookbooks seem to have no more functionality than a standard print book, I set out to create a cookbook that was smart and dynamic in order to help home cooks in the kitchen.
 
-In dolore culpa non nulla proident sint anim. Occaecat cupidatat Lorem exercitation cillum incididunt elit voluptate magna occaecat occaecat dolore commodo occaecat commodo. Laborum quis nostrud sunt reprehenderit laboris. Cillum non consectetur occaecat Lorem exercitation reprehenderit occaecat cupidatat ex nisi nostrud.
+## Motivations
 
-Labore do reprehenderit tempor fugiat ea et officia. Incididunt adipisicing culpa ex deserunt deserunt deserunt sint laboris minim. Duis adipisicing dolor est reprehenderit esse elit fugiat. Ea eiusmod dolore eiusmod sint. Ipsum do voluptate do qui qui eiusmod. Qui laborum veniam laboris et irure sunt veniam. Dolore aliqua nulla id aliqua occaecat in mollit exercitation reprehenderit elit qui fugiat reprehenderit elit.
+I love this project since it was a fun way to merge my passions for cooking and computer science. I relish opportunities to use CS as a tool to further my other interests.
 
-Ex mollit est eiusmod amet aliqua cillum non id amet est aliquip. Consequat ex deserunt in labore minim in culpa nostrud ullamco velit laborum mollit commodo tempor. Reprehenderit aliqua occaecat nulla consectetur do dolore velit dolore dolor fugiat exercitation sit sint.
+# How it works
 
-## Bar
+Cookie is a TypeScript ReactNative app with leverages graph theory to dynamically merge, adapt, and schedule the steps in any number of recipes. This allows us to build new highly efficient recipes out of smaller ones. Cookie ensures you never repeat steps and by paying attention to user feedback, knows when you're actively cooking, vs when actions are happening passively so it serves you the right steps.
 
-Qui mollit sunt dolore et veniam. Ullamco anim labore commodo quis nisi aliqua dolor. Culpa mollit qui nostrud magna officia excepteur ut pariatur minim laborum aliqua laborum cillum. Elit sint magna esse incididunt sint. Ex fugiat sint laborum fugiat aute eu proident eu eiusmod. Ea ut mollit officia veniam velit ipsum occaecat reprehenderit. Id proident id aliqua duis labore magna non duis duis ex elit Lorem voluptate.
+## Preference
 
-# Foo
+The Cookie algorithm also allows us to take personal preference into account. Don't have a stand mixer? We will swap out the mixer-related steps for instructions for making the same recipe with a bowl and whisk. Even better, the rest of the recipe is updated accordingly to account for the added time those new steps add.
 
-Labore ex aliquip reprehenderit sint ullamco tempor ullamco ipsum irure. Officia enim fugiat voluptate magna nulla id dolore velit officia ipsum commodo. Labore id reprehenderit ea mollit aute excepteur. Cillum tempor ex culpa adipisicing voluptate ullamco consectetur et Lorem enim id cillum enim magna. Officia officia ea nostrud ex reprehenderit deserunt pariatur dolor aute ipsum.
+## Merging
 
-Labore velit exercitation ut occaecat. Minim eiusmod id non dolor consectetur sint ex proident minim tempor quis eiusmod. Non voluptate aute dolore enim ullamco.
+Cookie's dynamic merging lets us collate recipes into one. Want to make `x` main course, `y` side, and `z` appetizer? Cookie will merge the recipes so you get one shopping list, one time estimate, one equpment list, and---most importantly---one set of instructions that is freshly optimized. For instance, if two recipes contain a step to chop carrots, Cookie will merge those into one. No repeated work means less time cooking and more time living your life.
+
+## Scheduling
+
+Further, Cookie's intelligent scheduling knows which steps are active and which are passive, only giving you new tasks to perform when you're not actively engaged. It won't tell you to chop an onion if you're in the middle of peeling carrots, but will if you have just put water to boil. It's even smart enough to not give you an active task if you have something you'll need to take out of the oven very soon.

@@ -68,7 +68,7 @@ body {
   .meta-info {
     flex-direction: row;
     width: 100vw;
-    height: 175px;
+    min-height: 175px;
     margin: 0;
     padding: 3rem 1rem 1rem 1rem;
   }
@@ -95,4 +95,9 @@ body {
   .content {
     padding: 2rem 2rem;
   }
+}
+
+.extern-links {
+  display: flex;
+  flex-direction: row;
 }

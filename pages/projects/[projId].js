@@ -1,10 +1,23 @@
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
-import { HiOutlineArrowLeft } from "react-icons/hi";
+import { HiOutlineArrowLeft, HiOutlineExternalLink } from "react-icons/hi";
+import { SiGithub } from "react-icons/si";
 import { useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import Tag from "../../components/Tag";
 import Head from "next/head";
+
+const Icon = ({ link }) => {
+  let ico = <HiOutlineExternalLink size={40} />;
+  if (link.includes("github")) {
+    ico = <SiGithub size={40} />;
+  }
+  return (
+    <a href={link} target="_blank">
+      {ico}
+    </a>
+  );
+};
 
 const ProjectPage = (props) => {
   const router = useRouter();
@@ -50,15 +63,21 @@ const ProjectPage = (props) => {
                 return <Tag tag={tag} />;
               })}
             </div>
-            {props.proj.links && (
-              <>
-                <h2>Check it out on</h2>
-              </>
-            )}
           </div>
         </div>
         <div className="content">
           <ReactMarkdown>{props.proj.content}</ReactMarkdown>
+          {props.proj.links && (
+            <>
+              <h2>Check it out</h2>
+              <div className="extern-links">
+                {props.proj.links.split(", ").map((link) => {
+                  link = "http://" + link;
+                  return <Icon link={link} />;
+                })}
+              </div>
+            </>
+          )}
         </div>
       </motion.div>
     </>
