@@ -8,21 +8,20 @@ const ProjectCard = ({ img, proj }) => {
     <motion.div
       // initial={{ scale: 0.8, opacity: 0 }}
       // animate={{ scale: 1, opacity: 1 }}
-      layoutId={"proj-container"}
+      layoutId={`proj-container-${proj}`}
       className={"project-card"}
       onClick={() => {
         router.push(`/project/${proj}`);
       }}
     >
-      <motion.img layoutId="img" className={"card-img"} src={img} />
+      <motion.img layoutId={`img-${proj}`} className={"card-img"} src={img} />
       <div className={"card-content"}>
-        <motion.h2 layoutId="title">Lectern</motion.h2>
+        <motion.h2 layoutId={`title-${proj}`}>Lectern</motion.h2>
         <motion.p>Foo bar</motion.p>
         <div className="tags">
-          <Tag color={"#0ff000"}></Tag>
-          <Tag color={"#0ff000"}></Tag>
-          <Tag color={"#0ff000"}></Tag>
-          <Tag color={"#0ff000"}></Tag>
+          <Tag/>
+          <Tag/>
+          <Tag/>
         </div>
       </div>
     </motion.div>

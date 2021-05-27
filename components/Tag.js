@@ -1,8 +1,8 @@
-import { GoPrimitiveDot } from "react-icons/go";
-const Tag = ({ color, text }) => {
-  return <div className={"tag"}>
-      <GoPrimitiveDot color={color}/>
+const Tag = ({ text }) => {
+  return (
+    <div className={"tag"}>
       <p>python</p>
-  </div>;
+    </div>
+  );
 };
 export default Tag;

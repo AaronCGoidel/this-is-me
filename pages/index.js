@@ -49,7 +49,7 @@ export default function Index() {
               few of my favorites.
             </p>
             <div className="cards">
-              <ProjectCard proj={1} img={"logo.png"} />
+              <ProjectCard proj={"lectern"} img={"logo.png"} />
             </div>
           </section>
 
