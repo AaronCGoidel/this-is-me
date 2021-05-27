@@ -53,10 +53,6 @@ body {
   margin: 0.8rem 0 0.2rem 0;
 }
 
-.meta-info p {
-  margin: 0;
-}
-
 .meta-tags {
   display: flex;
   flex-direction: row;
@@ -67,17 +63,19 @@ body {
   .project-container {
     padding: 0;
   }
+
   .meta-info {
     flex-direction: row;
     width: 100vw;
     height: 100%;
     margin: 0;
-    padding: 4rem 0 0 1rem;
+    padding: 4rem 0 1rem 1rem;
   }
 
   .cover-img {
     filter: brightness(70%);
     width: 100vw;
+    height: 100%;
     position: absolute;
     top: 0;
     left: 0;

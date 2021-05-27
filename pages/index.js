@@ -3,8 +3,9 @@ import Home from "../components/Home";
 import ProjectCard from "../components/ProjectCard";
 import { FiGithub } from "react-icons/fi";
 import { FaLinkedin } from "react-icons/fa";
+import { motion } from "framer-motion";
 
-export default function Index() {
+export default function Index(props) {
   return (
     <>
       <Home />
@@ -41,7 +42,7 @@ export default function Index() {
             </p>
           </section>
 
-          <section className="right">
+          <section className="right" id="projects">
             <h1>My Projects</h1>
             <p>
               Whether for school or work, for a hackathon, or just for fun, I am
@@ -49,7 +50,9 @@ export default function Index() {
               few of my favorites.
             </p>
             <div className="cards">
-              <ProjectCard proj={"lectern"} img={"logo.png"} />
+              {props.projects.map((project, i) => {
+                return <ProjectCard key={i} {...project} />;
+              })}
             </div>
           </section>
 
@@ -72,4 +75,25 @@ export default function Index() {
       </main>
     </>
   );
+}
+
+export async function getStaticProps() {
+  const fs = require("fs");
+  const matter = require("gray-matter");
+
+  const files = fs.readdirSync(`${process.cwd()}/pages/projects`, "utf-8");
+
+  const projects = files
+    .filter((fn) => fn.endsWith(".md"))
+    .map((fn) => {
+      const path = `${process.cwd()}/pages/projects/${fn}`;
+      const rawContent = fs.readFileSync(path, {
+        encoding: "utf-8",
+      });
+      const { data } = matter(rawContent);
+      return { ...data };
+    });
+  return {
+    props: { projects },
+  };
 }

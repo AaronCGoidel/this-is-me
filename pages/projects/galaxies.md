@@ -1,7 +1,9 @@
 ---
-title: Lectern
-subtitle: An online learning community built on the blockchain
-tags: ethereum, React, firebase
+title: Simulating Galaxies
+slug: galaxies
+subtitle: An n-body simulation illustrating the formation of galaxies 
+cover: /galaxy.png
+tags: C, OpenGL, algorithms
 ---
 
 # Foo

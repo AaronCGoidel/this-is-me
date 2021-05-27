@@ -42,12 +42,15 @@
   width: fit-content;
   border: 1px solid #cfcfcf;
   border-radius: 12px;
+  min-width: 20px;
+  
 }
 
 .tag p {
   font-size: 0.8rem;
   line-height: 23px;
   height: 23px;
+  margin: auto;
 }
 
 .tags {
