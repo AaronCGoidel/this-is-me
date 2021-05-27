@@ -104,7 +104,12 @@ section p {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  scroll-snap-type: x mandatory;
+}
+
+@media (max-width: 840px) {
+  .cards {
+    justify-content: center;
+  }
 }
 
 button {
