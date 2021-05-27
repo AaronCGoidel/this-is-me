@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import * as THREE from "three";
 import { MathUtils } from "three";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 class Home extends Component {
   componentDidMount() {
+    const { GLTFLoader } = require("three/examples/jsm/loaders/GLTFLoader");
+
     // setup scene, camera, etc
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera(
