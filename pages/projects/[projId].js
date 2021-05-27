@@ -1,16 +1,19 @@
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 import { HiOutlineArrowLeft, HiOutlineExternalLink } from "react-icons/hi";
-import { SiGithub } from "react-icons/si";
+import { SiGithub, SiYoutube } from "react-icons/si";
 import { useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import Tag from "../../components/Tag";
 import Head from "next/head";
+import gfm from "remark-gfm";
 
 const Icon = ({ link }) => {
   let ico = <HiOutlineExternalLink size={40} />;
   if (link.includes("github")) {
     ico = <SiGithub size={40} />;
+  } else if (link.includes("youtube")) {
+    ico = <SiYoutube size={40} />;
   }
   return (
     <a href={link} target="_blank">
@@ -66,7 +69,9 @@ const ProjectPage = (props) => {
           </div>
         </div>
         <div className="content">
-          <ReactMarkdown>{props.proj.content}</ReactMarkdown>
+          <ReactMarkdown remarkPlugins={[gfm]}>
+            {props.proj.content}
+          </ReactMarkdown>
           {props.proj.links && (
             <>
               <h2>Check it out</h2>

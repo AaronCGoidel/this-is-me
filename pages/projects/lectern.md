@@ -4,25 +4,41 @@ slug: lectern
 subtitle: An online learning community built on the blockchain
 cover: /lectern.png
 tags: ethereum, React, firebase
-links: lectern.tech, github.com/AaronCGoidel/lectern
+links: lectern.tech, github.com/AaronCGoidel/lectern, www.youtube.com/watch?v=YuRqcw7K2z4
 ---
 
-# Foo
+# Inspiration
 
-Cupidatat ipsum sunt exercitation culpa ex. Do cillum incididunt amet duis veniam nulla dolor ut laborum exercitation enim labore. Mollit non ullamco consectetur voluptate consectetur cillum cupidatat fugiat non tempor qui do pariatur. Laborum quis cupidatat ipsum quis esse elit sit velit eiusmod id elit eiusmod. Aute proident culpa fugiat tempor non reprehenderit voluptate sunt nostrud aute. Ullamco ad Lorem et laboris fugiat est qui sunt aute. Minim nostrud officia ea voluptate culpa.
+This was my entry into TOHacks 2021, a day-and-a-half long hackathon.
 
-In dolore culpa non nulla proident sint anim. Occaecat cupidatat Lorem exercitation cillum incididunt elit voluptate magna occaecat occaecat dolore commodo occaecat commodo. Laborum quis nostrud sunt reprehenderit laboris. Cillum non consectetur occaecat Lorem exercitation reprehenderit occaecat cupidatat ex nisi nostrud.
+As a student, it's impossible to ignore the impact Covid-19 had, and continues to have, on the learning experience. Most of us are learning from home, and for many, home is very far from school. Further, the pandemic has made it even more difficult for less fortunate pupils to access teachers and verify their educations to prospective employers and academic institutions.
 
-Labore do reprehenderit tempor fugiat ea et officia. Incididunt adipisicing culpa ex deserunt deserunt deserunt sint laboris minim. Duis adipisicing dolor est reprehenderit esse elit fugiat. Ea eiusmod dolore eiusmod sint. Ipsum do voluptate do qui qui eiusmod. Qui laborum veniam laboris et irure sunt veniam. Dolore aliqua nulla id aliqua occaecat in mollit exercitation reprehenderit elit qui fugiat reprehenderit elit.
+Even when the Covid crisis dies down, it is clear to see that our world has accelerated toward hybrid---or even online-first---systems. With this comes a need for fair, borderless, secure software.
 
-Ex mollit est eiusmod amet aliqua cillum non id amet est aliquip. Consequat ex deserunt in labore minim in culpa nostrud ullamco velit laborum mollit commodo tempor. Reprehenderit aliqua occaecat nulla consectetur do dolore velit dolore dolor fugiat exercitation sit sint.
+We're starting to crack these issues with **lectern**.
 
-## Bar
+# What it does
 
-Qui mollit sunt dolore et veniam. Ullamco anim labore commodo quis nisi aliqua dolor. Culpa mollit qui nostrud magna officia excepteur ut pariatur minim laborum aliqua laborum cillum. Elit sint magna esse incididunt sint. Ex fugiat sint laborum fugiat aute eu proident eu eiusmod. Ea ut mollit officia veniam velit ipsum occaecat reprehenderit. Id proident id aliqua duis labore magna non duis duis ex elit Lorem voluptate.
+**lectern** is a web app which is building the foundation for a decentralized token which will power education going forward. **lectern** is service which connects students and tutors around the world for virtual lessons (these can be one-on-one or group). What sets us apart is that the app is designed to be used with **KnowledgeCredits (KCR)**, our crypto token. Tutors are paid in **KCR** which erases borders from learning. Your local currency is no longer a hurdle in the way of getting an education.
 
-# Foo
+Simply sign-in as a student to view and filter classes and click one. You'll see a meeting link and see a button to start your session when your tutor shows up.
 
-Labore ex aliquip reprehenderit sint ullamco tempor ullamco ipsum irure. Officia enim fugiat voluptate magna nulla id dolore velit officia ipsum commodo. Labore id reprehenderit ea mollit aute excepteur. Cillum tempor ex culpa adipisicing voluptate ullamco consectetur et Lorem enim id cillum enim magna. Officia officia ea nostrud ex reprehenderit deserunt pariatur dolor aute ipsum.
+As a tutor, you can create classes in different subjects and have they displayed to students around the world. You'll receive an email (courtesy of Courier) notifying you when a student joins your session!
 
-Labore velit exercitation ut occaecat. Minim eiusmod id non dolor consectetur sint ex proident minim tempor quis eiusmod. Non voluptate aute dolore enim ullamco.
+We also have the ability, therefore, to donate a considerable amount of educational resources to children who need it (and not just in North America). By donating **KCR** to students, we can pay tutors while providing free education.
+
+# How we built it
+
+**lectern** is a React/NextJS app on the frontend with the centralized functionality built with Firebase. We use firebase for many things, including auth, realtime data, cloud functions, and firestore.
+
+We use courier to send beautiful email notifications to tutors.
+
+We used domain.com to register [lectern.tech](http://lectern.tech)
+
+# What we learned
+
+We wrote our first smartcontracts on the blockchain which proved difficult but learning blockchain is great considering its growing prominence in tech. We learned a lot about serverless architecture and authentication, as well as state management.
+
+# What's next for lectern
+
+We want to expand lectern to add more tools for students and teachers. By using **KCR** we can verify degrees and coursework so students from across the globe can have their work recognized by international employers when working remote. We would also like to add more ergonomic features to polish up the app. Finally, we want to deploy our coin onto the real ethereum network. Unfortunately, the price to put our coin on the real ethereum network proved too high for now. So, we released a non-blockchain demo.

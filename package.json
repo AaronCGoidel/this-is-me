@@ -23,6 +23,7 @@
     "react-icons": "^4.2.0",
     "react-markdown": "^6.0.2",
     "react-three-fiber": "4.0.12",
+    "remark-gfm": "^1.0.0",
     "remark-highlight.js": "^6.0.0",
     "remark-html": "^13.0.1",
     "remark-parse": "^9.0.0",

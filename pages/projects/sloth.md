@@ -4,24 +4,147 @@ slug: sloth
 subtitle: My very own esoteric programming language
 cover: /sloth.png
 tags: C, VM, Parsers
+links: github.com/AaronCGoidel/SlothLang
 ---
 
-# Foo
+# What's this?
 
-Cupidatat ipsum sunt exercitation culpa ex. Do cillum incididunt amet duis veniam nulla dolor ut laborum exercitation enim labore. Mollit non ullamco consectetur voluptate consectetur cillum cupidatat fugiat non tempor qui do pariatur. Laborum quis cupidatat ipsum quis esse elit sit velit eiusmod id elit eiusmod. Aute proident culpa fugiat tempor non reprehenderit voluptate sunt nostrud aute. Ullamco ad Lorem et laboris fugiat est qui sunt aute. Minim nostrud officia ea voluptate culpa.
+My interest in how programming languages work, as well as my having dabbled in some esoteric programming languages (namely BrainFuck), inspired me to take a crack at writing one of my very own.
 
-In dolore culpa non nulla proident sint anim. Occaecat cupidatat Lorem exercitation cillum incididunt elit voluptate magna occaecat occaecat dolore commodo occaecat commodo. Laborum quis nostrud sunt reprehenderit laboris. Cillum non consectetur occaecat Lorem exercitation reprehenderit occaecat cupidatat ex nisi nostrud.
+Introducing, SlothLang. SlothLang is an esoteric programming language by Aaron Goidel
 
-Labore do reprehenderit tempor fugiat ea et officia. Incididunt adipisicing culpa ex deserunt deserunt deserunt sint laboris minim. Duis adipisicing dolor est reprehenderit esse elit fugiat. Ea eiusmod dolore eiusmod sint. Ipsum do voluptate do qui qui eiusmod. Qui laborum veniam laboris et irure sunt veniam. Dolore aliqua nulla id aliqua occaecat in mollit exercitation reprehenderit elit qui fugiat reprehenderit elit.
+# Features
 
-Ex mollit est eiusmod amet aliqua cillum non id amet est aliquip. Consequat ex deserunt in labore minim in culpa nostrud ullamco velit laborum mollit commodo tempor. Reprehenderit aliqua occaecat nulla consectetur do dolore velit dolore dolor fugiat exercitation sit sint.
+  - Write code in a highly efficient and easy to read language
+  - Slothy sloths are slothy
 
-## Bar
+## Tech
 
-Qui mollit sunt dolore et veniam. Ullamco anim labore commodo quis nisi aliqua dolor. Culpa mollit qui nostrud magna officia excepteur ut pariatur minim laborum aliqua laborum cillum. Elit sint magna esse incididunt sint. Ex fugiat sint laborum fugiat aute eu proident eu eiusmod. Ea ut mollit officia veniam velit ipsum occaecat reprehenderit. Id proident id aliqua duis labore magna non duis duis ex elit Lorem voluptate.
+SlothLang is parsed and executed in C. 
 
-# Foo
+And of course the code behind the SlothLang VM itself is open source and can be found on GitHub.
 
-Labore ex aliquip reprehenderit sint ullamco tempor ullamco ipsum irure. Officia enim fugiat voluptate magna nulla id dolore velit officia ipsum commodo. Labore id reprehenderit ea mollit aute excepteur. Cillum tempor ex culpa adipisicing voluptate ullamco consectetur et Lorem enim id cillum enim magna. Officia officia ea nostrud ex reprehenderit deserunt pariatur dolor aute ipsum.
+## Usage
+A Sloth program is parsed as new-line deliminated instructions. Every line starts a new instruction at ```0x00```. Each occurrence of the word `sloth` on a line increases the instruction code by one. At the end of each line the resulting instruction code is pushed and the next line is read. 
 
-Labore velit exercitation ut occaecat. Minim eiusmod id non dolor consectetur sint ex proident minim tempor quis eiusmod. Non voluptate aute dolore enim ullamco.
+Since a Sloth command is generally based on the number of times the word sloth appears in a row, the syntax will be documented as a multiplication. For example the documentation `sloth * 3` means `sloth sloth sloth` in Sloth code.
+
+To save time and effort, there are a few commands which do not follow the scheme outlined above. These will be outlined below. 
+
+Note: the `and` operator is used to separate arguments.
+
+# Syntax and Effects
+### Exit
+**Syntax:** `nap`  
+**Effect:** will terminate the execution of the program and return the top element from the stack.  
+**NOTE:** every Sloth file must end in `nap`.  
+
+### Add
+**Syntax:** `sloth * 2`  
+**Effect:** pops the first two values off the stack and pushes their sum.  
+**Stack:** `S, x, y -> S, x+y`  
+
+### Subtract
+**Syntax:** `sloth * 3`  
+**Effect:** pops the first two values off the stack and pushes their difference.  
+**Stack:** `S, x, y -> S, x-y`
+
+### Multiply
+**Syntax:** `sloth * 4`  
+**Effect:** pops the first two values off the stack and pushes their product.  
+**Stack:** `S, x, y -> S, x*y`  
+
+### Divide
+**Syntax:** `sloth * 5`  
+**Effect:** pops the first two values off the stack and pushes their quotient.  
+**Stack:** `S, x, y -> S, x/y`  
+**NOTE:** Division in SlothLang is integer division, meaning divide will always round fractions down. e.g. 3/2 = 1
+
+### Compare \<c>
+  
+**Syntax:** `sloth * 6 and sloth * c`  
+
+> Notice that the **compare** instruction requires an argument. The number of sloths after the `and` will determine which comparison should be made. See `Comparison Codes` for reference.
+
+**Effect:** pops the first two values off the stack and pushes the truthiness of a comparison between them.  
+**Stack:** ``S, x, y -> S, 1 if true 0 if false``  
+
+### Input \<t>
+  
+**Syntax:** `sloth * 7 and sloth * t`  
+  
+> The **input** instruction takes a type code to determine what kind of data is being read. See `Type Codes` for reference.
+
+**Effect:** reads in either an integer or an ASCII character from standard in.  
+**Stack:** `S -> S, x`
+
+### Output \<t>
+  
+**Syntax:** `sloth * 8 and sloth * t`
+
+> The **output** instruction takes a type code to determine what kind of data is being displayed. See `Type Codes` for reference.
+
+**Effect:** pops the top value off the stack and writes it to standard out.  
+**Stack:** `S, x -> S`  
+
+### GOTO \<n>
+  
+**Syntax:** `sloth * 9 and sloth * n`
+
+> The **GOTO** instruction takes a number of sloths as the destination if the result is true.
+
+**Effect:** pops the top value off the stack, if the value is 1, the program counter is set to specified instruction, else continues as normal.  
+**Stack:** `S, x -> S`  
+
+### Push \<i>
+  
+**Syntax:** `slothy sloth * i`  
+**Effect:** pushes the integer value of the number of sloths following slothy onto the stack.  
+**Stack:** `S -> S, x`  
+**Example:** `slothy sloth sloth sloth` pushes 3 onto the stack.  
+
+### Duplicate
+  
+**Syntax:** `sloth * 10`  
+**Effect:** pops an element off the stack and pushes it twice.  
+**Stack:** `S, x -> S, x, x`  
+
+## Operation, Comparison, and Type Codes
+SlothLang relies on the translation of a number of sloths to a numeric code in order to perform specific operations. 
+
+### Comparison Codes
+The **Compare** function uses `<c>` sloths in order to select what kind of comparison is being made.
+
+| Comparison Code | Operation |
+|-----------------|-----------|
+| `0x01`          | `x == y`  |
+| `0x02`          | `x != y`  |
+| `0x03`          | `x < y`   |
+| `0x04`          | `x <= y`  |
+| `0x05`          | `x > y`   |
+| `0x06`          | `x >= y`  |
+
+### Type Codes
+Type Codes `<t>` are used in the **Input** and **Output** instructions in order to determine what kind of data is being read or written.
+
+| Type Code | Type of I/O              |
+|-----------|--------------------------|
+| `0x01`    | A signed integer value   |
+| `0x02`    | A single ASCII character |
+
+### Operation Codes
+Sloth code is read in by the SlothVM as bytecode. The following is the bytecode for each SlothLang instruction.
+
+| Byte Code | Name         |
+|-----------|--------------|
+| `0x00`    | Exit         |
+| `0x01`    | Push \<i>    |
+| `0x02`    | Add          |
+| `0x03`    | Subtract     |
+| `0x04`    | Multiply     |
+| `0x05`    | Divide       |
+| `0x06`    | Compare \<c> |
+| `0x07`    | Input \<t>   |
+| `0x08`    | Output \<t>  |
+| `0x09`    | GOTO \<o>    |
+| `0x0A`    | DUP          |
