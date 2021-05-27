@@ -22,22 +22,21 @@ const AnimateWhenVisible = ({ children, right }) => {
   useEffect(() => {
     if (inView) {
       controls.start("enter");
-      console.log("foo");
     }
   }, [controls, inView]);
 
   return (
-    <motion.div
-      ref={ref}
-      animate={controls}
-      initial="hidden"
-      transition={{ duration: 0.3 }}
-      variants={right ? rightVariant : leftVariant}
-      style={{widht: "fit-content"}}
-      className={right && "right"}
-    >
-      {children}
-    </motion.div>
+    // <motion.div
+    //   ref={ref}
+    //   animate={controls}
+    //   initial="hidden"
+    //   transition={{ duration: 0.3 }}
+    //   variants={right ? rightVariant : leftVariant}
+    //   style={{width: "fit-content"}}
+    //   className={right && "right"}
+    // >
+    <>{children}</>
+    // </motion.div>
   );
 };
 
