@@ -7,6 +7,10 @@ const ProjectCard = (props) => {
   const router = useRouter();
   return (
     <motion.div
+      // initial={{ scale: 0 }}
+      // animate={{ scale: 1 }}
+      whileHover={{ scale: 1.05 }}
+      // transition={{ delay: props.num * 0.1 }}
       layoutId={`proj-container-${props.slug}`}
       className={"project-card"}
       onClick={() => {
