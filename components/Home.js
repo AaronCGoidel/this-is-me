@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import * as THREE from "three";
 import { MathUtils } from "three";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+// import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 class Home extends Component {
   componentDidMount() {
@@ -51,21 +51,21 @@ class Home extends Component {
 
     Array(400).fill().forEach(spawnStar);
 
-    const loader = new GLTFLoader();
-    loader.load("./saturn.gltf", (gltf) => {
-      const saturn = gltf.scene;
-      saturn.position.set(-10, -10, -10);
-      saturn.scale.set(0.1, 0.1, 0.1);
+    // const loader = new GLTFLoader();
+    // loader.load("./saturn.gltf", (gltf) => {
+    //   const saturn = gltf.scene;
+    //   saturn.position.set(-10, -10, -10);
+    //   saturn.scale.set(0.1, 0.1, 0.1);
 
-      const saturn_b = saturn.clone();
-      saturn_b.position.set(-50, 30, -200);
-      saturn_b.rotateX(10);
+    //   const saturn_b = saturn.clone();
+    //   saturn_b.position.set(-50, 30, -200);
+    //   saturn_b.rotateX(10);
 
-      const saturn_c = saturn.clone();
-      saturn_c.position.set(185, -40, -300);
+    //   const saturn_c = saturn.clone();
+    //   saturn_c.position.set(185, -40, -300);
 
-      scene.add(saturn, saturn_b, saturn_c);
-    });
+    //   scene.add(saturn, saturn_b, saturn_c);
+    // });
 
     // camera movement, window resizing, animation
 

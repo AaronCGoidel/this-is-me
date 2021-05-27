@@ -1,27 +1,30 @@
 import Tag from "./Tag";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
-const ProjectCard = ({ img, proj }) => {
+const ProjectCard = (props) => {
   const router = useRouter();
   return (
     <motion.div
-      // initial={{ scale: 0.8, opacity: 0 }}
-      // animate={{ scale: 1, opacity: 1 }}
-      layoutId={`proj-container-${proj}`}
+      layoutId={`proj-container-${props.slug}`}
       className={"project-card"}
       onClick={() => {
-        router.push(`/project/${proj}`);
+        router.push(`/projects/${props.slug}`);
       }}
     >
-      <motion.img layoutId={`img-${proj}`} className={"card-img"} src={img} />
+      <motion.img
+        layoutId={`img-${props.slug}`}
+        className={"card-img"}
+        src={props.cover}
+      />
       <div className={"card-content"}>
-        <motion.h2 layoutId={`title-${proj}`}>Lectern</motion.h2>
-        <motion.p>Foo bar</motion.p>
+        <motion.h2 layoutId={`title-${props.slug}`}>{props.title}</motion.h2>
+        <motion.p>{props.subtitle}</motion.p>
         <div className="tags">
-          <Tag/>
-          <Tag/>
-          <Tag/>
+          {props.tags.split(", ").map((tag) => {
+            return <Tag tag={tag} />;
+          })}
         </div>
       </div>
     </motion.div>

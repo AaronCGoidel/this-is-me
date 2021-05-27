@@ -13,7 +13,7 @@ const ProjectPage = (props) => {
   return (
     <motion.div
       style={{ color: "#fff" }}
-      layoutId={`proj-container-${projId}`}
+      layoutId={`proj-container-${props.proj.slug}`}
       className="project-container"
     >
       <IoMdArrowRoundBack
@@ -26,22 +26,22 @@ const ProjectPage = (props) => {
           cursor: "pointer",
         }}
         onClick={() => {
-          router.back();
+          router.push("/#projects");
         }}
       />
       <div className={`meta-info`}>
         <motion.img
-          layoutId={`img-${projId}`}
-          src={"/lady.jpg"}
+          layoutId={`img-${props.proj.slug}`}
+          src={props.proj.cover}
           className="cover-img"
         />
         <div className={"text-meta"}>
-          <motion.h1 layoutId={`title-${projId}`}>Lectern</motion.h1>
-          <motion.p>Foo bar</motion.p>
+          <motion.h1 layoutId={`title-${props.proj.slug}`}>{props.proj.title}</motion.h1>
+          <motion.p>{props.proj.subtitle}</motion.p>
           <div className="meta-tags">
-            <Tag />
-            <Tag />
-            <Tag />
+            {props.proj.tags.split(", ").map((tag) => {
+              return <Tag tag={tag} />;
+            })}
           </div>
         </div>
       </div>
@@ -57,7 +57,7 @@ export async function getStaticProps(context) {
   const matter = require("gray-matter");
 
   const slug = context.params.projId;
-  const path = `${process.cwd()}/pages/project/${slug}.md`;
+  const path = `${process.cwd()}/pages/projects/${slug}.md`;
 
   const rawContent = fs.readFileSync(path, {
     encoding: "utf-8",
@@ -77,7 +77,7 @@ export async function getStaticProps(context) {
 export async function getStaticPaths(context) {
   const fs = require("fs");
 
-  const path = `${process.cwd()}/pages/project`;
+  const path = `${process.cwd()}/pages/projects`;
   const files = fs.readdirSync(path, "utf-8");
 
   const markdownFileNames = files

@@ -1,7 +1,7 @@
-const Tag = ({ text }) => {
+const Tag = ({ tag }) => {
   return (
     <div className={"tag"}>
-      <p>python</p>
+      <p>{tag}</p>
     </div>
   );
 };

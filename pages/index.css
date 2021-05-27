@@ -1,16 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
 
 body,
 div {
   margin: 0;
   padding: 0;
+  scroll-behavior: smooth;
 }
 
 h1,
 h2,
 h3 {
-  font-family: "Fredoka One", sans-serif;
+  font-family: "Nunito", sans-serif;
 }
 
 p {
@@ -35,6 +37,7 @@ header {
 }
 
 header h1 {
+  font-family: "Fredoka One", sans-serif;
   transform: skew(-10deg) rotate(-12deg);
   font-size: 0.5em;
   text-shadow: 0.2rem -0.2rem rgba(255, 0, 255, 0.75),
@@ -89,7 +92,8 @@ section {
 }
 
 section h1 {
-  font-size: 2rem;
+  margin: .5rem 0;
+  font-size: 2.5rem;
 }
 
 section p {
