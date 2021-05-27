@@ -83,6 +83,10 @@ body {
     box-shadow: none;
   }
 
+  .text-meta {
+    width: 80vw;
+  }
+
   .content {
     padding: 0;
   }

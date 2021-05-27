@@ -104,12 +104,7 @@ section p {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-}
-
-@media (max-width: 840px) {
-  .cards {
-    justify-content: center;
-  }
+  justify-content: center;
 }
 
 button {

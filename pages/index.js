@@ -59,9 +59,11 @@ export default function Index(props) {
           <section>
             <h1>Resume & Contact</h1>
             <p>Want a copy of my resume?</p>
-            <button>
-              <p style={{ margin: 0 }}>Download It! </p>
-            </button>
+            <a href="resume.pdf" download="Aaron Goidel Resume.pdf">
+              <button>
+                <p style={{ margin: 0 }}>Download It! </p>
+              </button>
+            </a>
 
             <p>You can find me online at the following places</p>
             <a href={"https://linkedin.com/in/aaroncgoidel"} target="_blank">
