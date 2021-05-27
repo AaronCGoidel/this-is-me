@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
-import { IoMdArrowRoundBack } from "react-icons/io";
+import { HiOutlineArrowLeft } from "react-icons/hi";
 import { useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import Tag from "../../components/Tag";
@@ -21,8 +21,8 @@ const ProjectPage = (props) => {
         layoutId={`proj-container-${props.proj.slug}`}
         className="project-container"
       >
-        <IoMdArrowRoundBack
-          size={50}
+        <HiOutlineArrowLeft
+          size={40}
           style={{
             position: "fixed",
             top: "1rem",
@@ -50,6 +50,11 @@ const ProjectPage = (props) => {
                 return <Tag tag={tag} />;
               })}
             </div>
+            {props.proj.links && (
+              <>
+                <h2>Check it out on</h2>
+              </>
+            )}
           </div>
         </div>
         <div className="content">
