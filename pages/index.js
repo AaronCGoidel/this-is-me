@@ -4,10 +4,14 @@ import ProjectCard from "../components/ProjectCard";
 import { FiGithub } from "react-icons/fi";
 import { FaLinkedin } from "react-icons/fa";
 import { motion } from "framer-motion";
+import Head from "next/head";
 
 export default function Index(props) {
   return (
     <>
+      <Head>
+        <title>Aaron Goidel</title>
+      </Head>
       <Home />
       <main>
         <header>

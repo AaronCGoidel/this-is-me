@@ -4,6 +4,7 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import Tag from "../../components/Tag";
+import Head from "next/head";
 
 const ProjectPage = (props) => {
   const router = useRouter();
@@ -11,44 +12,51 @@ const ProjectPage = (props) => {
   const { projId } = router.query;
 
   return (
-    <motion.div
-      style={{ color: "#fff" }}
-      layoutId={`proj-container-${props.proj.slug}`}
-      className="project-container"
-    >
-      <IoMdArrowRoundBack
-        size={50}
-        style={{
-          position: "fixed",
-          top: "1rem",
-          left: "1rem",
-          zIndex: 2,
-          cursor: "pointer",
-        }}
-        onClick={() => {
-          router.push("/#projects");
-        }}
-      />
-      <div className={`meta-info`}>
-        <motion.img
-          layoutId={`img-${props.proj.slug}`}
-          src={props.proj.cover}
-          className="cover-img"
+    <>
+      <Head>
+        <title>{props.proj.title} | Aaron Goidel</title>
+      </Head>
+      <motion.div
+        style={{ color: "#fff" }}
+        layoutId={`proj-container-${props.proj.slug}`}
+        className="project-container"
+      >
+        <IoMdArrowRoundBack
+          size={50}
+          style={{
+            position: "fixed",
+            top: "1rem",
+            left: "1rem",
+            zIndex: 2,
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            router.push("/#projects");
+          }}
         />
-        <div className={"text-meta"}>
-          <motion.h1 layoutId={`title-${props.proj.slug}`}>{props.proj.title}</motion.h1>
-          <motion.p>{props.proj.subtitle}</motion.p>
-          <div className="meta-tags">
-            {props.proj.tags.split(", ").map((tag) => {
-              return <Tag tag={tag} />;
-            })}
+        <div className={`meta-info`}>
+          <motion.img
+            layoutId={`img-${props.proj.slug}`}
+            src={props.proj.cover}
+            className="cover-img"
+          />
+          <div className={"text-meta"}>
+            <motion.h1 layoutId={`title-${props.proj.slug}`}>
+              {props.proj.title}
+            </motion.h1>
+            <motion.p>{props.proj.subtitle}</motion.p>
+            <div className="meta-tags">
+              {props.proj.tags.split(", ").map((tag) => {
+                return <Tag tag={tag} />;
+              })}
+            </div>
           </div>
         </div>
-      </div>
-      <div className="content">
-        <ReactMarkdown>{props.proj.content}</ReactMarkdown>
-      </div>
-    </motion.div>
+        <div className="content">
+          <ReactMarkdown>{props.proj.content}</ReactMarkdown>
+        </div>
+      </motion.div>
+    </>
   );
 };
 

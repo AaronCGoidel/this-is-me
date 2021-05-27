@@ -1,7 +1,7 @@
 ---
 title: Cookie
 slug: cookie
-subtitle: The world's smartest, most dynamic cookbook. 
+subtitle: The world's smartest, most dynamic cookbook
 cover: /cookie.png
 tags: ReactNative, Graph Theory
 ---
