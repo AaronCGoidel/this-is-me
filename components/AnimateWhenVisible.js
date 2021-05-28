@@ -25,18 +25,20 @@ const AnimateWhenVisible = ({ children, right }) => {
     }
   }, [controls, inView]);
 
-  return (
-    // <motion.div
-    //   ref={ref}
-    //   animate={controls}
-    //   initial="hidden"
-    //   transition={{ duration: 0.3 }}
-    //   variants={right ? rightVariant : leftVariant}
-    //   style={{width: "fit-content"}}
-    //   className={right && "right"}
-    // >
+  return false ? (
+    <motion.div
+      ref={ref}
+      animate={controls}
+      initial="hidden"
+      transition={{ duration: 0.3 }}
+      variants={right ? rightVariant : leftVariant}
+      style={{ width: "fit-content" }}
+      className={right && "right"}
+    >
+      {children}
+    </motion.div>
+  ) : (
     <>{children}</>
-    // </motion.div>
   );
 };
 

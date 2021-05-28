@@ -49,7 +49,7 @@ export default function Index(props) {
             </section>
           </AnimateWhenVisible>
           <AnimateWhenVisible right>
-            <section id="projects">
+            <section id="projects" className="right">
               <h1>My Projects</h1>
               <p>
                 Whether for school or work, for a hackathon, or just for fun, I
