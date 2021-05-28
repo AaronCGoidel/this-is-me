@@ -2,7 +2,7 @@ import { motion, useAnimation } from "framer-motion";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
-const AnimateWhenVisible = ({ children, right }) => {
+const AnimateWhenVisible = ({ children, right, id }) => {
   const controls = useAnimation();
   const [ref, inView] = useInView();
 
@@ -25,20 +25,18 @@ const AnimateWhenVisible = ({ children, right }) => {
     }
   }, [controls, inView]);
 
-  return false ? (
-    <motion.div
+  return (
+    <motion.section
+      id={id}
       ref={ref}
       animate={controls}
       initial="hidden"
       transition={{ duration: 0.3 }}
       variants={right ? rightVariant : leftVariant}
-      style={{ width: "fit-content" }}
       className={right && "right"}
     >
       {children}
-    </motion.div>
-  ) : (
-    <>{children}</>
+    </motion.section>
   );
 };
 

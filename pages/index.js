@@ -20,7 +20,6 @@ export default function Index(props) {
         </header>
         <div className={"container"}>
           <AnimateWhenVisible>
-            <section>
               <h1>About Me</h1>
               <p>
                 I am an intensely passionate student, currently studying
@@ -46,10 +45,8 @@ export default function Index(props) {
                 blockchain, and beyond. I have a love of all things food and
                 cooking and I am always listening to or making music.
               </p>
-            </section>
           </AnimateWhenVisible>
-          <AnimateWhenVisible right>
-            <section id="projects" className="right">
+          <AnimateWhenVisible right id={"products"}>
               <h1>My Projects</h1>
               <p>
                 Whether for school or work, for a hackathon, or just for fun, I
@@ -64,11 +61,9 @@ export default function Index(props) {
                   return <ProjectCard key={i} num={i} {...project} />;
                 })}
               </motion.div>
-            </section>
           </AnimateWhenVisible>
 
           <AnimateWhenVisible>
-            <section>
               <h1>Resume & Contact</h1>
               <p>Want a copy of my resume?</p>
               <a href="resume.pdf" download="Aaron Goidel Resume.pdf">
@@ -84,7 +79,6 @@ export default function Index(props) {
               <a href={"https://github.com/aaroncgoidel"} target="_blank">
                 <FiGithub size={35} />
               </a>
-            </section>
           </AnimateWhenVisible>
         </div>
       </main>
