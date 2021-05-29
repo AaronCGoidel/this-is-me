@@ -6,6 +6,8 @@ import { MathUtils } from "three";
 class Home extends Component {
   componentDidMount() {
     const { GLTFLoader } = require("three/examples/jsm/loaders/GLTFLoader");
+    var mixer;
+    var clock = new THREE.Clock();
 
     // setup scene, camera, etc
     var scene = new THREE.Scene();
@@ -53,20 +55,21 @@ class Home extends Component {
     Array(400).fill().forEach(spawnStar);
 
     const loader = new GLTFLoader();
-    loader.load("./saturn.gltf", (gltf) => {
-      const saturn = gltf.scene;
-      saturn.position.set(-10, -10, -10);
-      saturn.scale.set(0.1, 0.1, 0.1);
+    loader.load("./space.glb", (gltf) => {
+      const system = gltf.scene;
+    
+      system.position.set(0, -10, -10);
+      system.rotateY(10);
 
-      const saturn_b = saturn.clone();
-      saturn_b.position.set(-50, 30, -200);
-      saturn_b.rotateX(10);
+      mixer = new THREE.AnimationMixer(gltf.scene);
 
-      const saturn_c = saturn.clone();
-      saturn_c.position.set(185, -40, -300);
+      gltf.animations.forEach((clip) => {
+        mixer.clipAction(clip).play();
+      });
 
-      scene.add(saturn, saturn_b, saturn_c);
+      scene.add(system);
     });
+
 
     // camera movement, window resizing, animation
 
@@ -97,6 +100,10 @@ class Home extends Component {
 
     var animate = function () {
       requestAnimationFrame(animate);
+      var delta = clock.getDelta();
+
+      if (mixer) mixer.update(delta / 3);
+
       renderer.render(scene, camera);
     };
     animate();
