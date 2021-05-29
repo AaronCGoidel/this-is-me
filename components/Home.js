@@ -56,18 +56,18 @@ class Home extends Component {
 
     const loader = new GLTFLoader();
     loader.load("./space.glb", (gltf) => {
-      const system = gltf.scene;
+      const planets = gltf.scene;
     
-      system.position.set(0, -10, -10);
-      system.rotateY(10);
+      planets.position.set(0, -10, -10);
+      planets.rotateY(10);
 
-      mixer = new THREE.AnimationMixer(gltf.scene);
+      mixer = new THREE.AnimationMixer(planets);
 
       gltf.animations.forEach((clip) => {
         mixer.clipAction(clip).play();
       });
 
-      scene.add(system);
+      scene.add(planets);
     });
 
 
@@ -76,9 +76,9 @@ class Home extends Component {
     const moveCamera = () => {
       const top = document.body.getBoundingClientRect().top;
 
-      camera.position.z = top * -0.06;
-      camera.position.x = top * -0.003;
-      camera.rotation.y = top * -0.0003;
+      camera.position.z = top * -0.04;
+      camera.position.x = top * -0.001;
+      camera.rotation.y = top * -0.0002;
 
       //   console.log(camera.position)
     };
@@ -93,15 +93,10 @@ class Home extends Component {
 
     window.onresize = resizeCanvas;
 
-    const rotatePlane = (plane) => {
-      plane.rotation.y = Math.sin(Date.now() * 0.001) * Math.PI * 0.05;
-      plane.rotation.z = Math.sin(Date.now() * 0.001) * Math.PI * 0.05;
-    };
-
     var animate = function () {
       requestAnimationFrame(animate);
-      var delta = clock.getDelta();
 
+      var delta = clock.getDelta();
       if (mixer) mixer.update(delta / 3);
 
       renderer.render(scene, camera);
