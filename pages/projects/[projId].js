@@ -55,6 +55,7 @@ const ProjectPage = (props) => {
             layoutId={`img-${props.proj.slug}`}
             src={props.proj.cover}
             className="cover-img"
+            alt={`${props.proj.title} Logo`}
           />
           <div className={"text-meta"}>
             <motion.h1 layoutId={`title-${props.proj.slug}`}>

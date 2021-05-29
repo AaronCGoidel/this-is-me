@@ -21,6 +21,7 @@ const ProjectCard = (props) => {
         layoutId={`img-${props.slug}`}
         className={"card-img"}
         src={props.cover}
+        alt={`${props.title} Logo`}
       />
       <div className={"card-content"}>
         <motion.h2 layoutId={`title-${props.slug}`}>{props.title}</motion.h2>

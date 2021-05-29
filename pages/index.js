@@ -82,12 +82,24 @@ export default function Index(props) {
             </a>
 
             <p>You can find me online at the following places</p>
-            <a href={"https://linkedin.com/in/aaroncgoidel"} target="_blank">
-              <FaLinkedin size={35} />
-            </a>
-            <a href={"https://github.com/aaroncgoidel"} target="_blank">
-              <FiGithub size={35} />
-            </a>
+            <div style={{display: "flex", flexDirection: "row"}}>
+              <a
+                className={"social-link"}
+                href={"https://linkedin.com/in/aaroncgoidel"}
+                target="_blank"
+              >
+                <FaLinkedin size={35} />
+                LinkedIn
+              </a>
+              <a
+                className={"social-link"}
+                href={"https://github.com/aaroncgoidel"}
+                target="_blank"
+              >
+                <FiGithub size={35} />
+                GitHub
+              </a>
+            </div>
           </section>
         </div>
       </main>
