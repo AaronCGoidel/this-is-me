@@ -2,7 +2,7 @@
 title: SlothLang
 slug: sloth
 subtitle: My very own esoteric programming language
-cover: /sloth.png
+cover: sloth.webp
 tags: C, VM, Parsers
 links: github.com/AaronCGoidel/SlothLang
 ---

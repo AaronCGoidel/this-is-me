@@ -53,7 +53,7 @@ const ProjectPage = (props) => {
         <div className={`meta-info`}>
           <motion.img
             layoutId={`img-${props.proj.slug}`}
-            src={props.proj.cover}
+            src={`/images/${props.proj.cover}`}
             className="cover-img"
             alt={`${props.proj.title} Logo`}
           />

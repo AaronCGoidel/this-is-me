@@ -47,12 +47,12 @@ class Home extends Component {
 
       const [x, y, z] = Array(3)
         .fill()
-        .map(() => MathUtils.randFloatSpread(400));
+        .map(() => MathUtils.randFloatSpread(700));
       star.position.set(x, y, z);
       scene.add(star);
     };
 
-    Array(400).fill().forEach(spawnStar);
+    Array(500).fill().forEach(spawnStar);
 
     const loader = new GLTFLoader();
     loader.load("./space.glb", (gltf) => {

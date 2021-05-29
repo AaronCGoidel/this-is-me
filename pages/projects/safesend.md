@@ -2,7 +2,7 @@
 title: SafeSend
 slug: safesend
 subtitle: Super secure messaging applying 2-FA to anything
-cover: /safesend.png
+cover: safesend.webp
 tags: NodeJS, Security, React
 links: safesend.cf, github.com/MKA-Stem/ayc-galvanize
 ---

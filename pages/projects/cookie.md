@@ -2,7 +2,7 @@
 title: Cookie
 slug: cookie
 subtitle: The world's smartest, most dynamic cookbook
-cover: /cookie.png
+cover: cookie.webp
 tags: ReactNative, Graph Theory
 links: github.com/UpperMountain/dynamic-cookbook
 ---

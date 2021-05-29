@@ -2,7 +2,7 @@
 title: Track-19
 slug: track-19
 subtitle: Tailored, local tracking and news for Covid-19
-cover: /track19.png
+cover: track19.webp
 tags: ReactJS, NextJS, firebase
 links: track19.ca, github.com/AaronCGoidel/covid, www.youtube.com/watch?v=5geqseJqXIY
 ---

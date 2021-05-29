@@ -2,7 +2,7 @@
 title: Simulating Galaxies
 slug: galaxies
 subtitle: An n-body simulation illustrating the formation of galaxies
-cover: /galaxy.png
+cover: galaxy.webp
 tags: C, OpenGL, algorithms
 links: github.com/AaronCGoidel/n-body
 ---
