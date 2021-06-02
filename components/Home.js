@@ -6,7 +6,7 @@ import { MathUtils } from "three";
 class Home extends Component {
   componentDidMount() {
     const { GLTFLoader } = require("three/examples/jsm/loaders/GLTFLoader");
-    var mixer;
+    var mixer, rocket;
     var clock = new THREE.Clock();
 
     // setup scene, camera, etc
@@ -57,7 +57,7 @@ class Home extends Component {
     const loader = new GLTFLoader();
     loader.load("./space.glb", (gltf) => {
       const planets = gltf.scene;
-    
+
       planets.position.set(0, -10, -10);
       planets.rotateY(10);
 
@@ -70,6 +70,14 @@ class Home extends Component {
       scene.add(planets);
     });
 
+    loader.load("./rocket.glb", (gltf) => {
+      rocket = gltf.scene;
+
+      rocket.position.set(-20, -10, -15);
+      // rocket.rotateZ(-5);
+
+      scene.add(rocket);
+    });
 
     // camera movement, window resizing, animation
 
@@ -95,6 +103,12 @@ class Home extends Component {
 
     var animate = function () {
       requestAnimationFrame(animate);
+
+      if (rocket) {
+        rocket.position.x -= 0.1;
+        rocket.rotation.z -= 0.001;
+        rocket.position.y -= 0.001;
+      }
 
       var delta = clock.getDelta();
       if (mixer) mixer.update(delta / 3);
