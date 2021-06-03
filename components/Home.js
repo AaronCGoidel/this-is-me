@@ -74,9 +74,8 @@ class Home extends Component {
       rocket = gltf.scene;
 
       rocket.position.set(-20, -10, -15);
-      // rocket.rotateZ(-5);
 
-      scene.add(rocket);
+      // scene.add(rocket);
     });
 
     // camera movement, window resizing, animation
@@ -101,17 +100,22 @@ class Home extends Component {
 
     window.onresize = resizeCanvas;
 
+    const animateRocket = (delta) => {
+      // console.log(delta);
+      if (rocket) {
+        rocket.position.x -= 0.05 * delta;
+        rocket.position.y += 0.01 * Math.sqrt(delta);
+        rocket.position.z += 0.003;
+      }
+    };
+
     var animate = function () {
       requestAnimationFrame(animate);
 
-      if (rocket) {
-        rocket.position.x -= 0.1;
-        rocket.rotation.z -= 0.001;
-        rocket.position.y -= 0.001;
-      }
-
       var delta = clock.getDelta();
       if (mixer) mixer.update(delta / 3);
+
+      // animateRocket(delta);
 
       renderer.render(scene, camera);
     };
