@@ -43,8 +43,8 @@ export default function Index(props) {
 
             <p>
               My main interests in school are in computational linguistics as
-              well as languages and compilers. I am a Technical Officer in the
-              Computer Science Student Community, helping students to bridge the
+              well as languages and compilers. I am a TA for Theory of Computation and the Technical Director of the
+              Math and Computer Science Society, helping students to bridge the
               gap between theory and implementation by mentoring them during the
               development process.
             </p>
