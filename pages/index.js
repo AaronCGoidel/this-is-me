@@ -34,10 +34,9 @@ export default function Index(props) {
           <section>
             <h1>About Me</h1>
             <p>
-              I am an intensely passionate student, currently studying Computer
-              Science and Linguistics at the University of Toronto. I work
-              part-time as a backend engineer and am always tinkering and
-              reading. I am passionate about software as the tool to build a
+              I'm currently studying Computer
+              Science and Linguistics at the University of Toronto. I am a Software Engineering Intern at NASA
+              and am always tinkering and reading. I am passionate about software as the tool to build a
               better future.
             </p>
 
