@@ -28,7 +28,7 @@
     "remark-highlight.js": "^6.0.0",
     "remark-html": "^13.0.1",
     "remark-parse": "^9.0.0",
-    "three": "0.128.0",
+    "three": "0.137.0",
     "three-gltf-loader": "^1.111.0",
     "unified": "^9.2.1"
   },
