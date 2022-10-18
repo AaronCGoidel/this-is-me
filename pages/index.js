@@ -19,7 +19,7 @@ export default function Index(props) {
         />
         <meta
           name="keywords"
-          content="web dev, developer, programmer, New York, Toronto, Toronto developer, NYC developer"
+          content="backend dev, blockchain dev, web dev, developer, programmer, New York, Toronto, Toronto developer, NYC developer"
         />
         <meta name="robots" content="index, follow" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -34,18 +34,27 @@ export default function Index(props) {
           <section>
             <h1>About Me</h1>
             <p>
-              I'm currently studying Computer
-              Science and Linguistics at the University of Toronto. I am a Software Engineering Intern at NASA
-              and am always tinkering and reading. I am passionate about software as the tool to build a
-              better future.
+              I'm currently studying Computer Science and Linguistics at the
+              University of Toronto. I'm a dev at MLabs, where I am building the
+              future of blockchain.
+              <ul>
+              <li>I've worked on space launch technology @ NASA</li>
+              <li>I've worked in media @ Highsnobiety</li>
+              <li>I've worked on ML tools and also systems security @ NSA</li>
+            </ul>
+            </p>
+            <p>
+              I'm always tinkering and reading. And I am passionate about
+              software as the tool to build a better future.
             </p>
 
             <p>
               My main interests in school are in computational linguistics as
-              well as languages and compilers. I am a TA for Theory of Computation and the Technical Director of the
-              Math and Computer Science Society, helping students to bridge the
-              gap between theory and implementation by mentoring them during the
-              development process.
+              well as languages and compilers. I am a TA for Theory of
+              Computation and the Technical Director of the Math and Computer
+              Science Society, helping students to bridge the gap between theory
+              and implementation by mentoring them during the development
+              process.
             </p>
 
             <p>
@@ -81,7 +90,7 @@ export default function Index(props) {
             </a>
 
             <p>You can find me online at the following places</p>
-            <div style={{display: "flex", flexDirection: "row"}}>
+            <div style={{ display: "flex", flexDirection: "row" }}>
               <a
                 className={"social-link"}
                 href={"https://linkedin.com/in/aaroncgoidel"}
