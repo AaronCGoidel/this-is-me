@@ -7,7 +7,7 @@ type LayoutProps = {
 
 const Layout = ({ children }: LayoutProps): JSX.Element => {
   return (
-    <div className="overflow-scroll h-screen w-screen">
+    <div className="h-screen w-screen">
       <header>
         <div className="max-w-5xl px-8 mx-auto">
           <div className="flex items-center justify-between py-6">
@@ -19,7 +19,6 @@ const Layout = ({ children }: LayoutProps): JSX.Element => {
         <div className="max-w-5xl px-8 py-4 mx-auto">{children}</div>
       </main>
       
-      {/* footer with horizontal line */}
       <footer className="py-8">
         <div className="max-w-5xl px-8 mx-auto">
           <a
