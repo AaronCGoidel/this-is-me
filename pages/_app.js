@@ -1,32 +1,10 @@
-import "./index.css";
-import "../components/ProjectCard.css";
-import "../pages/projects/projects.css";
-import { AnimateSharedLayout } from "framer-motion";
-import { useEffect } from "react";
-import { useRouter } from "next/router";
+import React from 'react';
+import '../styles/global.css'
 
-import { pageview, event } from "../lib/ga";
-
-function MyApp({ Component, pageProps }) {
-  const router = useRouter();
-
-  useEffect(() => {
-    const handleRouteChange = (url) => {
-      pageview(url);
-    };
-
-    router.events.on("routeChangeComplete", handleRouteChange);
-
-    return () => {
-      router.events.off("routeChangeComplete", handleRouteChange);
-    };
-  }, [router.events]);
-
+const MyApp = ({ Component, pageProps }) => {
   return (
-    <AnimateSharedLayout>
-      <Component {...pageProps} />
-    </AnimateSharedLayout>
+    <Component {...pageProps} />
   );
-}
+};
 
 export default MyApp;

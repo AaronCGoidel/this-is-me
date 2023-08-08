@@ -15,22 +15,28 @@
     "export": "next export"
   },
   "dependencies": {
-    "framer-motion": "^4.1.17",
+    "@tailwindcss/typography": "^0.5.7",
     "gray-matter": "^4.0.3",
-    "next": "10.2.0",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
+    "next": "^13.4.13",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-dom-server": "^0.0.5",
     "react-icons": "^4.2.0",
     "react-intersection-observer": "^8.32.0",
     "react-markdown": "^6.0.2",
-    "react-three-fiber": "4.0.12",
     "remark-gfm": "^1.0.0",
     "remark-highlight.js": "^6.0.0",
     "remark-html": "^13.0.1",
     "remark-parse": "^9.0.0",
-    "three": "0.128.0",
-    "three-gltf-loader": "^1.111.0",
     "unified": "^9.2.1"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "20.4.9",
+    "@types/react": "^18.0.19",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.27",
+    "tailwindcss": "^3.3.3",
+    "typescript": "^5.1.6"
+  }
 }
