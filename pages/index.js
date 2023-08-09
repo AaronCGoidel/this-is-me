@@ -36,7 +36,7 @@ export default function Index(props) {
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="language" content="English" />
       </Head>
-      <Layout>
+      <Layout id="home">
         <div
           className="flex flex-col items-end justify-center"
           style={{ height: "80vh" }}
@@ -47,19 +47,13 @@ export default function Index(props) {
               Aaron Goidel
             </span>
           </h1>
-
-          {/* <img
-            src="/acg.png"
-            className="transform scale-10"
-            style={{ transform: `translateY(-${offsetY * .3}px)` }}
-          /> */}
         </div>
 
         {/* New Content Section */}
         <div className="py-16">
           <ChatApp />
         </div>
-        <div className="px-4 py-16 relative">
+        <div id="about" className="px-4 py-16 relative">
           <h2 className="text-4xl mb-4 font-bold">About Me</h2>
           <p className="mb-4">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque

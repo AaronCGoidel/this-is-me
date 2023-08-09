@@ -7,21 +7,21 @@ const Navigation = (): JSX.Element => {
     <nav>
       <Link
         className="pr-6 py-4 text-content hover:text-hover inline-flex items-center"
-        href="/"
+        href="#home"
       >
-        <FaHome className="mr-1" /> Home
+        <FaHome className="mr-2" /> Home
       </Link>
       <Link
         className="px-6 py-4 text-content hover:text-hover inline-flex items-center"
-        href="/about"
+        href="#chat"
       >
-        <FaCommentDots className="mr-1" /> Chat
+        <FaCommentDots className="mr-2" /> Chat
       </Link>
       <Link
         className="px-6 py-4 text-content hover:text-hover inline-flex items-center"
-        href="/about"
+        href="#about"
       >
-        <FaInfoCircle className="mr-1" /> About
+        <FaInfoCircle className="mr-2" /> About
       </Link>
     </nav>
   );

@@ -32,6 +32,7 @@ const ChatApp = ({ containerRef }) => {
   ];
 
   const [messages, setMessages] = useState([...initialMessages]);
+  const [awaitingResponse, setAwaitingResponse] = useState(false);
 
   const messagesEndRef = useRef(null);
 
@@ -47,17 +48,25 @@ const ChatApp = ({ containerRef }) => {
     if (messages.length > initialMessages.length) scrollToBottom();
   }, [messages]);
 
-  const handleNewMessage = (content) => {
+  const handleNewUserMessage = (content) => {
+    if (awaitingResponse) {
+        return;
+    }
+
     const newMessage = {
       content: content,
       isReceived: false,
     };
 
     setMessages((prevMessages) => [...prevMessages, newMessage]);
+    setAwaitingResponse(true);
   };
 
   return (
-    <div className="flex flex-col justify-center items-center md:flex-row">
+    <div
+      id="chat"
+      className="flex flex-col justify-center items-center md:flex-row"
+    >
       <div>
         <img src="/acg head.png" />
       </div>
@@ -80,13 +89,13 @@ const ChatApp = ({ containerRef }) => {
             <button
               className="border-gray-500 border text-gray-500 py-2 px-2 rounded m-2 text-sm hover:bg-gray-200 hover:text-gray-700 hover:border-gray-700"
               key={index}
-              onClick={() => handleNewMessage(prompt)}
+              onClick={() => handleNewUserMessage(prompt)}
             >
               {prompt}
             </button>
           ))}
         </div>
-        <ChatInput onSend={handleNewMessage} />
+        <ChatInput awaitingResponse={awaitingResponse} onSend={handleNewUserMessage} />
       </div>
     </div>
   );

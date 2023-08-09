@@ -3,11 +3,12 @@ import Navigation from "./Navigation";
 
 type LayoutProps = {
   children: React.ReactNode;
+  id?: string;
 };
 
-const Layout = ({ children }: LayoutProps): JSX.Element => {
+const Layout = ({ children, id }: LayoutProps): JSX.Element => {
   return (
-    <div className="h-screen w-screen">
+    <div id={`${id}`} className="h-screen w-screen">
       <header>
         <div className="max-w-5xl px-8 mx-auto">
           <div className="flex items-center justify-between py-6">
