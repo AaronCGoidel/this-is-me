@@ -1,5 +1,5 @@
-import React from 'react';
-import Navigation from './Navigation';
+import React from "react";
+import Navigation from "./Navigation";
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -18,7 +18,7 @@ const Layout = ({ children }: LayoutProps): JSX.Element => {
       <main>
         <div className="max-w-5xl px-8 py-4 mx-auto">{children}</div>
       </main>
-      
+
       <footer className="py-8">
         <div className="max-w-5xl px-8 mx-auto">
           <a

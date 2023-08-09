@@ -3,17 +3,20 @@ import { FiGithub } from "react-icons/fi";
 import { FaLinkedin } from "react-icons/fa";
 import Layout from "../components/Layout";
 import Head from "next/head";
-import { useEffect, useState } from "react";
-
+import { useEffect, useState, useRef } from "react";
+// import {ProjectCard} from '../components/ProjectCard';
+import ChatApp from "../components/Chat/ChatApp";
 export default function Index(props) {
   const [offsetY, setOffsetY] = useState(0);
-  
-  const handleScroll = () => {console.log(window.scrollY); setOffsetY(window.scrollY);}
+
+  const handleScroll = () => {
+    setOffsetY(window.scrollY);
+  };
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
@@ -34,7 +37,10 @@ export default function Index(props) {
         <meta name="language" content="English" />
       </Head>
       <Layout>
-        <div className="flex flex-col items-end justify-end" style={{height: '100vh'}}>
+        <div
+          className="flex flex-col items-end justify-center"
+          style={{ height: "80vh" }}
+        >
           <h1 className="font-bold text-8xl text-heading text-center">
             Hi, I'm{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
@@ -42,15 +48,18 @@ export default function Index(props) {
             </span>
           </h1>
 
-          <img
+          {/* <img
             src="/acg.png"
-            className=" transform"
+            className="transform scale-10"
             style={{ transform: `translateY(-${offsetY * .3}px)` }}
-          />
+          /> */}
         </div>
 
         {/* New Content Section */}
-        <div className="px-4 py-16">
+        <div className="py-16">
+          <ChatApp />
+        </div>
+        <div className="px-4 py-16 relative">
           <h2 className="text-4xl mb-4 font-bold">About Me</h2>
           <p className="mb-4">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
