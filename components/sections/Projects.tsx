@@ -36,6 +36,18 @@ const Projects = (): JSX.Element => {
     title: "Track-19",
     description: "A contact tracing app for COVID-19",
     image: "/images/track19.webp",
+  },
+  {
+    title: "Icing",
+    description: "A ml-powered visual product reccomendation tool",
+    image: "/images/icing.webp",
+    ghLink: "AaronCGoidel/icing",
+  },
+  {
+    title: "SEA",
+    description: "Shoddy Editor by Aaron (SEA) is a minimal text editor written in go",
+    image: "/images/sea.webp",
+    ghLink: "AaronCGoidel/SEA",
   }
 ];
 
