@@ -1,13 +1,25 @@
-import Link from "next/link";
-import Home from "../components/Home";
-import ProjectCard from "../components/ProjectCard";
-import { FiGithub } from "react-icons/fi";
-import { FaLinkedin } from "react-icons/fa";
-import { motion } from "framer-motion";
+import Layout from "../components/Layout";
 import Head from "next/head";
-import AnimateWhenVisible from "../components/AnimateWhenVisible";
+import { useEffect, useState, useRef } from "react";
+import Projects from "../components/sections/Projects";
+import Contact from "../components/sections/Contact";
+import About from "../components/sections/About";
+import Chat from "../components/sections/Chat";
+import Hero from "../components/sections/Hero";
 
 export default function Index(props) {
+  const [offsetY, setOffsetY] = useState(0);
+
+  const handleScroll = () => {
+    setOffsetY(window.scrollY);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <>
       <Head>
@@ -25,113 +37,15 @@ export default function Index(props) {
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="language" content="English" />
       </Head>
-      <Home />
-      <main>
-        <header>
-          <h1>Hi, I'm Aaron!</h1>
-        </header>
-        <div className={"container"}>
-          <section>
-            <h1>About Me</h1>
-            <p>
-              I'm currently studying Computer Science and Linguistics at the
-              University of Toronto. I'm a dev at MLabs, where I am building the
-              future of blockchain.
-              <ul>
-              <li>I've worked on space launch technology @ NASA</li>
-              <li>I've worked in media @ Highsnobiety</li>
-              <li>I've worked on ML tools and also systems security @ NSA</li>
-            </ul>
-            </p>
-            <p>
-              I'm always tinkering and reading. And I am passionate about
-              software as the tool to build a better future.
-            </p>
+      <Layout id="home">
+        <Hero />
 
-            <p>
-              My main interests in school are in computational linguistics as
-              well as languages and compilers. I am a TA for Theory of
-              Computation and the Technical Director of the Math and Computer
-              Science Society, helping students to bridge the gap between theory
-              and implementation by mentoring them during the development
-              process.
-            </p>
+        <Chat />
 
-            <p>
-              Out of school, I have experience developing production software in
-              teams small to large. I enjoy making small web projects as well as
-              exploring many other areas of computer science. These range from
-              language design, to physics simulations, to blockchain, and
-              beyond. I have a love of all things food and cooking and I am
-              always listening to or making music.
-            </p>
-          </section>
-          <section className="right" id={"projects"}>
-            <h1>My Projects</h1>
-            <p>
-              Whether for school or work, for a hackathon, or just for fun, I am
-              constantly working on projects I find interesting. Here are just a
-              few of my favorites. Click around for details.
-            </p>
-            <motion.div transition={{ staggerChildren: 0.1 }} className="cards">
-              {props.projects.map((project, i) => {
-                return <ProjectCard key={i} num={i} {...project} />;
-              })}
-            </motion.div>
-          </section>
-
-          <section>
-            <h1>Resume & Contact</h1>
-            <p>Want a copy of my resume?</p>
-            <a href="resume.pdf" download="Aaron Goidel Resume.pdf">
-              <motion.button whileHover={{ scale: 1.05 }}>
-                <p style={{ margin: 0 }}>Download It! </p>
-              </motion.button>
-            </a>
-
-            <p>You can find me online at the following places</p>
-            <div style={{ display: "flex", flexDirection: "row" }}>
-              <a
-                className={"social-link"}
-                href={"https://linkedin.com/in/aaroncgoidel"}
-                target="_blank"
-              >
-                <FaLinkedin size={35} />
-                LinkedIn
-              </a>
-              <a
-                className={"social-link"}
-                href={"https://github.com/aaroncgoidel"}
-                target="_blank"
-              >
-                <FiGithub size={35} />
-                GitHub
-              </a>
-            </div>
-          </section>
-        </div>
-      </main>
+        <About />
+        <Projects />
+        <Contact />
+      </Layout>
     </>
   );
-}
-
-export async function getStaticProps() {
-  const fs = require("fs");
-  const matter = require("gray-matter");
-
-  const files = fs.readdirSync(`${process.cwd()}/pages/projects`, "utf-8");
-
-  const projects = files
-    .filter((fn) => fn.endsWith(".md"))
-    .map((fn) => {
-      const path = `${process.cwd()}/pages/projects/${fn}`;
-      const rawContent = fs.readFileSync(path, {
-        encoding: "utf-8",
-      });
-      const { data } = matter(rawContent);
-      return { ...data };
-    });
-  return {
-    props: { projects },
-  };
 }
