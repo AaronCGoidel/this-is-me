@@ -1,13 +1,8 @@
 import React from "react";
 import { FaGithub, FaLink } from "react-icons/fa";
+import { Project } from "../types/project";
 
-type ProjectCardProps = {
-  title: string;
-  description: string;
-  image: string;
-  link?: string;
-  ghLink?: string;
-};
+type ProjectCardProps = Project
 
 const ProjectCard = ({
   title,
