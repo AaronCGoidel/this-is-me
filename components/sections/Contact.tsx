@@ -17,10 +17,9 @@ const Contact = (): JSX.Element => {
         acgoidel@gmail.com
       </a>
 
-      {/* a button with a gradient border that allows you to download my resume */}
       <button className="bg-gradient-to-r from-primary to-secondary text-white rounded-md p-1 m-2">
         <a
-          className="flex w-full bg-white text-heading font-semibold rounded p-2 hover:bg-inherit hover:text-white transition duration-200 ease-in-out"
+          className="flex w-full bg-white text-heading font-semibold rounded p-3 hover:bg-inherit hover:text-white transition duration-200 ease-in-out"
           href="/resume.pdf"
           download
         >
