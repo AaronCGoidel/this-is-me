@@ -31,7 +31,7 @@ const Navigation = (): JSX.Element => {
       </div>
 
       {
-        <div className={`${styles.sideDrawer} ${isOpen ? styles.active : ""}`}>
+        <div className={`${styles.drawer} ${isOpen ? styles.active : ""}`}>
         <Link className="pr-6 py-4 text-content hover:text-hover inline-flex items-center" href="#home">
           <FaHome className="mr-2" /> Home
         </Link>

@@ -10,6 +10,8 @@
   font-size: 24px;
   display: none; /* Initially hide the menu icon on larger screens */
   cursor: pointer;
+  /* keep icon on top */
+  z-index: 1;
 }
 
 .navLinks {
@@ -18,7 +20,7 @@
 }
 
 /* Styles specific for the slide out menu */
-.sideDrawer {
+.drawer {
   display: none;
   visibility: hidden;
   opacity: 0;
@@ -27,13 +29,20 @@
   position: absolute;
   top: 0;
   right: 0;
-  width: 200px;
+  width: 100vw;
   background-color: #fff;
-  flex-direction: column;
+  flex-wrap: wrap;
   align-items: flex-end;
+  padding: 2rem;
+
+  justify-content: center;
+  
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
-.sideDrawer.active {
+.drawer.active {
   visibility: visible;
   opacity: 1;
   display: flex;
