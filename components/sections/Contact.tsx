@@ -12,7 +12,7 @@ const Contact = (): JSX.Element => {
 
       <a
         href={`mailto:acgoidel@gmail.com`}
-        className="decoration-primary font-bold text-center text-3xl text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary m-2 hover:underline transition duration-200 ease-in-out"
+        className="decoration-primary underline font-bold text-center text-3xl text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary m-2 decoration-dashed hover:decoration-solid transition duration-200 ease-in-out"
       >
         acgoidel@gmail.com
       </a>

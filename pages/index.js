@@ -9,6 +9,7 @@ import Hero from "../components/sections/Hero";
 
 export default function Index(props) {
   const [offsetY, setOffsetY] = useState(0);
+  const [projectsPerPage, setProjectsPerPage] = useState(3);
 
   const handleScroll = () => {
     setOffsetY(window.scrollY);
@@ -18,6 +19,14 @@ export default function Index(props) {
     window.addEventListener("scroll", handleScroll);
 
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    if (window.innerWidth < 800) {
+      setProjectsPerPage(4);
+    } else {
+      setProjectsPerPage(6);
+    }
   }, []);
 
   return (
@@ -43,7 +52,7 @@ export default function Index(props) {
         <Chat />
 
         <About />
-        <Projects />
+        <Projects projectsPerPage={projectsPerPage} />
         <Contact />
       </Layout>
     </>
