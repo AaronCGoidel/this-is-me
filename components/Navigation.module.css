@@ -33,7 +33,8 @@
   background-color: #fff;
   flex-wrap: wrap;
   align-items: flex-end;
-  padding: 2rem;
+  padding-top: 3rem;
+  padding-bottom: 2rem;
 
   justify-content: center;
   
