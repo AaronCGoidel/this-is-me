@@ -103,6 +103,13 @@ export default function Index(props) {
           </div>
         </div>
 
+        <div id="contact" className="flex flex-col items-center justify-center">
+          <h2 className="text-4xl mb-4 font-bold text-heading text-center">Grab a copy of my resume or email me</h2>
+                
+          <a 
+          href={`mailto:acgoidel@gmail.com`}
+          className="font-bold text-center text-3xl text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">acgoidel@gmail.com</a>
+        </div>
 
 
       </Layout>

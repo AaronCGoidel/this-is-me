@@ -1,0 +1,52 @@
+/* Navigation.module.css */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menuIcon {
+  font-size: 24px;
+  display: none; /* Initially hide the menu icon on larger screens */
+  cursor: pointer;
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+}
+
+/* Styles specific for the slide out menu */
+.sideDrawer {
+  display: none;
+  visibility: hidden;
+  opacity: 0;
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(100%);
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 120px;
+  background-color: #fff;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.sideDrawer.active {
+  visibility: visible;
+  opacity: 1;
+  display: flex;
+  transform: translateX(0);
+}
+
+/* Media query for smaller screens */
+@media screen and (max-width: 768px) {
+  .menuIcon {
+    display: block;
+  }
+
+  .navLinks {
+    display: none; /* Hide the regular menu on smaller screens */
+  }
+}

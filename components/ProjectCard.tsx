@@ -17,7 +17,7 @@ const ProjectCard = ({
   ghLink,
 }: ProjectCardProps) => {
   return (
-    <div className="flex flex-col w-full bg-white shadow-xl rounded-lg overflow-hidden">
+    <div className="flex flex-col w-full bg-white shadow-lg rounded-lg overflow-hidden">
       {/* image with max height 40 and object fit cover */}
         <img
             className="h-40 w-full object-cover"
