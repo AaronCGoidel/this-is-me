@@ -6,7 +6,7 @@ const Chat = (): JSX.Element => {
     <div className="py-16">
       <div
         id="chat"
-        className="flex flx-col justify-center items-center md:flex-row"
+        className="flex flex-col justify-center items-center md:flex-row"
       >
         <div>
           <img src="/acg head.png" />
