@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";
 
-const ChatApp = ({ containerRef }) => {
+const ChatApp = ({}) => {
   const example_prompts = [
     "What are some of Aaron's ML projects?",
     "Where did Aaron go to school?",
@@ -50,7 +50,7 @@ const ChatApp = ({ containerRef }) => {
 
   const handleNewUserMessage = (content) => {
     if (awaitingResponse) {
-        return;
+      return;
     }
 
     const newMessage = {
@@ -64,39 +64,34 @@ const ChatApp = ({ containerRef }) => {
 
   return (
     <div
-      id="chat"
-      className="flex flex-col justify-center items-center md:flex-row"
+      className="flex flex-col w-full bg-white shadow-xl rounded-lg overflow-hidden"
+      style={{ height: "500px" }}
     >
-      <div>
-        <img src="/acg head.png" />
+      <div className="flex flex-col flex-grow p-4 overflow-y-auto">
+        {messages.map((message, index) => (
+          <ChatMessage
+            key={index}
+            isReceived={message.isReceived}
+            content={message.content}
+          />
+        ))}
+        <div ref={messagesEndRef}></div>
       </div>
-      <div
-        className="flex flex-col w-full bg-white shadow-xl rounded-lg overflow-hidden"
-        style={{ height: "500px" }}
-      >
-        <div className="flex flex-col flex-grow p-4 overflow-y-auto">
-          {messages.map((message, index) => (
-            <ChatMessage
-              key={index}
-              isReceived={message.isReceived}
-              content={message.content}
-            />
-          ))}
-          <div ref={messagesEndRef}></div>
-        </div>
-        <div className="flex flex-row flex-wrap justify-center">
-          {example_prompts.map((prompt, index) => (
-            <button
-              className="border-gray-500 border text-gray-500 py-2 px-2 rounded m-2 text-sm hover:bg-gray-200 hover:text-gray-700 hover:border-gray-700"
-              key={index}
-              onClick={() => handleNewUserMessage(prompt)}
-            >
-              {prompt}
-            </button>
-          ))}
-        </div>
-        <ChatInput awaitingResponse={awaitingResponse} onSend={handleNewUserMessage} />
+      <div className="flex flex-row flex-wrap justify-center">
+        {example_prompts.map((prompt, index) => (
+          <button
+            className="border-gray-500 border text-gray-500 py-2 px-2 rounded m-2 text-sm hover:bg-gray-200 hover:text-gray-700 hover:border-gray-700"
+            key={index}
+            onClick={() => handleNewUserMessage(prompt)}
+          >
+            {prompt}
+          </button>
+        ))}
       </div>
+      <ChatInput
+        awaitingResponse={awaitingResponse}
+        onSend={handleNewUserMessage}
+      />
     </div>
   );
 };
