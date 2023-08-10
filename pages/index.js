@@ -45,6 +45,7 @@ export default function Index(props) {
         <meta name="robots" content="index, follow" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="language" content="English" />
+        <link rel="icon" href="/aa.png" />
       </Head>
       <Layout id="home">
         <Hero />

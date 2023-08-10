@@ -16,15 +16,16 @@ const Projects = ({ projectsPerPage }: ProjectsProps): JSX.Element => {
       ghLink: " UpperMountain/dynamic-cookbook",
     },
     {
+      title: "Icing",
+      description: "A ml-powered visual product reccomendation tool",
+      image: "/images/icing.webp",
+      ghLink: "AaronCGoidel/icing",
+    },
+    {
       title: "Simulating Galaxies",
       description: "Simulating galaxies with n-body simulation",
       image: "/images/galaxy.webp",
       ghLink: "AaronCGoidel/n-body",
-    },
-    {
-      title: "Lectern",
-      description: "A crypto ecosystem for knowledge sharing and tutoring",
-      image: "/images/lectern.webp",
     },
     {
       title: "SafeSend",
@@ -33,29 +34,29 @@ const Projects = ({ projectsPerPage }: ProjectsProps): JSX.Element => {
       image: "/images/safesend.webp",
     },
     {
-      title: "SlothLang",
-      description: "A programming language for the sloth in all of us",
-      image: "/images/sloth.webp",
-      ghLink: "AaronCGoidel/SlothLang",
-    },
-    {
-      title: "Track-19",
-      description: "A contact tracing app for COVID-19",
-      image: "/images/track19.webp",
-    },
-    {
-      title: "Icing",
-      description: "A ml-powered visual product reccomendation tool",
-      image: "/images/icing.webp",
-      ghLink: "AaronCGoidel/icing",
-    },
-    {
       title: "SEA",
       description:
         "Shoddy Editor by Aaron (SEA) is a minimal text editor written in go",
       image: "/images/sea.webp",
       ghLink: "AaronCGoidel/SEA",
     },
+    {
+      title: "SlothLang",
+      description: "A programming language for the sloth in all of us",
+      image: "/images/sloth.webp",
+      ghLink: "AaronCGoidel/SlothLang",
+    },
+    {
+      title: "Lectern",
+      description: "A crypto ecosystem for knowledge sharing and tutoring",
+      image: "/images/lectern.webp",
+    },
+    {
+      title: "Track-19",
+      description: "A contact tracing app for COVID-19",
+      image: "/images/track19.webp",
+    },
+    
   ];
 
   const [currentPage, setCurrentPage] = React.useState(1);
