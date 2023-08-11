@@ -8,6 +8,8 @@ app = Flask(__name__)
 # model = "meta-llama/Llama-2-13b-chat-hf"
 model = "meta-llama/Llama-2-7b-chat-hf"
 
+print("[MODEL] Loading model:", model)
+
 tokenizer = AutoTokenizer.from_pretrained(model, use_auth_token=True)
 pipeline = transformers.pipeline(
     "text-generation",
