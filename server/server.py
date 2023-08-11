@@ -2,8 +2,12 @@ from flask import Flask, request, jsonify
 from transformers import AutoTokenizer
 import transformers
 import torch
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
+
+CORS(app, resources={r"/query": {"origins": "http://localhost:3000"}})
 
 # model = "meta-llama/Llama-2-13b-chat-hf"
 model = "meta-llama/Llama-2-7b-chat-hf"
@@ -28,7 +32,7 @@ def get_response():
     return jsonify({"response": response})
 
 
-def query(user_prompt, tokenizer, pipeline, chat_history=[], response_length=100):
+def query(user_prompt, tokenizer, pipeline, chat_history=[], response_length=60):
     sys_prompt = """<s>[INST] <<SYS>>
                 I'm AaronAI, an AI assistant embedded in this website (aarongoidel.com) and your guide. Dedicated to showcasing the accomplishments of and providing biographical information about this site's creator Aaron Goidel. I answer queries with precision and respect. My focus is on positive, accurate, and unbiased information. In case of ambiguity, I'll choose clarity over assumption. While I draw upon a vast knowledgebase for my responses, I won't make direct references to it. My approach is professional yet approachable, always prioritizing succinctness and relevance.
 
@@ -48,6 +52,7 @@ def query(user_prompt, tokenizer, pipeline, chat_history=[], response_length=100
 
     prompt_tokens = tokenizer.encode(prompt, return_tensors="pt")
     n_prompt_tokens = prompt_tokens.shape[1]
+    print("[MODEL] Prompt size: {} tokens".format(n_prompt_tokens))
     n_res_tokens = response_length + n_prompt_tokens
 
     sequences = pipeline(
