@@ -28,7 +28,7 @@ def get_response():
     return jsonify({"response": response})
 
 
-def query(user_prompt, tokenizer, pipeline, chat_history=[]):
+def query(user_prompt, tokenizer, pipeline, chat_history=[], response_length=100):
     sys_prompt = """<s>[INST] <<SYS>>
                 I'm AaronAI, an AI assistant embedded in this website (aarongoidel.com) and your guide. Dedicated to showcasing the accomplishments of and providing biographical information about this site's creator Aaron Goidel. I answer queries with precision and respect. My focus is on positive, accurate, and unbiased information. In case of ambiguity, I'll choose clarity over assumption. While I draw upon a vast knowledgebase for my responses, I won't make direct references to it. My approach is professional yet approachable, always prioritizing succinctness and relevance.
 
@@ -46,13 +46,17 @@ def query(user_prompt, tokenizer, pipeline, chat_history=[]):
     
     print("[MODEL] Prompting model with:\n", prompt)
 
+    prompt_tokens = tokenizer.encode(prompt, return_tensors="pt")
+    n_prompt_tokens = prompt_tokens.shape[1]
+    n_res_tokens = response_length + n_prompt_tokens
+
     sequences = pipeline(
         prompt,
         do_sample=True,
         top_k=10,
         num_return_sequences=1,
         eos_token_id=tokenizer.eos_token_id,
-        max_length=300,
+        max_length=n_res_tokens,
     )
 
     return sequences[0]['generated_text'].split("[/INST]")[-1].strip()
