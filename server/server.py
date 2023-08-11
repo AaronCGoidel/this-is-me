@@ -68,4 +68,5 @@ def query(user_prompt, tokenizer, pipeline, chat_history=[], response_length=60)
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(ssl_context=('/etc/letsencrypt/live/aaronai.duckdns.org/fullchain.pem', '/etc/letsencrypt/live/aaronai.duckdns.org/privkey.pem'), 
+            host='0.0.0.0', port=5000, debug=True)
