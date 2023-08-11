@@ -1,0 +1,5 @@
+transformers
+xformers
+accelerate
+torch
+Flask
