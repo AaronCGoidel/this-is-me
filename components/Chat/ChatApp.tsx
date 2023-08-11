@@ -11,7 +11,6 @@ const ChatApp = ({}) => {
   const initialMessages = [];
 
   const MODEL_ENDPOINT = process.env.NEXT_PUBLIC_MODEL_ENDPOINT + "/query";
-  console.log("MODEL_ENDPOINT:", MODEL_ENDPOINT);
 
   const [messages, setMessages] = useState([...initialMessages]);
   const [awaitingResponse, setAwaitingResponse] = useState(false);
@@ -67,9 +66,6 @@ const ChatApp = ({}) => {
     if (chatHistory.length > 0) {
       requestBody["chat_history"] = chatHistory;
     }
-
-    console.log("endpoint:", MODEL_ENDPOINT);
-    console.log("requestBody:", requestBody);
 
     fetch(MODEL_ENDPOINT, {
       method: "POST",
