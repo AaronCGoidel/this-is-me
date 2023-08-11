@@ -10,6 +10,8 @@ const ChatApp = ({}) => {
 
   const initialMessages = [];
 
+  const MODEL_ENDPOINT = process.env.NEXT_PUBLIC_MODEL_ENDPOINT + "/query";
+
   const [messages, setMessages] = useState([...initialMessages]);
   const [awaitingResponse, setAwaitingResponse] = useState(false);
 
@@ -45,25 +47,63 @@ const ChatApp = ({}) => {
     if (!awaitingResponse) {
       return;
     }
+    console.log("Querying model...");
 
-    const newMessage = {
-      content: "I'm a response!",
-      isReceived: true,
+    const userPrompt = messages[messages.length - 1].content;
+
+    console.log("userPrompt:", userPrompt);
+
+    const chatHistory = messages
+      .slice(0, messages.length - 1)
+      .map((message) => message.content)
+      .slice(-4);
+
+    console.log("chatHistory:", chatHistory);
+
+    let requestBody = {
+      user_prompt: userPrompt,
     };
+    if (chatHistory.length > 0) {
+      requestBody["chat_history"] = chatHistory;
+    }
 
-    setTimeout(() => {
-      setMessages((prevMessages) => [...prevMessages, newMessage]);
-      setAwaitingResponse(false);
-    }, 1000);
-  }, [awaitingResponse]);
+    fetch(MODEL_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const responseMessage = {
+          content: data.response,
+          isReceived: true,
+        };
+
+        setMessages((prevMessages) => [...prevMessages, responseMessage]);
+      })
+      .catch((error) => {
+        console.error("There was an error querying the model:", error);
+      })
+      .finally(() => {
+        setAwaitingResponse(false);
+      });
+  }, [awaitingResponse, messages]);
 
   return (
     <div
       className="flex flex-col w-full bg-white shadow-xl rounded-lg overflow-hidden"
       style={{ height: "500px" }}
     >
-      <div className={`flex flex-col flex-grow p-4 overflow-y-auto ${messages.length == 0 ? 'justify-center' : undefined}`}>
-      {messages.length == 0 && <h2 className="text-center text-gray-400">Say hello!</h2>}
+      <div
+        className={`flex flex-col flex-grow p-4 overflow-y-auto ${
+          messages.length == 0 ? "justify-center" : undefined
+        }`}
+      >
+        {messages.length == 0 && (
+          <h2 className="text-center text-gray-400">Say hello!</h2>
+        )}
         {messages.map((message, index) => (
           <ChatMessage
             key={index}
