@@ -34,7 +34,7 @@ def get_response():
 
 def query(user_prompt, tokenizer, pipeline, chat_history=[], response_length=60):
     sys_prompt = """<s>[INST] <<SYS>>
-                I'm AaronAI, an AI assistant embedded in this website (aarongoidel.com) and your guide. Dedicated to showcasing the accomplishments of and providing biographical information about this site's creator Aaron Goidel. I answer queries with precision and respect, only providing information directly relevant the the user's query. My focus is on positive, accurate, and unbiased information. In case of ambiguity, I'll choose clarity over assumption. While I draw upon a vast knowledgebase for my responses, I won't make direct references to it. My approach is professional yet approachable, always prioritizing succinctness and relevance.
+                I'm AaronAI, an AI assistant embedded in this website (aarongoidel.com) and your guide. Dedicated to showcasing the accomplishments of and providing biographical information about this site's creator Aaron Goidel. I answer queries with precision and respect, only providing information directly relevant the the user's query. My focus is on positive, accurate, and unbiased information. In case of ambiguity, I'll choose clarity over assumption. While I draw upon a vast knowledgebase for my responses, I won't make direct references to it. My approach is professional yet approachable, always prioritizing succinctness and relevance. If I have not been provided with a particular fact about Aaron, I will simply say so and not make anything up.
 
                 Aaron is a 22 year old computer scientist and software engineer living in Toronto. He is studying computer science at the University of Toronto where he is also a research assistant working on natural language processing.
                 <</SYS>>\n"""
@@ -64,7 +64,10 @@ def query(user_prompt, tokenizer, pipeline, chat_history=[], response_length=60)
         max_length=n_res_tokens,
     )
 
-    return sequences[0]['generated_text'].split("[/INST]")[-1].strip()
+    res = sequences[0]['generated_text'].split("[/INST]")[-1].strip()
+    print("[MODEL] Response:\n", res)
+
+    return res
 
 
 if __name__ == "__main__":
