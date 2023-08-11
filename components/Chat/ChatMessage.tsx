@@ -10,7 +10,9 @@ const ChatMessage = ({ isReceived, content }) => {
     <div className={`flex w-full mt-2 space-x-3 ${messageClass}`}>
       <div>
         <div className={bubbleClass}>
-          <p className="text-sm">{content}</p>
+          {content.split("\n").map((line, index) => (
+            <p key={index} className="text-sm">{line}</p>
+          ))}
         </div>
       </div>
     </div>

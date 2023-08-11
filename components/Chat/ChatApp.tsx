@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";
 
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
 const ChatApp = ({}) => {
   const example_prompts = [
     "What are some of Aaron's ML projects?",
@@ -47,48 +49,61 @@ const ChatApp = ({}) => {
     if (!awaitingResponse) {
       return;
     }
-    console.log("Querying model...");
 
-    const userPrompt = messages[messages.length - 1].content;
+    const queryModel = async () => {
+      console.log("Querying model...");
 
-    console.log("userPrompt:", userPrompt);
+      const userPrompt = messages[messages.length - 1].content;
+      console.log("userPrompt:", userPrompt);
 
-    const chatHistory = messages
-      .slice(0, messages.length - 1)
-      .map((message) => message.content)
-      .slice(-4);
+      const chatHistory = messages
+        .slice(0, messages.length - 1)
+        .map((message) => message.content)
+        .slice(-4);
+      console.log("chatHistory:", chatHistory);
 
-    console.log("chatHistory:", chatHistory);
+      try {
+        const response = await fetch("/api/predictions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            user_prompt: userPrompt,
+            chat_history: chatHistory,
+          }),
+        });
+        let prediction = await response.json();
 
-    let requestBody = {
-      user_prompt: userPrompt,
-    };
-    if (chatHistory.length > 0) {
-      requestBody["chat_history"] = chatHistory;
-    }
+        while (
+          prediction.status !== "succeeded" &&
+          prediction.status !== "failed"
+        ) {
+          await sleep(1000);
+          const response = await fetch("/api/predictions/" + prediction.id);
+          prediction = await response.json();
+          if (response.status !== 200) {
+            throw new Error(prediction.detail);
+          }
+          console.log({ prediction });
+        }
 
-    fetch(MODEL_ENDPOINT, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestBody),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const responseMessage = {
-          content: data.response,
+        const newMessage = {
+          content: prediction.output.join(""),
           isReceived: true,
         };
 
-        setMessages((prevMessages) => [...prevMessages, responseMessage]);
-      })
-      .catch((error) => {
-        console.error("There was an error querying the model:", error);
-      })
-      .finally(() => {
         setAwaitingResponse(false);
-      });
+
+        setMessages((prevMessages) => [...prevMessages, newMessage]);
+        console.log("prediction:", prediction);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    // Call the async function
+    queryModel();
   }, [awaitingResponse, messages]);
 
   return (

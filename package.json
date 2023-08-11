@@ -28,6 +28,7 @@
     "remark-highlight.js": "^6.0.0",
     "remark-html": "^13.0.1",
     "remark-parse": "^9.0.0",
+    "replicate": "^0.16.0",
     "unified": "^9.2.1"
   },
   "license": "MIT",

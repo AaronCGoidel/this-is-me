@@ -1,6 +1,0 @@
-transformers
-xformers
-accelerate
-torch
-Flask
-flask_cors
