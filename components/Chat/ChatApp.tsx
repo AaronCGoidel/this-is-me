@@ -1,4 +1,3 @@
-// ChatApp.jsx
 import React, { useState, useRef, useEffect } from "react";
 import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";
@@ -9,27 +8,7 @@ const ChatApp = ({}) => {
     "Where did Aaron go to school?",
   ];
 
-  const initialMessages = [
-    {
-      isReceived: true,
-      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    },
-    {
-      isReceived: false,
-      content:
-        "Ea ipsum labore occaecat anim laborum Lorem id ullamco sunt culpa reprehenderit anim.",
-    },
-    {
-      isReceived: false,
-      content:
-        "Laborum excepteur do cillum eiusmod occaecat ea amet elit consequat ex eiusmod elit nostrud nisi.",
-    },
-    {
-      isReceived: true,
-      content:
-        "Nulla duis consectetur consequat ipsum in excepteur aute amet do aute aliqua culpa.",
-    },
-  ];
+  const initialMessages = [];
 
   const [messages, setMessages] = useState([...initialMessages]);
   const [awaitingResponse, setAwaitingResponse] = useState(false);
@@ -62,12 +41,29 @@ const ChatApp = ({}) => {
     setAwaitingResponse(true);
   };
 
+  useEffect(() => {
+    if (!awaitingResponse) {
+      return;
+    }
+
+    const newMessage = {
+      content: "I'm a response!",
+      isReceived: true,
+    };
+
+    setTimeout(() => {
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
+      setAwaitingResponse(false);
+    }, 1000);
+  }, [awaitingResponse]);
+
   return (
     <div
       className="flex flex-col w-full bg-white shadow-xl rounded-lg overflow-hidden"
       style={{ height: "500px" }}
     >
-      <div className="flex flex-col flex-grow p-4 overflow-y-auto">
+      <div className={`flex flex-col flex-grow p-4 overflow-y-auto ${messages.length == 0 ? 'justify-center' : undefined}`}>
+      {messages.length == 0 && <h2 className="text-center text-gray-400">Say hello!</h2>}
         {messages.map((message, index) => (
           <ChatMessage
             key={index}

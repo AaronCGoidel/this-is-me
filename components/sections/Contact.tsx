@@ -12,12 +12,12 @@ const Contact = (): JSX.Element => {
 
       <a
         href={`mailto:acgoidel@gmail.com`}
-        className="decoration-primary underline font-bold text-center text-3xl text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary m-2 decoration-dashed hover:decoration-solid transition duration-200 ease-in-out"
+        className="decoration-primary underline font-bold text-center text-3xl text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary my-2 decoration-dashed hover:decoration-solid transition duration-200 ease-in-out"
       >
         acgoidel@gmail.com
       </a>
 
-      <button className="bg-gradient-to-r from-primary to-secondary text-white rounded-md p-1 m-2">
+      <button className="bg-gradient-to-r from-primary to-secondary text-white rounded-md p-1 mt-4">
         <a
           className="flex w-full bg-white text-heading font-semibold rounded p-3 hover:bg-inherit hover:text-white transition duration-200 ease-in-out"
           href="/resume.pdf"
