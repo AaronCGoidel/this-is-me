@@ -9,10 +9,7 @@ const ChatApp = ({}) => {
     "What are some of Aaron's ML projects?",
     "Where did Aaron go to school?",
   ];
-
   const initialMessages = [];
-
-  const MODEL_ENDPOINT = process.env.NEXT_PUBLIC_MODEL_ENDPOINT + "/query";
 
   const [messages, setMessages] = useState([...initialMessages]);
   const [awaitingResponse, setAwaitingResponse] = useState(false);
@@ -50,6 +47,21 @@ const ChatApp = ({}) => {
       return;
     }
 
+    const lookupKnowledge = async (query) => {
+      console.log(`Looking up knowledge for "${query}"...`);
+
+      try {
+        const res = await fetch(`/api/search?query=${query}`);
+        const data = await res.json();
+
+        return data;
+      } catch (error) {
+        console.error("Error fetching knowledge:", error);
+
+        return [];
+      }
+    };
+
     const queryModel = async () => {
       console.log("Querying model...");
 
@@ -62,6 +74,8 @@ const ChatApp = ({}) => {
         .slice(-4);
       console.log("chatHistory:", chatHistory);
 
+      const knowledge = await lookupKnowledge(userPrompt);
+
       try {
         const response = await fetch("/api/predictions", {
           method: "POST",
@@ -71,6 +85,7 @@ const ChatApp = ({}) => {
           body: JSON.stringify({
             user_prompt: userPrompt,
             chat_history: chatHistory,
+            knowledge: knowledge,
           }),
         });
         let prediction = await response.json();
