@@ -57,7 +57,7 @@ const searchHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const queryRequest = {
       vector: Array.from(features.data) as number[],
-      topK: 3,
+      topK: 10,
       includeValues: true,
       includeMetadata: true,
     };
@@ -67,7 +67,7 @@ const searchHandler = async (req: NextApiRequest, res: NextApiResponse) => {
       .status(200)
       .json(
         queryResponse.matches.map((match) =>
-          match.metadata && match.metadata["text"] && match.metadata["file"] ? `\n${match.metadata["text"]}` : ""
+          match.metadata && match.metadata["paragraph"] && match.metadata["file"] ? `\n${match.metadata["paragraph"]}` : ""
         )
       );
   } else {

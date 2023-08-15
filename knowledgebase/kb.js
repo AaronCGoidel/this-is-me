@@ -1,6 +1,6 @@
-const { PineconeClient } = require("@pinecone-database/pinecone");
-const fs = require("fs").promises;
-const path = require("path");
+import { PineconeClient } from "@pinecone-database/pinecone";
+import { promises as fs } from "fs";
+import path from "path";
 
 let transformers;
 
@@ -22,36 +22,25 @@ const getAllFiles = async () => {
   return ["bio.md", "resume.md", "profile.md", ...mdFiles];
 };
 
-// const chunkText = (text, chunkSize = 25) => {
-//   const words = text.split(" ");
-//   const chunks = [];
-//   for (let i = 0; i < words.length; i += chunkSize) {
-//     chunks.push(words.slice(i, i + chunkSize).join(" "));
-//   }
-//   return chunks;
-// };
-
-const chunkText = (text, chunkSize = 50) => {
-  let paragraphs = text.split("\n\n");
-
-  return paragraphs;
-
-  let chunks = [];
-  for (let i = 0; i < paragraphs.length; i++) {
-    let words = paragraphs[i].split(" ");
-    for (let j = 0; j < words.length; j += chunkSize) {
-      chunks.push(words.slice(j, j + chunkSize).join(" "));
+const chunkText = (text) => {
+  const paragraphs = text.split("\n\n");
+  const sentences = [];
+  for (const paragraph of paragraphs) {
+    const paragraphSentences = paragraph.split(/(?<=[.?!])\s+(?=[A-Z])/);
+    for (const sentence of paragraphSentences) {
+      sentences.push({ sentence, paragraph });
     }
   }
-  return chunks;
-}
+  return sentences;
+};
 
 const main = async () => {
   await loadModules();
 
   const pinecone = new PineconeClient();
   await pinecone.init({
-    apiKey: process.env.PINECONE_API_KEY || "13183aa4-cec7-4e7a-97ca-9708af445b30",
+    apiKey:
+      process.env.PINECONE_API_KEY,
     environment: "gcp-starter",
   });
 
@@ -72,13 +61,14 @@ const main = async () => {
     MODEL_NAME,
     { revision: "default" }
   );
+
   const embeddings = {};
 
   for (const [file, chunks] of Object.entries(chunkedFileContents)) {
     console.log(`Extracting embeddings for ${file}`);
     const chunkEmbeddings = await Promise.all(
-      chunks.map((chunk) =>
-        featureExtractor(chunk, { pooling: "mean", normalize: true })
+      chunks.map(({ sentence }) =>
+        featureExtractor(sentence, { pooling: "mean", normalize: true })
       )
     );
     embeddings[file] = chunkEmbeddings.map((embedding) =>
@@ -91,7 +81,7 @@ const main = async () => {
   for (const [file, chunkEmbeddings] of Object.entries(embeddings)) {
     for (let idx = 0; idx < chunkEmbeddings.length; idx++) {
       const vec = chunkEmbeddings[idx];
-      const text = chunkedFileContents[file][idx];
+      const {sentence, paragraph} = chunkedFileContents[file][idx];
       const key = `${file}-${idx}`;
       console.log(`Adding vector for ${key}`);
       const upsertRequest = {
@@ -99,12 +89,11 @@ const main = async () => {
           {
             id: key,
             values: vec,
-            metadata: { file: file, chunk: idx, text: text },
+            metadata: { file: file, chunk: idx, sentence: sentence, paragraph: paragraph },
           },
         ],
       };
       await index.upsert({ upsertRequest });
-      // await index.delete1( {ids: [key]} )
     }
   }
 };
