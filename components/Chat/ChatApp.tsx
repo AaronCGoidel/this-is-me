@@ -75,6 +75,7 @@ const ChatApp = ({}) => {
       console.log("chatHistory:", chatHistory);
 
       const knowledge = await lookupKnowledge(userPrompt);
+      console.log("knowledge:", knowledge);
 
       try {
         const response = await fetch("/api/predictions", {

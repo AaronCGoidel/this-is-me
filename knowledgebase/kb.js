@@ -8,7 +8,7 @@ async function loadModules() {
   transformers = await import("@xenova/transformers");
 }
 
-const MODEL_NAME = "Xenova/bert-base-uncased";
+const MODEL_NAME = "Xenova/distilbert-base-uncased";
 
 const readMarkdownFiles = async (filepath) => {
   return await fs.readFile(filepath, "utf8");
@@ -22,21 +22,36 @@ const getAllFiles = async () => {
   return ["bio.md", "resume.md", "profile.md", ...mdFiles];
 };
 
-const chunkText = (text, chunkSize = 100) => {
-  const words = text.split(" ");
-  const chunks = [];
-  for (let i = 0; i < words.length; i += chunkSize) {
-    chunks.push(words.slice(i, i + chunkSize).join(" "));
+// const chunkText = (text, chunkSize = 25) => {
+//   const words = text.split(" ");
+//   const chunks = [];
+//   for (let i = 0; i < words.length; i += chunkSize) {
+//     chunks.push(words.slice(i, i + chunkSize).join(" "));
+//   }
+//   return chunks;
+// };
+
+const chunkText = (text, chunkSize = 50) => {
+  let paragraphs = text.split("\n\n");
+
+  return paragraphs;
+
+  let chunks = [];
+  for (let i = 0; i < paragraphs.length; i++) {
+    let words = paragraphs[i].split(" ");
+    for (let j = 0; j < words.length; j += chunkSize) {
+      chunks.push(words.slice(j, j + chunkSize).join(" "));
+    }
   }
   return chunks;
-};
+}
 
 const main = async () => {
   await loadModules();
 
   const pinecone = new PineconeClient();
   await pinecone.init({
-    apiKey: process.env.PINECONE_API_KEY,
+    apiKey: process.env.PINECONE_API_KEY || "13183aa4-cec7-4e7a-97ca-9708af445b30",
     environment: "gcp-starter",
   });
 
@@ -89,6 +104,7 @@ const main = async () => {
         ],
       };
       await index.upsert({ upsertRequest });
+      // await index.delete1( {ids: [key]} )
     }
   }
 };

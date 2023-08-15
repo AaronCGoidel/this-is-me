@@ -7,7 +7,7 @@ let extractor: any;
 // singleton for lazy construction of the pipeline
 class PipelineSingleton {
   static task: string = "feature-extraction";
-  static model: string = "Xenova/bert-base-uncased";
+  static model: string = "Xenova/distilbert-base-uncased";
   static instance: any = null;
 
   static async getInstance(progress_callback?: any): Promise<any> {
@@ -57,7 +57,7 @@ const searchHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const queryRequest = {
       vector: Array.from(features.data) as number[],
-      topK: 2,
+      topK: 3,
       includeValues: true,
       includeMetadata: true,
     };
@@ -67,7 +67,7 @@ const searchHandler = async (req: NextApiRequest, res: NextApiResponse) => {
       .status(200)
       .json(
         queryResponse.matches.map((match) =>
-          match.metadata && match.metadata["text"] ? match.metadata["text"] : ""
+          match.metadata && match.metadata["text"] && match.metadata["file"] ? `\n${match.metadata["text"]}` : ""
         )
       );
   } else {
