@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";
-
+import LoadingMessage from "./Loading"
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const ChatApp = ({}) => {
@@ -142,6 +142,7 @@ const ChatApp = ({}) => {
             content={message.content}
           />
         ))}
+        {awaitingResponse && <LoadingMessage isReceived={true} />}  {/* This line is added */}
         <div ref={messagesEndRef}></div>
       </div>
       <div className="flex flex-row flex-wrap justify-center">
