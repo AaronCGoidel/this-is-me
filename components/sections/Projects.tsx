@@ -10,51 +10,64 @@ const Projects = ({ projectsPerPage }: ProjectsProps): JSX.Element => {
   const projects: Project[] = [
     {
       title: "Cookie",
-      description: "Better cooking through ml and graph theory",
+      description: "Better cooking through ml and graph theory. Recipe customization, ingredient substitution, realtime custom interactive steps.",
       image: "/images/cookie.webp",
-      link: "https://google.com",
-      ghLink: " UpperMountain/dynamic-cookbook",
+      ghLink: "UpperMountain/dynamic-cookbook",
     },
     {
       title: "Icing",
-      description: "A ml-powered visual product reccomendation tool",
+      description: "A ml-powered visual product reccomendation tool. Using cnn feature extraction and attention, find products that match the style of an image.",
       image: "/images/icing.webp",
       ghLink: "AaronCGoidel/icing",
     },
     {
+      title: "NeRF 3D Reconstruction",
+      description: "An video to AR 3D reconstruction pipeline using Neural Radiance Fields. A deep learning model predicts scene radiance for a volumetric renderer.",
+      image: "/images/nerf.webp",
+    },
+    {
+      title: "AaronAI",
+      description: "A new kind of personal site: a portfolio chatbot. AaronAI is armed with a knowledge base of my resume, projects, and more.",
+      image: "/images/aaronai.webp",
+      ghLink: "AaronCGoidel/this-is-me",
+    },
+    {
       title: "Simulating Galaxies",
-      description: "Simulating galaxies with n-body simulation",
+      description: "Simulating the formation of galactic structures with a highly optimized n-body simulation written in pure C and OpenGL.",
       image: "/images/galaxy.webp",
       ghLink: "AaronCGoidel/n-body",
     },
     {
-      title: "SafeSend",
-      description:
-        "Apply cryptography and 2-factor-authentication to data sharing",
-      image: "/images/safesend.webp",
-    },
-    {
-      title: "SEA",
-      description:
-        "Shoddy Editor by Aaron (SEA) is a minimal text editor written in go",
-      image: "/images/sea.webp",
-      ghLink: "AaronCGoidel/SEA",
-    },
-    {
       title: "SlothLang",
-      description: "A programming language for the sloth in all of us",
+      description: "A programming language for the sloth in all of us. A simple, interpreted esolang written in C.",
       image: "/images/sloth.webp",
       ghLink: "AaronCGoidel/SlothLang",
     },
     {
+      title: "SEA",
+      description:
+        "Shoddy Editor by Aaron (SEA) is a minimal text editor written in Go. Supports syntax highlighting, file management, and more.",
+      image: "/images/sea.webp",
+      ghLink: "AaronCGoidel/SEA",
+    },
+    {
+      title: "SafeSend",
+      description:
+        "Apply cryptography and 2-factor-authentication to data sharing. Generate secure ephemeral links to share sensitive data.",
+      image: "/images/safesend.webp",
+      ghLink: "MKA-Stem/ayc-galvanize",
+    },
+    {
       title: "Lectern",
-      description: "A crypto ecosystem for knowledge sharing and tutoring",
+      description: "A crypto ecosystem for knowledge sharing and tutoring. Get matched with tutors and get paid in crypto.",
       image: "/images/lectern.webp",
+      ghLink: "AaronCGoidel/lectern",
     },
     {
       title: "Track-19",
-      description: "A contact tracing app for COVID-19",
+      description: "A secure and private covid news and reporting platform.",
       image: "/images/track19.webp",
+      ghLink: "AaronCGoidel/Covid",
     },
     
   ];
