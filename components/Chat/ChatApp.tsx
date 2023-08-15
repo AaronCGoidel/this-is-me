@@ -124,8 +124,8 @@ const ChatApp = ({}) => {
 
   return (
     <div
-      className="flex flex-col w-full bg-white shadow-xl rounded-lg overflow-hidden"
-      style={{ height: "500px" }}
+      className="flex flex-col w-full bg-white shadow-xl rounded-lg overflow-hidden flex-grow"
+      style={{ height: "600px" }}
     >
       <div
         className={`flex flex-col flex-grow p-4 overflow-y-auto ${
