@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 
 const Hero = (): JSX.Element => {
   const [opacity, setOpacity] = useState(1);
@@ -31,7 +32,8 @@ const Hero = (): JSX.Element => {
         </h1>
       </div>
 
-      <div
+      <Link
+        href="#chat"
         className="animate-bounce mb-5 flex flex-col items-center justify-center"
         style={{ opacity }}
       >
@@ -50,7 +52,7 @@ const Hero = (): JSX.Element => {
             d="M6 9l6 6 6-6"
           />
         </svg>
-      </div>
+      </Link>
     </div>
   );
 };
