@@ -9,7 +9,7 @@ type ProjectsProps = {
 const Projects = ({ projectsPerPage }: ProjectsProps): JSX.Element => {
   const projects: Project[] = [
     {
-      title: "Cookie",
+      title: "Cookie - Dynamic Cookbook",
       description: "Better cooking through ml and graph theory. Recipe customization, ingredient substitution, realtime custom interactive steps.",
       image: "/images/cookie.webp",
       ghLink: "UpperMountain/dynamic-cookbook",
@@ -24,6 +24,7 @@ const Projects = ({ projectsPerPage }: ProjectsProps): JSX.Element => {
       title: "NeRF 3D Reconstruction",
       description: "An video to AR 3D reconstruction pipeline using Neural Radiance Fields. A deep learning model predicts scene radiance for a volumetric renderer.",
       image: "/images/nerf.webp",
+      ghLink: "AaronCGoidel/NeRF",
     },
     {
       title: "AaronAI",
