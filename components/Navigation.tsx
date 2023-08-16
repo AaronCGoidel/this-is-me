@@ -40,7 +40,7 @@ const Navigation = (): JSX.Element => {
   return (
     <nav className={styles.navbar}>
       <div
-        className={`text-heading ${styles.menuIcon}`}
+        className={`text-heading rounded-full p-3 shadow-md bg-white ${styles.menuIcon}`}
         onClick={() => setIsOpen(!isOpen)}
       >
         {isOpen ? <FaTimes /> : <FaBars />}

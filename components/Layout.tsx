@@ -9,7 +9,7 @@ type LayoutProps = {
 const Layout = ({ children, id }: LayoutProps): JSX.Element => {
   return (
     <div id={`${id}`} className="h-screen w-screen">
-      <header>
+      <header className="md:relative fixed z-10">
         <div className="max-w-5xl px-8 mx-auto">
           <div className="flex items-center justify-between py-6">
             <Navigation />

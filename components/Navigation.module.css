@@ -26,14 +26,15 @@
   opacity: 0;
   transition: transform 0.3s ease-in-out;
   transform: translateX(100%);
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   width: 100vw;
   background-color: #fff;
   flex-wrap: wrap;
   align-items: flex-end;
-  padding-top: 3rem;
+  padding: 1rem;
+  padding-top: 5rem;
   padding-bottom: 2rem;
 
   justify-content: center;
