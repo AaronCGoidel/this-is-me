@@ -19,7 +19,7 @@ const getAllFiles = async () => {
   const mdFiles = projectFiles
     .filter((file) => file.endsWith(".md"))
     .map((file) => path.join("projects", file));
-  return ["bio.md", "resume.md", "profile.md", ...mdFiles];
+  return ["bio.md", "resume.md", "profile.md", "birthday.md", ...mdFiles];
 };
 
 const chunkText = (text) => {
@@ -82,6 +82,9 @@ const main = async () => {
     for (let idx = 0; idx < chunkEmbeddings.length; idx++) {
       const vec = chunkEmbeddings[idx];
       const {sentence, paragraph} = chunkedFileContents[file][idx];
+      if (sentence.trim() === "") {
+        continue;
+      }
       const key = `${file}-${idx}`;
       console.log(`Adding vector for ${key}`);
       const upsertRequest = {
@@ -94,6 +97,7 @@ const main = async () => {
         ],
       };
       await index.upsert({ upsertRequest });
+      // await index.delete1({ids: [key]});
     }
   }
 };

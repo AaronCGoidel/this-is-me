@@ -46,7 +46,7 @@ export default async function handler(req, res) {
 
   console.log("[MODEL] Prompting model with:\n", prompt);
 
-  const model_id = "2a7f981751ec7fdf87b5b91ad4db53683a98082e9ff7bfd12c8cd5ea85980a52"
+  const model_id = "7b0bfc9aff140d5b75bacbed23e91fd3c34b01a1e958d32132de6e0a19796e2c"
 
   try {
     const prediction = await replicate.predictions.create({
@@ -55,7 +55,7 @@ export default async function handler(req, res) {
       input: {
         system_prompt,
         prompt,
-        max_new_tokens: 150,
+        max_new_tokens: 175,
         temperature: 0.7,
         top_p: 1,
         top_k: 20,

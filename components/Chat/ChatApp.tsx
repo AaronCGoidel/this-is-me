@@ -47,11 +47,11 @@ const ChatApp = ({}) => {
       return;
     }
 
-    const lookupKnowledge = async (query) => {
+    const lookupKnowledge = async (query, n) => {
       console.log(`Looking up knowledge for "${query}"...`);
 
       try {
-        const res = await fetch(`/api/search?query=${query}`);
+        const res = await fetch(`/api/search?query=${encodeURIComponent(query)}&n=${n}`);
         const data = await res.json();
 
         return data;
@@ -74,7 +74,12 @@ const ChatApp = ({}) => {
         .slice(-4);
       console.log("chatHistory:", chatHistory);
 
-      const knowledge = await lookupKnowledge(userPrompt);
+      let knowledge = await lookupKnowledge(userPrompt, 8);
+      if (chatHistory.length > 0) {
+        const last_message = chatHistory[chatHistory.length - 1];
+        const last_message_knowledge = await lookupKnowledge(last_message, 3);
+        knowledge = [...knowledge, ...last_message_knowledge];
+      }
       console.log("knowledge:", knowledge);
 
       try {
@@ -101,7 +106,6 @@ const ChatApp = ({}) => {
           if (response.status !== 200) {
             throw new Error(prediction.detail);
           }
-          console.log({ prediction });
         }
 
         const newMessage = {

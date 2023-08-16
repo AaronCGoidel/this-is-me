@@ -26,13 +26,14 @@ const INDEX_NAME = "aaronai-kb";
 const searchHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
     const query = req.query.query;
-
     if (!query || typeof query !== "string") {
       res
         .status(400)
         .json({ error: "Query parameter is missing or not a string" });
       return;
     }
+    const num_results_int = parseInt(req.query.n as string);
+    const n = isNaN(num_results_int) ? 8 : num_results_int;
 
     if (!extractor) {
       extractor = await PipelineSingleton.getInstance();
@@ -57,7 +58,7 @@ const searchHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const queryRequest = {
       vector: Array.from(features.data) as number[],
-      topK: 10,
+      topK: n,
       includeValues: true,
       includeMetadata: true,
     };

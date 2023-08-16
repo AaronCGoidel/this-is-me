@@ -15,7 +15,7 @@ const Chat = (): JSX.Element => {
       </div>
       {/* add note */}
       <div className="flex flex-col justify-center items-center md:flex-row">
-        <p className="text-xs text-gray-500 mt-3">*This chatbot may provide inaccurate information, break character, fail to finish a thought, or otherwise behave unexpectedly.</p>
+        <p className="text-xs text-gray-500 mt-3">*This chatbot may occasionally provide inaccurate information, break character, fail to finish a thought, or otherwise behave unexpectedly.</p>
       </div>
     </div>
   );
