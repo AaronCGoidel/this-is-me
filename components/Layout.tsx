@@ -16,7 +16,7 @@ const Layout = ({ children, id }: LayoutProps): JSX.Element => {
           </div>
         </div>
       </header>
-      <main>
+      <main className="pt-16 md:pt-0">
         <div className="max-w-5xl px-8 py-4 mx-auto">{children}</div>
       </main>
 
