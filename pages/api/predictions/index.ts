@@ -46,7 +46,7 @@ export default async function handler(req, res) {
 
   console.log("[MODEL] Prompting model with:\n", prompt);
 
-  const model_id = "7b0bfc9aff140d5b75bacbed23e91fd3c34b01a1e958d32132de6e0a19796e2c"
+  const model_id = "9dff94b1bed5af738655d4a7cbcdcde2bd503aa85c94334fe1f42af7f3dd5ee3"
 
   try {
     const prediction = await replicate.predictions.create({
