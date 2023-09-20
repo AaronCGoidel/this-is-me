@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";
-import LoadingMessage from "./Loading"
+import LoadingMessage from "./Loading";
+import { v4 as uuidv4 } from "uuid";
+
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const ChatApp = ({}) => {
@@ -13,8 +15,9 @@ const ChatApp = ({}) => {
 
   const [messages, setMessages] = useState([...initialMessages]);
   const [awaitingResponse, setAwaitingResponse] = useState(false);
-
+  const chatId = uuidv4();  
   const messagesEndRef = useRef(null);
+
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({
@@ -28,8 +31,11 @@ const ChatApp = ({}) => {
     if (messages.length > initialMessages.length) scrollToBottom();
   }, [messages]);
 
-  const handleNewUserMessage = (content) => {
-    if (awaitingResponse) {
+  const limit = 10;
+  const overLimit = messages.length >= limit;
+
+  const handleNewUserMessage = async (content) => {
+    if (awaitingResponse || overLimit) {
       return;
     }
 
@@ -51,7 +57,9 @@ const ChatApp = ({}) => {
       console.log(`Looking up knowledge for "${query}"...`);
 
       try {
-        const res = await fetch(`/api/search?query=${encodeURIComponent(query)}&n=${n}`);
+        const res = await fetch(
+          `/api/search?query=${encodeURIComponent(query)}&n=${n}`
+        );
         const data = await res.json();
 
         return data;
@@ -74,7 +82,7 @@ const ChatApp = ({}) => {
         .slice(-4);
       console.log("chatHistory:", chatHistory);
 
-      let knowledge = await lookupKnowledge(userPrompt, 8);
+      let knowledge = await lookupKnowledge(userPrompt, 4);
       if (chatHistory.length > 0) {
         const last_message = chatHistory[chatHistory.length - 1];
         const last_message_knowledge = await lookupKnowledge(last_message, 3);
@@ -92,8 +100,20 @@ const ChatApp = ({}) => {
             user_prompt: userPrompt,
             chat_history: chatHistory,
             knowledge: knowledge,
+            chat_id: chatId,
           }),
         });
+
+        if (response.status === 429) {
+          // Too many requests send message to user
+          const newMessage = {
+            content: "I'm sorry, I'm overwhelmed with requests right now. Please try again later.",
+            isReceived: true,
+          };
+          setAwaitingResponse(false);
+          setMessages((prevMessages) => [...prevMessages, newMessage]);
+          throw new Error(response.statusText);
+        }
         let prediction = await response.json();
 
         while (
@@ -114,7 +134,6 @@ const ChatApp = ({}) => {
         };
 
         setAwaitingResponse(false);
-
         setMessages((prevMessages) => [...prevMessages, newMessage]);
         console.log("prediction:", prediction);
       } catch (error) {
@@ -131,11 +150,21 @@ const ChatApp = ({}) => {
       className="flex flex-col w-full bg-white shadow-xl rounded-lg overflow-hidden flex-grow"
       style={{ height: "600px" }}
     >
+      <p>
+          <span
+            className={`text-gray-500 text-sm absolute bg-white rounded-md p-1 shadow-md ml-2 mt-1 ${
+              overLimit ? "text-red-500" : ""
+            }`}
+          >
+            {messages.length} / {limit}
+          </span>
+        </p>
       <div
         className={`flex flex-col flex-grow p-4 overflow-y-auto ${
           messages.length == 0 ? "justify-center" : undefined
         }`}
       >
+        
         {messages.length == 0 && (
           <h2 className="text-center text-gray-400">Say hello!</h2>
         )}
@@ -146,7 +175,8 @@ const ChatApp = ({}) => {
             content={message.content}
           />
         ))}
-        {awaitingResponse && <LoadingMessage isReceived={true} />}  {/* This line is added */}
+        {awaitingResponse && <LoadingMessage isReceived={true} />}{" "}
+        {/* This line is added */}
         <div ref={messagesEndRef}></div>
       </div>
       <div className="flex flex-row flex-wrap justify-center">
@@ -154,7 +184,7 @@ const ChatApp = ({}) => {
           <button
             className="border-gray-500 border text-gray-500 py-2 px-2 rounded m-2 text-sm hover:bg-gray-200 hover:text-gray-700 hover:border-gray-700"
             key={index}
-            onClick={() => handleNewUserMessage(prompt)}
+            onClick={async () => {await handleNewUserMessage(prompt);}}
           >
             {prompt}
           </button>
@@ -163,6 +193,7 @@ const ChatApp = ({}) => {
       <ChatInput
         awaitingResponse={awaitingResponse}
         onSend={handleNewUserMessage}
+        disabled={overLimit}
       />
     </div>
   );

@@ -4,9 +4,10 @@ import { FaPaperPlane } from "react-icons/fa";
 type ChatInputProps = {
   onSend: (content: string) => void;
   awaitingResponse: boolean;
+  disabled: boolean;
 };
 
-const ChatInput = ({ onSend, awaitingResponse }: ChatInputProps) => {
+const ChatInput = ({ onSend, awaitingResponse, disabled }: ChatInputProps) => {
   const [inputValue, setInputValue] = useState("");
 
   const handleSend = () => {
@@ -37,7 +38,7 @@ const ChatInput = ({ onSend, awaitingResponse }: ChatInputProps) => {
           />
 
           <button
-            className="flex items-center justify-center h-10 w-20 rounded-md bg-primary hover:bg-primary-dark text-white focus:outline-none focus:ring-2 focus:ring-primary"
+            className={`flex items-center justify-center h-10 w-20 rounded-md ${disabled ? "bg-gray-300 cursor-not-allowed" : "bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary"}  text-white `}
             onClick={handleSend}
           >
             <FaPaperPlane />
