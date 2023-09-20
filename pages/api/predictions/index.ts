@@ -6,13 +6,13 @@ const replicate = new Replicate({
 });
 
 const limiter = rateLimit({
-  interval: 10 * 60 * 1000, // 10 minutes
+  interval: 20 * 60 * 1000, // 20 minutes
   uniqueTokenPerInterval: 500, // Max 500 users per second
 })
 
 export default async function handler(req, res) {
   try {
-    await limiter.check(res, 10, 'CACHE_TOKEN');
+    await limiter.check(res, 8, 'CACHE_TOKEN');
 
     if (!process.env.REPLICATE_API_TOKEN) {
       throw new Error(
