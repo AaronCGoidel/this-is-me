@@ -12,7 +12,7 @@ const limiter = rateLimit({
 
 export default async function handler(req, res) {
   try {
-    await limiter.check(res, 8, 'CACHE_TOKEN');
+    await limiter.check(res, 24, 'CACHE_TOKEN');
 
     if (!process.env.REPLICATE_API_TOKEN) {
       throw new Error(
