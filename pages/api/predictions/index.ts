@@ -1,5 +1,5 @@
 import Replicate from "replicate";
-import rateLimit from "../../../lib/rateLimit";
+import rateLimit from "../../../utils/rateLimit";
 
 const replicate = new Replicate({
   auth: process.env.REPLICATE_API_TOKEN,
@@ -54,7 +54,7 @@ export default async function handler(req, res) {
     console.log("[MODEL] Prompting model with:\n", prompt);
 
     const model_id =
-      "9dff94b1bed5af738655d4a7cbcdcde2bd503aa85c94334fe1f42af7f3dd5ee3";
+      "f4e2de70d66816a838a89eeeb621910adffb0dd0baba3976c96980970978018d";
 
     try {
       const prediction = await replicate.predictions.create({
