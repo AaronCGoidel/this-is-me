@@ -15,7 +15,7 @@ const About = (): JSX.Element => {
       <p>I've worked with some fantastic organizations</p>
       <ul>
         <li>
-          At NASA, I contributed to launch software for the groundbraeaking Artemis program.
+          At NASA, I contributed to launch software for the groundbreaking Artemis program.
         </li>
         <li>
           While at MLabs, I developed tools and smart contracts for financial tech on the Cardano blockchain.
