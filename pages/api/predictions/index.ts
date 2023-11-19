@@ -53,8 +53,8 @@ export default async function handler(req, res) {
 
     console.log("[MODEL] Prompting model with:\n", prompt);
 
-    const model_id =
-      "f4e2de70d66816a838a89eeeb621910adffb0dd0baba3976c96980970978018d";
+    const model_id = process.env.REPLICATE_MODEL_ID ||
+      "f4e2de70d66816a838a89eeeb621910adffb0dd0baba3976c96980970978018d"; // llama-2-13B-chat
 
     try {
       const prediction = await replicate.predictions.create({
@@ -70,6 +70,7 @@ export default async function handler(req, res) {
           repetition_penalty_sustain: 256,
           token_repetition_penalty_decay: 128,
         },
+        stream: true,
       });
 
       console.log("[MODEL] Response:\n", prediction);

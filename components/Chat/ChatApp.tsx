@@ -15,9 +15,9 @@ const ChatApp = ({}) => {
 
   const [messages, setMessages] = useState([...initialMessages]);
   const [awaitingResponse, setAwaitingResponse] = useState(false);
-  const chatId = uuidv4();  
+  const [streaming, setStreaming] = useState(false);
+  const chatId = uuidv4();
   const messagesEndRef = useRef(null);
-
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({
@@ -49,7 +49,7 @@ const ChatApp = ({}) => {
   };
 
   useEffect(() => {
-    if (!awaitingResponse) {
+    if (!awaitingResponse || streaming) {
       return;
     }
 
@@ -104,38 +104,49 @@ const ChatApp = ({}) => {
           }),
         });
 
-        if (response.status === 429) {
-          // Too many requests send message to user
+        const prediction = await response.json();
+
+        if (prediction && prediction.urls && prediction.urls.stream) {
+          console.log("Streaming predictions...");
+          setStreaming(true);
           const newMessage = {
-            content: "I'm sorry, I'm overwhelmed with requests right now. Please try again later.",
+            content: "",
             isReceived: true,
           };
-          setAwaitingResponse(false);
           setMessages((prevMessages) => [...prevMessages, newMessage]);
-          throw new Error(response.statusText);
+          setAwaitingResponse(false);
+          const source = new EventSource(prediction.urls.stream, {
+            withCredentials: true,
+          });
+
+          source.addEventListener("output", (e) => {
+            const streamedData = e.data;
+
+            setMessages((prevMessages) => {
+              // we want to update the last message with the new streamed data
+              const lastMessage = prevMessages[prevMessages.length - 1];
+              const updatedLastMessage = {
+                ...lastMessage,
+                content: lastMessage.content + streamedData,
+              };
+
+              return [
+                ...prevMessages.slice(0, prevMessages.length - 1),
+                updatedLastMessage,
+              ];
+            });
+          });
+
+          source.addEventListener("error", (e) => {
+            console.error("Streaming error", e);
+          });
+
+          source.addEventListener("done", (e) => {
+            source.close();
+            setStreaming(false);
+            setAwaitingResponse(false);
+          });
         }
-        let prediction = await response.json();
-
-        while (
-          prediction.status !== "succeeded" &&
-          prediction.status !== "failed"
-        ) {
-          await sleep(1000);
-          const response = await fetch("/api/predictions/" + prediction.id);
-          prediction = await response.json();
-          if (response.status !== 200) {
-            throw new Error(prediction.detail);
-          }
-        }
-
-        const newMessage = {
-          content: prediction.output.join(""),
-          isReceived: true,
-        };
-
-        setAwaitingResponse(false);
-        setMessages((prevMessages) => [...prevMessages, newMessage]);
-        console.log("prediction:", prediction);
       } catch (error) {
         console.error(error);
       }
@@ -151,20 +162,19 @@ const ChatApp = ({}) => {
       style={{ height: "600px" }}
     >
       <p>
-          <span
-            className={`text-gray-500 text-sm absolute bg-white rounded-md p-1 shadow-md ml-2 mt-1 ${
-              overLimit ? "text-red-500" : ""
-            }`}
-          >
-            {messages.length} / {limit}
-          </span>
-        </p>
+        <span
+          className={`text-gray-500 text-sm absolute bg-white rounded-md p-1 shadow-md ml-2 mt-1 ${
+            overLimit ? "text-red-500" : ""
+          }`}
+        >
+          {messages.length} / {limit}
+        </span>
+      </p>
       <div
         className={`flex flex-col flex-grow p-4 overflow-y-auto ${
           messages.length == 0 ? "justify-center" : undefined
         }`}
       >
-        
         {messages.length == 0 && (
           <h2 className="text-center text-gray-400">Say hello!</h2>
         )}
@@ -176,7 +186,6 @@ const ChatApp = ({}) => {
           />
         ))}
         {awaitingResponse && <LoadingMessage isReceived={true} />}{" "}
-        {/* This line is added */}
         <div ref={messagesEndRef}></div>
       </div>
       <div className="flex flex-row flex-wrap justify-center">
@@ -184,7 +193,9 @@ const ChatApp = ({}) => {
           <button
             className="border-gray-500 border text-gray-500 py-2 px-2 rounded m-2 text-sm hover:bg-gray-200 hover:text-gray-700 hover:border-gray-700"
             key={index}
-            onClick={async () => {await handleNewUserMessage(prompt);}}
+            onClick={async () => {
+              await handleNewUserMessage(prompt);
+            }}
           >
             {prompt}
           </button>
