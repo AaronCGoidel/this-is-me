@@ -7,21 +7,33 @@ import {
   FaTimes,
   FaEnvelope,
   FaGripHorizontal,
+  FaGithub,
+  FaLinkedin,
 } from "react-icons/fa";
 import styles from "./Navigation.module.css";
 
 const Navigation = (): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleLinkClick = (e, href) => {
+  type Link = {
+    icon: JSX.Element;
+    text: string;
+    href: string;
+    external?: boolean;
+  };
+
+  const handleLinkClick = (e, link: Link) => {
+    if (link.external) {
+      return;
+    }
     e.preventDefault();
-    const element = document.querySelector(href);
+    const element = document.querySelector(link.href);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
   };
 
-  const links = [
+  const links: Link[] = [
     { icon: <FaHome className="mr-2" />, text: "Home", href: "#home" },
     { icon: <FaCommentDots className="mr-2" />, text: "Chat", href: "#chat" },
     { icon: <FaInfoCircle className="mr-2" />, text: "About", href: "#about" },
@@ -34,6 +46,18 @@ const Navigation = (): JSX.Element => {
       icon: <FaEnvelope className="mr-2" />,
       text: "Contact/Résumé",
       href: "#contact",
+    },
+    {
+      icon: <FaGithub className="mr-2" />,
+      text: "Github",
+      href: "https://github.com/aaroncgoidel/",
+      external: true,
+    },
+    {
+      icon: <FaLinkedin className="mr-2" />,
+      text: "LinkedIn",
+      href: "https://www.linkedin.com/in/aaroncgoidel/",
+      external: true,
     },
   ];
 
@@ -51,8 +75,9 @@ const Navigation = (): JSX.Element => {
           <a
             className="pr-6 py-4 text-content hover:text-hover inline-flex items-center"
             href={link.href}
-            onClick={(e) => handleLinkClick(e, link.href)}
+            onClick={(e) => handleLinkClick(e, link)}
             key={index}
+            target={link.external ? "_blank" : undefined}
           >
             {link.icon} {link.text}
           </a>
@@ -64,7 +89,7 @@ const Navigation = (): JSX.Element => {
           <a
             className="pr-6 py-4 text-content hover:text-hover inline-flex items-center"
             href={link.href}
-            onClick={(e) => handleLinkClick(e, link.href)}
+            onClick={(e) => handleLinkClick(e, link)}
             key={index}
           >
             {link.icon} {link.text}

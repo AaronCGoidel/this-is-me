@@ -21,12 +21,24 @@ const Layout = ({ children, id }: LayoutProps): JSX.Element => {
       </main>
 
       <footer className="py-8">
-        <div className="max-w-5xl px-8 mx-auto">
+        <div className="max-w-5xl px-8 mx-auto flex">
           <a
-            className="text-content hover:text-hover"
+            className="text-content hover:text-hover mr-4"
             href="https://aarongoidel.com"
           >
             Aaron Goidel
+          </a>
+          <a
+            className="text-content hover:text-hover mr-4"
+            href="https://github.com/aaroncgoidel/"
+          >
+            Github
+          </a>
+          <a
+            className="text-content hover:text-hover"
+            href="https://www.linkedin.com/in/aaroncgoidel/"
+          >
+            LinkedIn
           </a>
         </div>
       </footer>
