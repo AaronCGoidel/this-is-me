@@ -9,13 +9,16 @@ const Chat = (): JSX.Element => {
         className="flex flex-col justify-center items-center md:flex-row"
       >
         <div className="md:w-2/5 w-3/5">
-          <img src="/acg head.png"/>
+          <img src="/acg head.png" />
         </div>
         <ChatApp />
       </div>
-      {/* add note */}
+      {/* disclaimer */}
       <div className="flex flex-col justify-center items-center md:flex-row">
-        <p className="text-xs text-gray-500 mt-3">*This chatbot may occasionally provide inaccurate information, break character, fail to finish a thought, or otherwise behave unexpectedly.</p>
+        <p className="text-xs text-gray-500 mt-3">
+          *This chatbot may occasionally provide inaccurate information, break
+          character, fail to finish a thought, or otherwise behave unexpectedly.
+        </p>
       </div>
     </div>
   );

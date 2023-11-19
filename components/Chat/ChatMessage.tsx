@@ -1,5 +1,5 @@
 import React from "react";
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown from "react-markdown";
 
 const ChatMessage = ({ isReceived, content }) => {
   const messageClass = isReceived ? "max-w-xs" : "max-w-xs ml-auto justify-end";
@@ -8,11 +8,17 @@ const ChatMessage = ({ isReceived, content }) => {
     : "bg-primary text-white p-3 rounded-l-lg rounded-br-lg";
 
   const color = isReceived ? "text-black" : "text-white";
-  const codeColor = isReceived ? "border-primary text-black" : "border-white text-white";
+  const codeColor = isReceived
+    ? "border-primary text-black"
+    : "border-white text-white";
 
   const markdownComponents = {
     a: ({ node, ...props }) => (
-      <a {...props} className={`${color} underline decoration-dashed`} target="_blank" />
+      <a
+        {...props}
+        className={`${color} underline decoration-dashed`}
+        target="_blank"
+      />
     ),
     h1: ({ node, ...props }) => (
       <h1 {...props} className={`${color} text-xl font-bold my-2`} />
@@ -23,15 +29,14 @@ const ChatMessage = ({ isReceived, content }) => {
     h3: ({ node, ...props }) => (
       <h3 {...props} className={`${color} text-base font-bold my-2`} />
     ),
-    p: ({ node, ...props }) => (
-      <p {...props} className={`${color}`} />
-    ),
+    p: ({ node, ...props }) => <p {...props} className={`${color}`} />,
     pre: ({ node, ...props }) => (
-      <pre {...props} className={`${codeColor} bg-gray-200 text-sm p-1 border-2 rounded`} />
+      <pre
+        {...props}
+        className={`${codeColor} bg-gray-200 text-sm p-1 border-2 rounded`}
+      />
     ),
-    li: ({ node, ...props }) => (
-      <li {...props} className={`my-2`} />
-    ),
+    li: ({ node, ...props }) => <li {...props} className={`my-2`} />,
   };
 
   return (

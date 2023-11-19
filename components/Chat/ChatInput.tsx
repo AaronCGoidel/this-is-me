@@ -31,14 +31,18 @@ const ChatInput = ({ onSend, awaitingResponse, disabled }: ChatInputProps) => {
           <input
             className="flex items-center h-10 w-full rounded px-3 text-sm focus:outline-none"
             type="text"
-            placeholder="Ask AaronAI…"
+            placeholder={disabled ? "Message limit reached." : "Ask AaronAI…"}
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={handleKeyPress}
           />
 
           <button
-            className={`flex items-center justify-center h-10 w-20 rounded-md ${disabled ? "bg-gray-300 cursor-not-allowed" : "bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary"}  text-white `}
+            className={`flex items-center justify-center h-10 w-20 rounded-md ${
+              disabled
+                ? "bg-gray-300 cursor-not-allowed"
+                : "bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary"
+            }  text-white `}
             onClick={handleSend}
           >
             <FaPaperPlane />
