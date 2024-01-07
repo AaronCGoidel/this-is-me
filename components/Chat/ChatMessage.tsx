@@ -2,12 +2,12 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 
 const ChatMessage = ({ isReceived, content }) => {
-  const messageClass = isReceived ? "max-w-xs" : "max-w-xs ml-auto justify-end";
+  const messageClass = isReceived ? "max-w-2xl" : "max-w-2xl ml-auto justify-end";
   const bubbleClass = isReceived
-    ? "bg-gray-200 p-3 rounded-r-lg rounded-bl-lg"
-    : "bg-primary text-white p-3 rounded-l-lg rounded-br-lg";
+    ? "p-3 rounded-r-lg rounded-bl-lg"
+    : "text-white p-3 rounded-l-lg rounded-br-lg";
 
-  const color = isReceived ? "text-black" : "text-white";
+  const color = isReceived ? "text-white" : "text-white";
   const codeColor = isReceived
     ? "border-primary text-black"
     : "border-white text-white";
@@ -29,7 +29,7 @@ const ChatMessage = ({ isReceived, content }) => {
     h3: ({ node, ...props }) => (
       <h3 {...props} className={`${color} text-base font-bold my-2`} />
     ),
-    p: ({ node, ...props }) => <p {...props} className={`${color}`} />,
+    p: ({ node, ...props }) => <p {...props} className={`${color} text-3xl`} />,
     pre: ({ node, ...props }) => (
       <pre
         {...props}

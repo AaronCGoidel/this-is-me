@@ -40,7 +40,7 @@ const main = async () => {
   const pinecone = new PineconeClient();
   await pinecone.init({
     apiKey:
-      process.env.PINECONE_API_KEY,
+      "13183aa4-cec7-4e7a-97ca-9708af445b30",
     environment: "gcp-starter",
   });
 

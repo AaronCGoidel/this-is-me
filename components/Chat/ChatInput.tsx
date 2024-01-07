@@ -25,11 +25,11 @@ const ChatInput = ({ onSend, awaitingResponse, disabled }: ChatInputProps) => {
   };
 
   return (
-    <div className="flex items-center h-16 w-full border-t border-primary p-4">
+    <div className="flex items-center justify-center h-16 w-full p-4">
       {!awaitingResponse ? (
         <>
           <input
-            className="flex items-center h-10 w-full rounded px-3 text-sm focus:outline-none"
+            className="flex items-center h-12 rounded px-3 text-lg focus:outline-none bg-inherit w-3/5 text-white"
             type="text"
             placeholder={disabled ? "Message limit reached." : "Ask AaronAI…"}
             value={inputValue}
@@ -41,7 +41,7 @@ const ChatInput = ({ onSend, awaitingResponse, disabled }: ChatInputProps) => {
             className={`flex items-center justify-center h-10 w-20 rounded-md ${
               disabled
                 ? "bg-gray-300 cursor-not-allowed"
-                : "bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary"
+                : "ring-white hover:bg-primary-dark focus:outline-none ring-1 focus:ring-primary"
             }  text-white `}
             onClick={handleSend}
           >
@@ -49,7 +49,7 @@ const ChatInput = ({ onSend, awaitingResponse, disabled }: ChatInputProps) => {
           </button>
         </>
       ) : (
-        <div className="flex items-center h-10 w-full rounded px-3 text-sm focus:outline-none text-gray-400">
+        <div className="flex items-center h-10 w-full rounded px-3 text-sm focus:outline-none ">
           <p>Waiting for response...</p>
         </div>
       )}

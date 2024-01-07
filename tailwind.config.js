@@ -12,6 +12,8 @@ module.exports = {
         primary: "#13B0F5",
         secondary: "#E70FAA",
         hover: "#13B0F5",
+        text: "#FFFFFF",
+        background: "#0b0317",
       },
       height: { half: "50vh" },
       fontFamily: {

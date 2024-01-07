@@ -1,11 +1,7 @@
 import Layout from "../components/Layout";
 import Head from "next/head";
 import { useEffect, useState, useRef } from "react";
-import Projects from "../components/sections/Projects";
-import Contact from "../components/sections/Contact";
-import About from "../components/sections/About";
-import Chat from "../components/sections/Chat";
-import Hero from "../components/sections/Hero";
+import ChatBot from "../components/Chat/ChatBot";
 
 export default function Index(props) {
   const [offsetY, setOffsetY] = useState(0);
@@ -47,15 +43,9 @@ export default function Index(props) {
         <meta name="language" content="English" />
         <link rel="icon" href="/aa.png" />
       </Head>
-      <Layout id="home">
-        <Hero />
-
-        <Chat />
-
-        <About />
-        <Projects projectsPerPage={projectsPerPage} />
-        <Contact />
-      </Layout>
+      <div className="w-screen h-screen">
+        <ChatBot />
+      </div>
     </>
   );
 }
