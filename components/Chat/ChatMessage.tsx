@@ -36,7 +36,7 @@ const ChatMessage = ({ isReceived, content }) => {
         className={`${codeColor} bg-gray-200 text-sm p-1 border-2 rounded`}
       />
     ),
-    li: ({ node, ...props }) => <li {...props} className={`my-2`} />,
+    li: ({ node, ...props }) => <li {...props} className={`${color} my-2`} />,
   };
 
   return (
