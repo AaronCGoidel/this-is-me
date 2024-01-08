@@ -29,7 +29,7 @@ const ChatInput = ({ onSend, awaitingResponse, disabled }: ChatInputProps) => {
       {!awaitingResponse ? (
         <>
           <input
-            className="flex items-center h-12 rounded px-3 text-lg focus:outline-none bg-inherit w-3/5 text-white"
+            className="flex items-center h-12 rounded px-3 text-lg focus:outline-none bg-inherit w-full md:w-3/5 text-white ring-1 ring-white mr-4"
             type="text"
             placeholder={disabled ? "Message limit reached." : "Ask AaronAI…"}
             value={inputValue}
@@ -38,7 +38,7 @@ const ChatInput = ({ onSend, awaitingResponse, disabled }: ChatInputProps) => {
           />
 
           <button
-            className={`flex items-center justify-center h-10 w-20 rounded-md ${
+            className={`flex items-center justify-center h-12 w-20 rounded-md ${
               disabled
                 ? "bg-gray-300 cursor-not-allowed"
                 : "ring-white hover:bg-primary-dark focus:outline-none ring-1 focus:ring-primary"

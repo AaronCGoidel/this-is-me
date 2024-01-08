@@ -203,10 +203,10 @@ const ChatBot = ({}) => {
       </div>
 
       <div className="flex justify-center">
-        <div className="md:grid md:grid-cols-2 gap-1 p-4 flex space-x-2 overflow-x-scroll w-full md:w-4/6">
+        <div className="gap-1 p-4 flex space-x-2 overflow-x-scroll w-full md:w-4/6 md:pl-0">
           {example_prompts.map((prompt, index) => (
             <button
-              className="border-gray-500 border text-left text-gray-500 py-6 px-2 rounded m-2 text-sm flex items-center justify-between hover:bg-gray-400 flex-shrink-0 bg-opacity-0 bg-white hover:bg-opacity-25"
+              className="border-gray-500 border text-left text-gray-500 py-6 px-2 rounded text-sm flex items-center justify-between hover:bg-gray-400 flex-shrink-0 bg-opacity-0 bg-white hover:bg-opacity-25"
               key={index}
               onMouseEnter={() => setHoveredPromptIndex(index)}
               onMouseLeave={() => setHoveredPromptIndex(null)}
