@@ -54,7 +54,7 @@ export default async function handler(req, res) {
     console.log("[MODEL] Prompting model with:\n", prompt);
 
     const model_id = process.env.REPLICATE_MODEL_ID ||
-      "meta/llama-2-13b-chat"; // llama-2-13B-chat
+      "f4e2de70d66816a838a89eeeb621910adffb0dd0baba3976c96980970978018d"; // llama-2-13B-chat
 
     try {
       const prediction = await replicate.predictions.create({
