@@ -5,15 +5,7 @@ import { FaGithub, FaRobot, FaUser } from "react-icons/fa";
 import { CardBody, CardContainer, CardItem } from "./ui/3d-card";
 import { ScrollArea } from "./ui/scroll-area";
 import { Embed, EmbedCard, EmbedType } from "./Embeds";
-
-function ChatInput() {
-  return (
-    <div>
-      <Input />
-      <Button />
-    </div>
-  );
-}
+import { ChatInput } from "./ChatInput";
 
 export enum SentBy {
   User,
@@ -71,10 +63,13 @@ interface ChatProps {
 
 export function Chat({ messages }: ChatProps) {
   return (
-    <ScrollArea className="">
-      {messages.map((message, idx) => (
-        <ChatMessage key={idx} message={message} number={idx} />
-      ))}
-    </ScrollArea>
+    <div>
+      <ScrollArea className="px-4 md:px-8">
+        {messages.map((message, idx) => (
+          <ChatMessage key={idx} message={message} number={idx} />
+        ))}
+      </ScrollArea>
+      <ChatInput className="sticky bottom-0" />
+    </div>
   );
 }

@@ -1,11 +1,50 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { FaArrowUp, FaPaperPlane } from "react-icons/fa";
+import { Card, CardContent } from "./ui/card";
 
-export default function ChatInput() {
+const SuggestedPrompt = ({prompt}: {prompt: string}) => {
   return (
-    <div className="flex w-full max-w-sm items-center space-x-2">
-      <Input type="email" placeholder="Email" />
-      <Button type="submit">Subscribe</Button>
+    <Card className="flex justify-center">
+      <CardContent className="flex items-center p-4 w-60 md:max-w-56">
+        <p className="mr-2">{prompt}</p>
+        <Button className="min-h-8 min-w-8 max-w-8 max-h-8 p-0 ml-auto" variant={'outline'}>
+          <FaArrowUp size={12}/>
+        </Button>
+      </CardContent>
+    </Card>
+  );
+};
+
+const SuggestedPrompts = () => {
+  return (
+    <div className="flex md:justify-center overflow-scroll gap-2 md:gap-6 mb-2">
+      <SuggestedPrompt prompt={"Can I have a copy of Aaron's resume?"}/>
+      <SuggestedPrompt prompt={"Who is Aaron?"}/>
+      <SuggestedPrompt prompt={"What are some projects Aaron has worked on?"}/>
+      <SuggestedPrompt prompt={"Write me a haiku about Aaron"}/>
+      <SuggestedPrompt prompt={"Explain what Aaron does for work to a five-year-old"}/>
     </div>
   );
+};
+
+interface ChatInputProps {
+  className?: string;
 }
+
+export const ChatInput = ({ className }: ChatInputProps) => {
+  return (
+    <div className={className}>
+      <SuggestedPrompts />
+      <div
+        className={`flex w-full justify-between py-4 bg-black rounded-xl px-4 border`}
+      >
+        
+        <Input className={`mr-4 h-12`} />
+        <Button className={`h-12 w-16`}>
+          <FaPaperPlane />
+        </Button>
+      </div>
+    </div>
+  );
+};
