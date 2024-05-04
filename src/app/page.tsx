@@ -9,23 +9,26 @@ export default function Home() {
 
   const messages: Message[] = [
     {
-      message_parts: [intro_msg, "erf"],
+      message_parts: [intro_msg, "Hello, World!"],
       sent_by: SentBy.Bot,
       embeds: [
         [
           {
             type: EmbedType.File,
-            id: "foo",
+            id: "Aaron's Resume",
           },
           {
             type: EmbedType.Link,
-            id: "bar",
+            id: "Github Profile",
           },
         ],
       ],
     },
     {
-      message_parts: [intro_msg, "erf"],
+      message_parts: [
+        "Tempor non dolor enim nulla velit nostrud laboris dolore eiusmod pariatur nostrud commodo esse incididunt. Consectetur anim do aute irure duis deserunt commodo cupidatat.",
+        "Enim et laboris in duis occaecat do occaecat ipsum mollit.",
+      ],
       sent_by: SentBy.User,
       embeds: [
         [
@@ -33,9 +36,11 @@ export default function Home() {
             type: EmbedType.Project,
             id: "foo",
           },
+        ],
+        [
           {
             type: EmbedType.Link,
-            id: "bar",
+            id: "Foo Bar",
           },
         ],
       ],

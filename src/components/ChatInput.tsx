@@ -34,17 +34,20 @@ interface ChatInputProps {
 
 export const ChatInput = ({ className }: ChatInputProps) => {
   return (
-    <div className={className}>
+    <div className={`${className}`}>
       <SuggestedPrompts />
       <div
         className={`flex w-full justify-between py-4 bg-black rounded-xl px-4 border`}
       >
         
-        <Input className={`mr-4 h-12`} />
+        <Input className={`mr-4 h-12`} placeholder="Ask AaronAI anything..." />
         <Button className={`h-12 w-16`}>
           <FaPaperPlane />
         </Button>
       </div>
+      <p className="text-xs text-center pt-1">
+        Some of AaronAI's responses may contain inacurate information.
+      </p>
     </div>
   );
 };

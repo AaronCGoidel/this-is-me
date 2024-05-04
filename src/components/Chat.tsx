@@ -1,11 +1,12 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "./ui/card";
+import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import { FaGithub, FaRobot, FaUser } from "react-icons/fa";
 import { CardBody, CardContainer, CardItem } from "./ui/3d-card";
 import { ScrollArea } from "./ui/scroll-area";
 import { Embed, EmbedCard, EmbedType } from "./Embeds";
 import { ChatInput } from "./ChatInput";
+import { FaMeta } from "react-icons/fa6";
 
 export enum SentBy {
   User,
@@ -53,6 +54,12 @@ function ChatMessage({ message, number }: ChatMessageProps) {
         </div>
         {genMessage(message)}
       </CardContent>
+      {message.sent_by === SentBy.Bot && (
+        <CardFooter className="flex justify-end py-0">
+          <FaMeta className="mr-2" />
+          <span className="text-xs">Powered by Llama 3</span>
+        </CardFooter>
+      )}
     </Card>
   );
 }
