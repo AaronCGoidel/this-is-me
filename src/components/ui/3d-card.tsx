@@ -48,10 +48,7 @@ export const CardContainer = ({
   return (
     <MouseEnterContext.Provider value={[isMouseEntered, setIsMouseEntered]}>
       <div
-        className={cn(
-          "py-4 flex",
-          containerClassName
-        )}
+        className={cn("py-3 md:flex", containerClassName)}
         style={{
           perspective: "1000px",
         }}

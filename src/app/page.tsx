@@ -1,8 +1,9 @@
 import ChatInput from "@/components/ChatInput";
-import { Chat, EmbedType, Message, SentBy } from "@/components/Chat";
+import { Chat, Message, SentBy } from "@/components/Chat";
 import { TextGenerate } from "@/components/ui/text-generate";
 import { WavyBackground } from "@/components/ui/wavy-background";
 import Image from "next/image";
+import { EmbedType } from "@/components/Embeds";
 
 export default function Home() {
   const intro_msg =
@@ -15,7 +16,7 @@ export default function Home() {
       embeds: [
         [
           {
-            type: EmbedType.Link,
+            type: EmbedType.File,
             id: "foo",
           },
           {
@@ -43,10 +44,10 @@ export default function Home() {
     },
   ];
   return (
-    <main className="w-screen h-screen">
-      <WavyBackground className="p-4">
+    <main className="w-screen h-screen p-2 md:p-6">
+      {/* <WavyBackground className="p-4"> */}
         <Chat messages={messages} />
-      </WavyBackground>
+      {/* </WavyBackground> */}
     </main>
   );
 }
