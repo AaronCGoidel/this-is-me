@@ -25,7 +25,7 @@ const SuggestedPrompts = () => {
     "What are some projects Aaron has worked on?",
     "Write me a haiku about Aaron",
     "Explain what Aaron does for work to a five-year-old",
-    "Can I have a copy of Aaron\'s resume?",
+    "Can I have a copy of Aaron's resume?",
   ];
   return (
     <div className="flex md:justify-center overflow-scroll gap-2 md:gap-6 mb-2">
@@ -42,8 +42,10 @@ interface ChatInputProps {
 
 export const ChatInput = ({ className }: ChatInputProps) => {
   return (
-    <div className={`${className}`}>
-      <SuggestedPrompts />
+    <div
+      className={`${className} w-screen bg-gradient-to-t from-black via-black to-transparent px-4`}
+    >
+      {/* <SuggestedPrompts /> */}
       <div
         className={`flex w-full justify-between py-4 bg-black rounded-xl px-4 border`}
       >
@@ -52,8 +54,8 @@ export const ChatInput = ({ className }: ChatInputProps) => {
           <FaPaperPlane />
         </Button>
       </div>
-      <p className="text-xs text-center pt-1">
-        {`Some of AaronAI\'s responses may contain inacurate information.`}
+      <p className="text-xs text-center pt-1 text-slate-200/[.5]">
+        {`*AaronAI\'s responses may contain inaccurate information.`}
       </p>
     </div>
   );

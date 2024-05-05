@@ -7,17 +7,7 @@ import { ScrollArea } from "./ui/scroll-area";
 import { Embed, EmbedCard, EmbedType } from "./Embeds";
 import { ChatInput } from "./ChatInput";
 import { FaMeta } from "react-icons/fa6";
-
-export enum SentBy {
-  User,
-  Bot,
-}
-
-export interface Message {
-  message_parts: string[];
-  embeds?: Embed[][];
-  sent_by: SentBy;
-}
+import { Message, SentBy } from "@/lib/messages";
 
 interface ChatMessageProps {
   message: Message;
@@ -31,11 +21,13 @@ function ChatMessage({ message, number }: ChatMessageProps) {
         {message.message_parts.map((message_part, idx) => (
           <div key={idx}>
             <p className="text-2xl mb-2">{message_part}</p>
-            {message.embeds && message.embeds[idx]
-              ? message.embeds[idx].map((embed, idx) => (
+            {message.embeds && message.embeds[idx] ? (
+              <div className="flex flex-wrap gap-4 mt-2">
+                {message.embeds[idx].map((embed, idx) => (
                   <EmbedCard key={idx} embed={embed} />
-                ))
-              : null}
+                ))}
+              </div>
+            ) : null}
           </div>
         ))}
       </div>
@@ -70,8 +62,8 @@ interface ChatProps {
 
 export function Chat({ messages }: ChatProps) {
   return (
-    <div>
-      <ScrollArea className="px-4 md:px-8">
+    <div className="w-full max-h-screen">
+      <ScrollArea className="p-4 md:px-10">
         {messages.map((message, idx) => (
           <ChatMessage key={idx} message={message} number={idx} />
         ))}

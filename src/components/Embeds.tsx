@@ -1,5 +1,6 @@
 import {
   FaArrowRight,
+  FaArrowUp,
   FaFileAlt,
   FaGithub,
   FaHammer,
@@ -10,9 +11,10 @@ import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 
 export enum EmbedType {
-  File,
-  Project,
-  Link,
+  File = "file",
+  Project = "project",
+  Link = "link",
+  Prompt = "prompt",
 }
 
 export interface Embed {
@@ -116,6 +118,32 @@ const ProjectEmbed = ({ embed }: EmbedProps) => {
   );
 };
 
+const suggested_prompts: Record<string, string> = {
+  bio: "Who is Aaron?\nGive me a brief overview of his bio.",
+  projects: "What are some projects Aaron has worked on?",
+  poem: "Write me a haiku about Aaron",
+  eli5: "Explain what Aaron does for work to a five-year-old",
+  resume: "Can I have a copy of Aaron's resume?",
+};
+
+const PromptEmbed = ({ prompt }: { prompt: string }) => {
+  return (
+    <Card className="flex justify-center md:max-w-72 mb-2">
+      <CardContent className="flex items-center p-4 w-60 ">
+        <p className="mr-2">
+          {suggested_prompts[prompt] || "I'm sorry, I don't know that prompt."}
+        </p>
+        <Button
+          className="min-h-8 min-w-8 max-w-8 max-h-8 p-0 ml-auto"
+          variant={"outline"}
+        >
+          <FaArrowUp size={12} />
+        </Button>
+      </CardContent>
+    </Card>
+  );
+};
+
 export const EmbedCard = ({ embed }: EmbedProps) => {
   switch (embed.type) {
     case EmbedType.File:
@@ -124,5 +152,7 @@ export const EmbedCard = ({ embed }: EmbedProps) => {
       return <ProjectEmbed embed={embed} />;
     case EmbedType.Link:
       return <LinkEmbed embed={embed} />;
+    case EmbedType.Prompt:
+      return <PromptEmbed prompt={embed.id} />;
   }
 };
