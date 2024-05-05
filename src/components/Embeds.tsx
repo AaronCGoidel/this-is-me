@@ -42,7 +42,7 @@ const FileEmbed = ({ embed }: EmbedProps) => {
       <CardItem translateZ={40} rotateX={-5} rotateY={20}>
         <FaFileAlt className="mr-4" size={24} />
       </CardItem>
-      <CardItem translateZ={40} as="p" className="text-lg">
+      <CardItem translateZ={40} as="p" className="text-lg mr-4">
         {embed.id}
       </CardItem>
       <div className="ml-auto">
@@ -62,7 +62,7 @@ const LinkEmbed = ({ embed }: EmbedProps) => {
       <CardItem rotateZ={-10} translateZ={40}>
         <FaLink className="mr-4" size={18} />
       </CardItem>
-      <CardItem translateZ={40} as="p" className="text-lg">
+      <CardItem translateZ={40} as="p" className="text-lg mr-4">
         {embed.id}
       </CardItem>
       <div className="ml-auto">
