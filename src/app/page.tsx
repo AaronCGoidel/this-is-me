@@ -39,7 +39,7 @@ export default function Home() {
     },
   ];
   return (
-    <main className="w-screen h-screen max-h-screen overflow-auto">
+    <main className="w-screen h-screen max-h-dvh overflow-auto">
       <Chat messages={messages} />
     </main>
   );
