@@ -20,9 +20,9 @@ function ChatMessage({ message, number }: ChatMessageProps) {
       <div className="mt-2">
         {message.message_parts.map((message_part, idx) => (
           <div key={idx}>
-            <p className="text-2xl mb-2">{message_part}</p>
+            <p className="text-2xl mb-1 mt-4">{message_part}</p>
             {message.embeds && message.embeds[idx] ? (
-              <div className="flex flex-wrap gap-4 mt-2">
+              <div className="flex flex-wrap gap-4 mt-4">
                 {message.embeds[idx].map((embed, idx) => (
                   <EmbedCard key={idx} embed={embed} />
                 ))}
@@ -62,8 +62,8 @@ interface ChatProps {
 
 export function Chat({ messages }: ChatProps) {
   return (
-    <div className="w-full max-h-screen">
-      <ScrollArea className="p-4 md:px-10">
+    <div className="w-full max-h-dvh">
+      <ScrollArea className="p-4 h-dvh md:px-10">
         {messages.map((message, idx) => (
           <ChatMessage key={idx} message={message} number={idx} />
         ))}
