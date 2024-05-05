@@ -65,11 +65,9 @@ export const parseBotMessageString = (message: string): Message => {
 
   const res: Message = {
     message_parts,
-    embeds,
     sent_by: SentBy.Bot,
+    embeds,
   };
-
-  console.log(res);
 
   return res;
 };

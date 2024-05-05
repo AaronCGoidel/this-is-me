@@ -15,6 +15,7 @@ export default function Home() {
     "Here are some useful links: $!link:github!$ $!link:linkedin!$ Or, you can ask me anything you'd like! Just type your question in the chat box below!";
 
   useEffect(() => {
+    const includeDebug = false;
     const debugMessage: Message = {
       message_parts: [
         "Tempor non dolor enim nulla velit nostrud laboris dolore eiusmod pariatur nostrud commodo esse incididunt. Consectetur anim do aute irure duis deserunt commodo cupidatat.",
@@ -23,6 +24,10 @@ export default function Home() {
       sent_by: SentBy.User,
       embeds: [
         [
+          {
+            type: EmbedType.Project,
+            id: "foo",
+          },
           {
             type: EmbedType.Project,
             id: "foo",
@@ -36,7 +41,12 @@ export default function Home() {
         ],
       ],
     };
-    setMessages([parseBotMessageString(introMessage),]);
+    setMessages([
+      parseBotMessageString(introMessage),
+    ]);
+    if (includeDebug) {
+      setMessages((prev) => [...prev, debugMessage]);
+    }
   }, []);
 
   return (
