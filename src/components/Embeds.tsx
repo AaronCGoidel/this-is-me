@@ -11,13 +11,14 @@ import { CardBody, CardContainer, CardItem } from "./ui/3d-card";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 import { Embed, EmbedType } from "@/lib/knowledgebase/knowledge";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "./ui/tooltip";
+import { Textarea } from "./ui/textarea";
 
 interface EmbedProps {
   embed: Embed;
@@ -123,12 +124,21 @@ const suggested_prompts: Record<string, string> = {
   resume: "Can I have a copy of Aaron's resume?",
 };
 
-const PromptEmbedCard = ({ prompt }: { prompt: string }) => {
+const PromptEmbedCard = ({ prompt_id }: { prompt_id: string }) => {
+  const [prompt, setPrompt] = useState<string>(
+    suggested_prompts[prompt_id] || "Unknown prompt."
+  );
+  const [editing, setEditing] = useState<boolean>(false);
   const EditButton = () => {
     return (
       <Tooltip>
         <TooltipTrigger>
-          <Button variant="outline" size="icon" className="mt-2">
+          <Button
+            variant="outline"
+            size="icon"
+            className="mt-2"
+            onClick={() => setEditing(!editing)}
+          >
             <FaPencilAlt size={12} />
           </Button>
         </TooltipTrigger>
@@ -157,11 +167,16 @@ const PromptEmbedCard = ({ prompt }: { prompt: string }) => {
     <Card className="flex justify-center md:max-w-72 mb-2">
       <CardContent className="flex items-center p-4 w-60 ">
         <TooltipProvider>
-          <p className="mr-2">
-            {suggested_prompts[prompt] ||
-              "I'm sorry, I don't know that prompt."}
-          </p>
-          <div className="flex-col">
+          {editing ? (
+            <Textarea
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+              className="mr-2"
+            />
+          ) : (
+            <p className="mr-2">{prompt}</p>
+          )}
+          <div className="flex flex-col ml-auto">
             <SubmitButton />
             <EditButton />
           </div>
@@ -180,6 +195,6 @@ export const EmbedCard = ({ embed }: EmbedProps) => {
     case EmbedType.link:
       return <LinkEmbedCard embed={embed} />;
     case EmbedType.prompt:
-      return <PromptEmbedCard prompt={embed.id} />;
+      return <PromptEmbedCard prompt_id={embed.id} />;
   }
 };
