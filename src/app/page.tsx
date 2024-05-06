@@ -2,7 +2,7 @@
 import { Chat } from "@/components/Chat";
 import { TextGenerate } from "@/components/ui/text-generate";
 import Image from "next/image";
-import { EmbedType } from "@/components/Embeds";
+import { EmbedType } from "@/lib/knowledgebase/knowledge";
 import { Message, SentBy, parseBotMessageString } from "@/lib/messages";
 import { useEffect, useState } from "react";
 
@@ -25,17 +25,17 @@ export default function Home() {
       embeds: [
         [
           {
-            type: EmbedType.Project,
+            type: EmbedType.project,
             id: "foo",
           },
           {
-            type: EmbedType.Project,
+            type: EmbedType.project,
             id: "foo",
           },
         ],
         [
           {
-            type: EmbedType.Link,
+            type: EmbedType.link,
             id: "Foo Bar",
           },
         ],

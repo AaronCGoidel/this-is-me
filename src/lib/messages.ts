@@ -1,4 +1,4 @@
-import { Embed, EmbedType } from "@/components/Embeds";
+import { Embed, EmbedType } from "@/lib/knowledgebase/knowledge";
 
 export enum SentBy {
   User,
@@ -19,9 +19,7 @@ const parseEmbedString = (embedString: string): Embed[] => {
   while ((match = embedPattern.exec(embedString)) !== null) {
     const [, type, id] = match;
     embeds.push({
-      type: EmbedType[
-        (type.charAt(0).toUpperCase() + type.slice(1)) as keyof typeof EmbedType
-      ],
+      type: EmbedType[type as keyof typeof EmbedType],
       id: id,
     });
   }
@@ -84,12 +82,12 @@ const testParseBotMessageString = () => {
     sent_by: SentBy.Bot,
     embeds: [
       [
-        { type: EmbedType.Prompt, id: "bio" },
-        { type: EmbedType.Prompt, id: "projects" },
+        { type: EmbedType.prompt, id: "bio" },
+        { type: EmbedType.prompt, id: "projects" },
       ],
       [
-        { type: EmbedType.Link, id: "github" },
-        { type: EmbedType.Link, id: "linkedin" },
+        { type: EmbedType.link, id: "github" },
+        { type: EmbedType.link, id: "linkedin" },
       ],
       [],
     ],

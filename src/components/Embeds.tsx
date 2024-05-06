@@ -5,22 +5,19 @@ import {
   FaGithub,
   FaHammer,
   FaLink,
+  FaPencilAlt,
 } from "react-icons/fa";
 import { CardBody, CardContainer, CardItem } from "./ui/3d-card";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
-
-export enum EmbedType {
-  File = "file",
-  Project = "project",
-  Link = "link",
-  Prompt = "prompt",
-}
-
-export interface Embed {
-  type: EmbedType;
-  id: string;
-}
+import { Embed, EmbedType } from "@/lib/knowledgebase/knowledge";
+import { useEffect } from "react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip";
 
 interface EmbedProps {
   embed: Embed;
@@ -36,7 +33,7 @@ const EmbedContainer = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-const FileEmbed = ({ embed }: EmbedProps) => {
+const FileEmbedCard = ({ embed }: EmbedProps) => {
   return (
     <EmbedContainer>
       <CardItem translateZ={40} rotateX={-5} rotateY={20}>
@@ -56,7 +53,7 @@ const FileEmbed = ({ embed }: EmbedProps) => {
   );
 };
 
-const LinkEmbed = ({ embed }: EmbedProps) => {
+const LinkEmbedCard = ({ embed }: EmbedProps) => {
   return (
     <EmbedContainer>
       <CardItem rotateZ={-10} translateZ={40}>
@@ -76,7 +73,7 @@ const LinkEmbed = ({ embed }: EmbedProps) => {
   );
 };
 
-const ProjectEmbed = ({ embed }: EmbedProps) => {
+const ProjectEmbedCard = ({ embed }: EmbedProps) => {
   return (
     <CardContainer className="inter-var">
       <CardBody className="md:w-96 relative group/card">
@@ -126,19 +123,49 @@ const suggested_prompts: Record<string, string> = {
   resume: "Can I have a copy of Aaron's resume?",
 };
 
-const PromptEmbed = ({ prompt }: { prompt: string }) => {
+const PromptEmbedCard = ({ prompt }: { prompt: string }) => {
+  const EditButton = () => {
+    return (
+      <Tooltip>
+        <TooltipTrigger>
+          <Button variant="outline" size="icon" className="mt-2">
+            <FaPencilAlt size={12} />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Edit prompt suggestion</p>
+        </TooltipContent>
+      </Tooltip>
+    );
+  };
+
+  const SubmitButton = () => {
+    return (
+      <Tooltip>
+        <TooltipTrigger>
+          <Button variant="outline" size="icon">
+            <FaArrowUp size={12} />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Send this prompt</p>
+        </TooltipContent>
+      </Tooltip>
+    );
+  };
   return (
     <Card className="flex justify-center md:max-w-72 mb-2">
       <CardContent className="flex items-center p-4 w-60 ">
-        <p className="mr-2">
-          {suggested_prompts[prompt] || "I'm sorry, I don't know that prompt."}
-        </p>
-        <Button
-          className="min-h-8 min-w-8 max-w-8 max-h-8 p-0 ml-auto"
-          variant={"outline"}
-        >
-          <FaArrowUp size={12} />
-        </Button>
+        <TooltipProvider>
+          <p className="mr-2">
+            {suggested_prompts[prompt] ||
+              "I'm sorry, I don't know that prompt."}
+          </p>
+          <div className="flex-col">
+            <SubmitButton />
+            <EditButton />
+          </div>
+        </TooltipProvider>
       </CardContent>
     </Card>
   );
@@ -146,13 +173,13 @@ const PromptEmbed = ({ prompt }: { prompt: string }) => {
 
 export const EmbedCard = ({ embed }: EmbedProps) => {
   switch (embed.type) {
-    case EmbedType.File:
-      return <FileEmbed embed={embed} />;
-    case EmbedType.Project:
-      return <ProjectEmbed embed={embed} />;
-    case EmbedType.Link:
-      return <LinkEmbed embed={embed} />;
-    case EmbedType.Prompt:
-      return <PromptEmbed prompt={embed.id} />;
+    case EmbedType.file:
+      return <FileEmbedCard embed={embed} />;
+    case EmbedType.project:
+      return <ProjectEmbedCard embed={embed} />;
+    case EmbedType.link:
+      return <LinkEmbedCard embed={embed} />;
+    case EmbedType.prompt:
+      return <PromptEmbedCard prompt={embed.id} />;
   }
 };
