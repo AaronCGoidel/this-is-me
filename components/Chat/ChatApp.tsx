@@ -24,8 +24,8 @@ async function* streamingFetch(input: RequestInfo | URL, init?: RequestInit) {
 
 const ChatApp = ({ }) => {
   const example_prompts = [
-    "Write me a poem about Aaron",
-    "Where did Aaron go to school?",
+    "Tell me about Aaron in a sonnet",
+    "Does Aaron have social media?",
   ];
   const initialMessages = [];
 

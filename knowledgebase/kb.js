@@ -16,7 +16,8 @@ const getAllFiles = async () => {
   const mdFiles = projectFiles
     .filter((file) => file.endsWith(".md"))
     .map((file) => path.join("projects", file));
-  return ["bio.md", "resume.md", "profile.md", "birthday.md", ...mdFiles];
+  // return ["bio.md", "resume.md", "profile.md", "birthday.md", ...mdFiles];
+  return ["profile.md"];
 };
 
 const chunkText = (text) => {
