@@ -2,7 +2,7 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 
 const ChatMessage = ({ isReceived, content }) => {
-  const messageClass = isReceived ? "max-w-xs" : "max-w-xs ml-auto justify-end";
+  const messageClass = isReceived ? "max-w-sm" : "max-w-sm ml-auto justify-end";
   const bubbleClass = isReceived
     ? "bg-gray-200 p-3 rounded-r-lg rounded-bl-lg"
     : "bg-primary text-white p-3 rounded-l-lg rounded-br-lg";

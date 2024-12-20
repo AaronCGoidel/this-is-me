@@ -6,48 +6,18 @@ const About = (): JSX.Element => {
       <h2 className="text-4xl mb-4 font-bold text-heading">About Me</h2>
 
       <p>
-        Currently pursuing Computer Science and Linguistics at the University of
-        Toronto, I am deeply involved in NLP research on cross-linguistic
-        semantics. My dual roles as a Research Assistant and a TA for Theory of
-        Computation showcase my commitment to both theoretical understanding and
-        its practical applications.
+        Hi, I'm Aaron, a Software Engineer based in Seattle, WA, passionate about improving experiences for billions through technology. At Meta, I work on the Media Algorithms team within the Video Infrastructure org, focusing on audio processing and semantic video understanding to enhance video experiences across Facebook and Instagram.
       </p>
-      <p>I've worked with some fantastic organizations</p>
-      <ul>
-        <li>
-          At NASA, I contributed to launch software for the groundbreaking Artemis program.
-        </li>
-        <li>
-          While at MLabs, I developed tools and smart contracts for financial tech on the Cardano blockchain.
-        </li>
-        <li>
-          My media tenure with Highsnobiety offered a unique blend of tech and
-          art where I helped build data collection pipelines and content management software.
-        </li>
-        <li>
-          With the NSA, I researched novel applications of machine learning for security applications and fortified Linux systems security.
-        </li>
-      </ul>
-
       <p>
-        Beyond my studies, I am a fervent tinkerer and reader, driven by a
-        belief that software can shape a brighter, more informed future.
+        I earned my B.S. in Computer Science from the University of Toronto in 2023, graduating with high distinction. During my studies, I was a Dean's List scholar, TA for Theory of Computation, and explored cross-linguistic semantics as a researcher in the Language, Cognition, and Computation group.
+      </p>
+      <p>
+        My career highlights include building launch software for NASA's Artemis I mission and developing decentralized finance applications at MLabs. These roles shaped my ability to deliver impactful, production-ready systems.
+      </p>
+      <p>
+        Outside of work, I'm a foodie inspired by Washington's local farmers markets, an avid reader of sci-fi, and a guitarist. When I'm not cooking, reading, or playing tennis, I enjoy tinkering and solving puzzles.
       </p>
 
-      <p>
-        My academic passions lie in computational linguistics and the intricate
-        world of languages and compilers. As the Technical Director of the Math
-        and Computer Science Society, I mentor peers, bridging theoretical
-        concepts with practical execution.
-      </p>
-
-      <p>
-        Outside academia, I've crafted production-grade software for diverse
-        teams. My explorations in computer science span from designing languages
-        and simulating physics to delving into blockchain. Off the screen, my
-        love for culinary arts keeps me experimenting in the kitchen, while
-        music is both a solace and a creative outlet.
-      </p>
     </div>
   );
 };
