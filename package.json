@@ -15,12 +15,14 @@
     "export": "next export"
   },
   "dependencies": {
-    "@pinecone-database/pinecone": "^0.1.6",
+    "@pinecone-database/pinecone": "^4.0.0",
     "@tailwindcss/typography": "^0.5.7",
     "@vercel/analytics": "^1.0.2",
     "@xenova/transformers": "^2.5.1",
+    "dotenv": "^16.4.7",
     "gray-matter": "^4.0.3",
     "next": "^13.4.13",
+    "openai": "^4.77.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-dom-server": "^0.0.5",

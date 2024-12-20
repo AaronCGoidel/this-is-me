@@ -1,14 +1,11 @@
-import { PineconeClient } from "@pinecone-database/pinecone";
+import { Pinecone } from "@pinecone-database/pinecone";
 import { promises as fs } from "fs";
 import path from "path";
+import OpenAI from "openai";
+import dotenv from "dotenv";
+dotenv.config();
 
-let transformers;
-
-async function loadModules() {
-  transformers = await import("@xenova/transformers");
-}
-
-const MODEL_NAME = "Xenova/distilbert-base-uncased";
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 const readMarkdownFiles = async (filepath) => {
   return await fs.readFile(filepath, "utf8");
@@ -35,13 +32,8 @@ const chunkText = (text) => {
 };
 
 const main = async () => {
-  await loadModules();
-
-  const pinecone = new PineconeClient();
-  await pinecone.init({
-    apiKey:
-      process.env.PINECONE_API_KEY,
-    environment: "gcp-starter",
+  const pinecone = new Pinecone({
+    apiKey: process.env.PINECONE_API_KEY,
   });
 
   const allFiles = await getAllFiles();
@@ -56,47 +48,42 @@ const main = async () => {
     chunkedFileContents[file] = chunkText(content);
   }
 
-  const featureExtractor = await transformers.pipeline(
-    "feature-extraction",
-    MODEL_NAME,
-    { revision: "default" }
-  );
-
   const embeddings = {};
 
   for (const [file, chunks] of Object.entries(chunkedFileContents)) {
     console.log(`Extracting embeddings for ${file}`);
-    const chunkEmbeddings = await Promise.all(
-      chunks.map(({ sentence }) =>
-        featureExtractor(sentence, { pooling: "mean", normalize: true })
-      )
-    );
-    embeddings[file] = chunkEmbeddings.map((embedding) =>
-      Array.from(embedding.data)
-    );
+    const chunkEmbeddings = [];
+    for (const { sentence } of chunks) {
+      const res = await openai.embeddings.create({
+        model: "text-embedding-3-small",
+        input: sentence,
+        encoding_format: "float",
+      });
+      chunkEmbeddings.push(res.data[0].embedding);
+      await new Promise((resolve) => setTimeout(resolve, 500));
+    }
+    embeddings[file] = chunkEmbeddings;
   }
 
-  const index = pinecone.Index("aaronai-kb");
+  const index = pinecone.index(process.env.PINECONE_INDEX_NAME);
 
   for (const [file, chunkEmbeddings] of Object.entries(embeddings)) {
     for (let idx = 0; idx < chunkEmbeddings.length; idx++) {
       const vec = chunkEmbeddings[idx];
-      const {sentence, paragraph} = chunkedFileContents[file][idx];
+      const { sentence, paragraph } = chunkedFileContents[file][idx];
       if (sentence.trim() === "") {
         continue;
       }
       const key = `${file}-${idx}`;
       console.log(`Adding vector for ${key}`);
-      const upsertRequest = {
-        vectors: [
-          {
-            id: key,
-            values: vec,
-            metadata: { file: file, chunk: idx, sentence: sentence, paragraph: paragraph },
-          },
-        ],
-      };
-      await index.upsert({ upsertRequest });
+      const upsertRequest = [
+        {
+          id: key,
+          values: vec,
+          metadata: { file: file, chunk: idx, sentence: sentence, paragraph: paragraph },
+        },
+      ];
+      await index.upsert(upsertRequest);
       // await index.delete1({ids: [key]});
     }
   }
