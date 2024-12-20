@@ -3,10 +3,28 @@ import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";
 import LoadingMessage from "./Loading";
 import { v4 as uuidv4 } from "uuid";
+import { openai } from '@ai-sdk/openai'
+import { CoreMessage, streamText } from 'ai'
 
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+async function* streamingFetch(input: RequestInfo | URL, init?: RequestInit) {
+  const response = await fetch(input, init)
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder('utf-8');
 
-const ChatApp = ({}) => {
+  for (; ;) {
+    const { done, value } = await reader.read()
+    if (done) break;
+
+    try {
+      yield decoder.decode(value)
+    }
+    catch (e: any) {
+      console.warn(e.message)
+    }
+  }
+}
+
+const ChatApp = ({ }) => {
   const example_prompts = [
     "What are some of Aaron's ML projects?",
     "Where did Aaron go to school?",
@@ -91,7 +109,7 @@ const ChatApp = ({}) => {
       console.log("knowledge:", knowledge);
 
       try {
-        const response = await fetch("/api/predictions", {
+        const stream = streamingFetch("/api/predictions", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -104,49 +122,31 @@ const ChatApp = ({}) => {
           }),
         });
 
-        const prediction = await response.json();
+        console.log("Streaming predictions...");
+        setStreaming(true);
+        const newMessage = {
+          content: "",
+          isReceived: true,
+        };
+        setMessages((prevMessages) => [...prevMessages, newMessage]);
+        setAwaitingResponse(false);
 
-        if (prediction && prediction.urls && prediction.urls.stream) {
-          console.log("Streaming predictions...");
-          setStreaming(true);
-          const newMessage = {
-            content: "",
-            isReceived: true,
-          };
-          setMessages((prevMessages) => [...prevMessages, newMessage]);
-          setAwaitingResponse(false);
-          const source = new EventSource(prediction.urls.stream, {
-            withCredentials: true,
-          });
+        for await (const chunk of stream) {
+          const content = chunk;
+          setMessages((prevMessages) => {
+            const lastMessage = prevMessages[prevMessages.length - 1];
+            const updatedLastMessage = {
+              ...lastMessage,
+              content: lastMessage.content + content,
+            };
 
-          source.addEventListener("output", (e) => {
-            const streamedData = e.data;
-
-            setMessages((prevMessages) => {
-              // we want to update the last message with the new streamed data
-              const lastMessage = prevMessages[prevMessages.length - 1];
-              const updatedLastMessage = {
-                ...lastMessage,
-                content: lastMessage.content + streamedData,
-              };
-
-              return [
-                ...prevMessages.slice(0, prevMessages.length - 1),
-                updatedLastMessage,
-              ];
-            });
-          });
-
-          source.addEventListener("error", (e) => {
-            console.error("Streaming error", e);
-          });
-
-          source.addEventListener("done", (e) => {
-            source.close();
-            setStreaming(false);
-            setAwaitingResponse(false);
+            return [
+              ...prevMessages.slice(0, prevMessages.length - 1),
+              updatedLastMessage,
+            ];
           });
         }
+        setStreaming(false);
       } catch (error) {
         console.error(error);
       }
@@ -163,17 +163,15 @@ const ChatApp = ({}) => {
     >
       <p>
         <span
-          className={`text-gray-500 text-sm absolute bg-white rounded-md p-1 shadow-md ml-2 mt-1 ${
-            overLimit ? "text-red-500" : ""
-          }`}
+          className={`text-gray-500 text-sm absolute bg-white rounded-md p-1 shadow-md ml-2 mt-1 ${overLimit ? "text-red-500" : ""
+            }`}
         >
           {messages.length} / {limit}
         </span>
       </p>
       <div
-        className={`flex flex-col flex-grow p-4 overflow-y-auto ${
-          messages.length == 0 ? "justify-center" : undefined
-        }`}
+        className={`flex flex-col flex-grow p-4 overflow-y-auto ${messages.length == 0 ? "justify-center" : undefined
+          }`}
       >
         {messages.length == 0 && (
           <h2 className="text-center text-gray-400">Say hello!</h2>
