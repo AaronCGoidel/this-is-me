@@ -3,8 +3,6 @@ import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";
 import LoadingMessage from "./Loading";
 import { v4 as uuidv4 } from "uuid";
-import { openai } from '@ai-sdk/openai'
-import { CoreMessage, streamText } from 'ai'
 
 async function* streamingFetch(input: RequestInfo | URL, init?: RequestInit) {
   const response = await fetch(input, init)
@@ -26,7 +24,7 @@ async function* streamingFetch(input: RequestInfo | URL, init?: RequestInit) {
 
 const ChatApp = ({ }) => {
   const example_prompts = [
-    "What are some of Aaron's ML projects?",
+    "Write me a poem about Aaron",
     "Where did Aaron go to school?",
   ];
   const initialMessages = [];
