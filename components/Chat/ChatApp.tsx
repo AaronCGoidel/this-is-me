@@ -172,7 +172,8 @@ const ChatApp = ({ }) => {
           }`}
       >
         {messages.length == 0 && (
-          <h2 className="text-center text-gray-400">Say hello!</h2>
+          <h2 className="text-center text-gray-400">
+            <span>Say hello!</span><br /><span> Or, if you don't know where to start, simply type "what should I ask?"</span></h2>
         )}
         {messages.map((message, index) => (
           <ChatMessage
