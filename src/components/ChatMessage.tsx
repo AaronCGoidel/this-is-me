@@ -1,5 +1,4 @@
 import { Message } from "ai";
-import { ReactNode } from "react";
 import { ppMori } from "../app/lib/fonts";
 
 interface ChatMessageProps {
@@ -12,8 +11,8 @@ interface BaseToolInvocation {
   toolCallId: string;
   toolName: string;
   state: "call" | "partial-call" | "result";
-  args?: Record<string, any>;
-  result?: any;
+  args?: Record<string, unknown>;
+  result?: unknown;
 }
 
 interface ToolComponentProps {
@@ -39,7 +38,9 @@ const ConfirmationTool = ({ invocation, onResult }: ToolComponentProps) => {
     case "call":
       return (
         <div className="bg-gray-700 rounded-lg p-4 my-2">
-          <p className={`mb-3 ${ppMori.regular}`}>{invocation.args?.message}</p>
+          <p className={`mb-3 ${ppMori.regular}`}>
+            {(invocation.args as { message?: string })?.message}
+          </p>
           <div className="flex gap-2">
             <button
               onClick={() =>
@@ -59,7 +60,9 @@ const ConfirmationTool = ({ invocation, onResult }: ToolComponentProps) => {
         </div>
       );
     case "result":
-      return <ToolResult label="Confirmation" value={invocation.result} />;
+      return (
+        <ToolResult label="Confirmation" value={String(invocation.result)} />
+      );
     default:
       return null;
   }
@@ -70,7 +73,7 @@ const LocationTool = ({ invocation }: ToolComponentProps) => {
     case "call":
       return <LoadingIndicator text="Getting location..." />;
     case "result":
-      return <ToolResult label="Location" value={invocation.result} />;
+      return <ToolResult label="Location" value={String(invocation.result)} />;
     default:
       return null;
   }
@@ -91,14 +94,16 @@ const WeatherTool = ({ invocation }: ToolComponentProps) => {
     case "call":
       return (
         <LoadingIndicator
-          text={`Getting weather information for ${invocation.args?.city}...`}
+          text={`Getting weather information for ${
+            (invocation.args as { city?: string })?.city
+          }...`}
         />
       );
     case "result":
       return (
         <ToolResult
-          label={`Weather in ${invocation.args?.city}`}
-          value={invocation.result}
+          label={`Weather in ${(invocation.args as { city?: string })?.city}`}
+          value={String(invocation.result)}
         />
       );
     default:

@@ -4,7 +4,6 @@ import { useChat } from "@ai-sdk/react";
 import ChatMessage from "../components/ChatMessage";
 import ChatInput from "../components/ChatInput";
 import { ppMori } from "./lib/fonts";
-import { useState } from "react";
 import { TextHoverEffect } from "@/components/ui/text-hover-effect";
 import {
   Carousel,
@@ -49,23 +48,22 @@ export default function Chat() {
     "What is Aaron's favorite plant?",
   ];
 
-  const clearChat = () => {
-    // Since useChat doesn't have a built-in clear function, we'll reload the page
-    window.location.reload();
-  };
-
   const handlePromptClick = (prompt: string) => {
-    // Set the input to the selected prompt and submit
+    // Create a temporary form and input to trigger proper submission
+    const form = document.createElement("form");
+    const input = document.createElement("input");
+    input.value = prompt;
+    form.appendChild(input);
+
+    // Update the state first
     const syntheticEvent = {
       target: { value: prompt },
     } as React.ChangeEvent<HTMLInputElement>;
-
     handleInputChange(syntheticEvent);
 
-    // Submit after a brief delay to ensure state is updated
+    // Then submit
     setTimeout(() => {
-      const submitEvent = new Event("submit") as any;
-      handleSubmit(submitEvent);
+      form.requestSubmit();
     }, 10);
   };
 
@@ -78,7 +76,7 @@ export default function Chat() {
               <h1
                 className={`text-6xl md:text-7xl lg:text-8xl mb-4 leading-tight`}
               >
-                Hi, I'm <TextHoverEffect text="AaronAI" />
+                Hi, I&apos;m <TextHoverEffect text="AaronAI" />
               </h1>
               <p className={`text-xl md:text-2xl mb-8 ${ppMori.regular}`}>
                 You can ask me anything about Aaron Goidel
