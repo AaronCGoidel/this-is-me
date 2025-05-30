@@ -189,8 +189,6 @@ export default function ChatMessage({
     <div
       className={`flex rounded-md gap-4 p-4 ${isUser ? "" : "bg-[#020203]"}`}
     >
-      <div className="flex-shrink-0"></div>
-
       <div className="flex-1 min-w-0">
         <div className="text-gray-100">
           <MessageContent message={message} onToolResult={onToolResult} />
