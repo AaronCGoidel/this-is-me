@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --bot-message-bg: #020203;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-bot-message-bg: var(--bot-message-bg);
+  --font-sans: var(--font-pp-mori), ui-sans-serif, system-ui, sans-serif;
+  --font-monument: var(--font-pp-monument-extended), ui-sans-serif, system-ui, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #131314;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-pp-mori), ui-sans-serif, system-ui, sans-serif;
+}
