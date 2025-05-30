@@ -1,6 +1,6 @@
 import { FormEvent } from "react";
 import { ppMori } from "../app/lib/fonts";
-import { Plane, Send } from "lucide-react";
+import { Send } from "lucide-react";
 
 interface ChatInputProps {
   input: string;
