@@ -1,5 +1,6 @@
 import { FormEvent } from "react";
 import { ppMori } from "../app/lib/fonts";
+import { Plane, Send } from "lucide-react";
 
 interface ChatInputProps {
   input: string;
@@ -26,7 +27,7 @@ export default function ChatInput({
             value={input}
             onChange={onInputChange}
             placeholder={placeholder}
-            className={`w-full px-4 py-3 bg-[#020203] rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-gray-500 transition-colors ${ppMori.regular}`}
+            className={`w-full px-4 py-3 bg-[#020203] rounded-lg text-white focus:outline-none focus:border-gray-500 transition-colors ${ppMori.regular}`}
             disabled={isLoading || disabled}
           />
         </div>
@@ -38,19 +39,7 @@ export default function ChatInput({
           {isLoading ? (
             <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
           ) : (
-            <svg
-              className="w-5 h-5 text-white"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-              />
-            </svg>
+            <Send />
           )}
         </button>
       </form>
