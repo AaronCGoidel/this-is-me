@@ -184,7 +184,7 @@ export default function HamburgerMenu({
                   onClick={() => handleUtilityClick(item.action)}
                   className={`w-full text-left px-3 py-3 rounded-md transition-all duration-200 group focus:outline-none ${
                     item.isDestructive
-                      ? "text-red-600 hover:bg-red-50 focus:bg-red-50"
+                      ? "text-red-600 hover:bg-red-100 focus:bg-red-50"
                       : "text-[#020203] hover:bg-[#020203]/10 focus:bg-[#020203]/10"
                   } ${ppMori.regular}`}
                   role="menuitem"

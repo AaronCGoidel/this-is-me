@@ -24,6 +24,7 @@ export default function Chat() {
     isLoading,
     stop,
     setMessages,
+    append,
   } = useChat({
     maxSteps: 5,
 
@@ -73,22 +74,10 @@ export default function Chat() {
   ];
 
   const handlePromptClick = (prompt: string) => {
-    // Create a temporary form and input to trigger proper submission
-    const form = document.createElement("form");
-    const input = document.createElement("input");
-    input.value = prompt;
-    form.appendChild(input);
-
-    // Update the state first
-    const syntheticEvent = {
-      target: { value: prompt },
-    } as React.ChangeEvent<HTMLInputElement>;
-    handleInputChange(syntheticEvent);
-
-    // Then submit
-    setTimeout(() => {
-      form.requestSubmit();
-    }, 10);
+    append({
+      role: "user",
+      content: prompt,
+    });
   };
 
   return (
