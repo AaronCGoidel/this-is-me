@@ -32,20 +32,19 @@ export default function Chat() {
         const city = cities[Math.floor(Math.random() * cities.length)];
         return city;
       }
+
+      if (toolCall.toolName === "showResume") {
+        return "Resume displayed successfully";
+      }
     },
   });
 
   const cannedPrompts = [
-    "What is Aaron's favorite food?",
-    "What is Aaron's favorite color?",
+    "Give me a brief bio for Aaron",
     "What is Aaron's favorite book?",
-    "What is Aaron's favorite song?",
-    "What is Aaron's favorite movie?",
-    "What is Aaron's favorite TV show?",
-    "What is Aaron's favorite game?",
-    "What is Aaron's favorite sport?",
-    "What is Aaron's favorite animal?",
-    "What is Aaron's favorite plant?",
+    "What does Aaron like to do outside of work?",
+    "Can I have a copy of Aaron's resume?",
+    "Write me a poem about Aaron",
   ];
 
   const handlePromptClick = (prompt: string) => {

@@ -1,5 +1,6 @@
 import { Message } from "ai";
 import { ppMori } from "../app/lib/fonts";
+import { Download } from "lucide-react";
 
 interface ChatMessageProps {
   message: Message;
@@ -111,6 +112,41 @@ const WeatherTool = ({ invocation }: ToolComponentProps) => {
   }
 };
 
+const ResumeTool = ({ invocation }: ToolComponentProps) => {
+  switch (invocation.state) {
+    case "call":
+    case "result":
+      return (
+        <div className="bg-gray-700 rounded-lg p-4 my-4 max-w-4xl">
+          <div className="flex items-center justify-between mb-4">
+            <h3
+              className={`text-lg font-semibold text-white ${ppMori.semiBold}`}
+            >
+              Aaron's Resume
+            </h3>
+            <a
+              href="/resume.pdf"
+              download="Aaron_Goidel_Resume.pdf"
+              className={`px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors flex items-center gap-2 ${ppMori.semiBold}`}
+            >
+              <Download className="w-4 h-4" />
+              Download PDF
+            </a>
+          </div>
+          <div className="w-full h-[600px] border rounded-lg overflow-hidden bg-white">
+            <iframe
+              src="/resume.pdf"
+              className="w-full h-full"
+              title="Aaron's Resume"
+            />
+          </div>
+        </div>
+      );
+    default:
+      return null;
+  }
+};
+
 const TOOL_COMPONENTS: Record<
   string,
   React.ComponentType<ToolComponentProps>
@@ -118,6 +154,7 @@ const TOOL_COMPONENTS: Record<
   askForConfirmation: ConfirmationTool,
   getLocation: LocationTool,
   getWeatherInformation: WeatherTool,
+  showResume: ResumeTool,
 };
 
 const ToolInvocationRenderer = ({
