@@ -3,6 +3,7 @@
 import { useChat } from "@ai-sdk/react";
 import ChatMessage from "../components/ChatMessage";
 import ChatInput from "../components/ChatInput";
+import HamburgerMenu from "../components/HamburgerMenu";
 import { ppMori } from "./lib/fonts";
 import { TextHoverEffect } from "@/components/ui/text-hover-effect";
 import {
@@ -22,6 +23,8 @@ export default function Chat() {
     addToolResult,
     isLoading,
     stop,
+    setMessages,
+    append,
   } = useChat({
     maxSteps: 5,
 
@@ -71,26 +74,20 @@ export default function Chat() {
   ];
 
   const handlePromptClick = (prompt: string) => {
-    // Create a temporary form and input to trigger proper submission
-    const form = document.createElement("form");
-    const input = document.createElement("input");
-    input.value = prompt;
-    form.appendChild(input);
-
-    // Update the state first
-    const syntheticEvent = {
-      target: { value: prompt },
-    } as React.ChangeEvent<HTMLInputElement>;
-    handleInputChange(syntheticEvent);
-
-    // Then submit
-    setTimeout(() => {
-      form.requestSubmit();
-    }, 10);
+    append({
+      role: "user",
+      content: prompt,
+    });
   };
 
   return (
     <div className="flex flex-col h-[100dvh] max-h-[100dvh]">
+      {/* Hamburger Menu */}
+      <HamburgerMenu
+        onPromptClick={handlePromptClick}
+        onResetChat={() => setMessages([])}
+      />
+
       <div className="flex-1 overflow-y-auto min-h-0">
         {messages.length === 0 ? (
           <div className="flex items-center justify-center min-h-full p-4">
