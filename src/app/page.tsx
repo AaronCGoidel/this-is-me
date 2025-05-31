@@ -98,7 +98,7 @@ export default function Chat() {
                       >
                         <button
                           onClick={() => handlePromptClick(prompt)}
-                          className={`w-full h-20 sm:h-24 md:h-28 bg-[#020203] rounded-lg text-white hover:bg-[#020203]/70 transition-all duration-200 px-3 sm:px-4 py-2 text-sm sm:text-base ${ppMori.regular} flex items-center justify-center text-center leading-tight`}
+                          className={`w-full h-20 sm:h-24 md:h-28 bg-[#020203] rounded-lg text-white transition-all duration-200 px-3 sm:px-4 py-2 text-sm sm:text-base ${ppMori.regular} flex items-center justify-center text-center leading-tight hover:cursor-pointer hover:bg-[#020203]/30`}
                         >
                           {prompt}
                         </button>
@@ -130,7 +130,7 @@ export default function Chat() {
       </div>
 
       {isLoading && (
-        <div className="flex justify-center p-2 border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="flex justify-center p-2 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <button
             onClick={stop}
             className={`flex items-center gap-2 px-4 py-2 text-sm text-gray-300 hover:text-white transition-colors ${ppMori.regular}`}

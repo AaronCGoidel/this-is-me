@@ -16,7 +16,7 @@ export default function ChatInput({
   isLoading,
   onInputChange,
   onSubmit,
-  placeholder = "Let the magic begin, Ask a question",
+  placeholder = "Let the magic begin, ask a question",
   disabled = false,
 }: ChatInputProps) {
   return (
@@ -34,7 +34,7 @@ export default function ChatInput({
         <button
           type="submit"
           disabled={isLoading || !input.trim() || disabled}
-          className="px-4 py-3 bg-[#020203] hover:bg-[#020203] disabled:bg-[#020203] disabled:cursor-not-allowed rounded-lg transition-colors"
+          className="px-4 py-3 bg-[#020203] hover:bg-[#020203]/30 disabled:bg-[#020203] disabled:cursor-not-allowed rounded-lg transition-colors hover:cursor-pointer"
         >
           {isLoading ? (
             <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>

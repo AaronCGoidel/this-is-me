@@ -11,6 +11,9 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
+    "build:kb": "tsx scripts/build-knowledge-base.ts",
+    "test:rag": "tsx scripts/test-rag.ts",
+    "prebuild": "npm run build:kb",
     "start": "next start",
     "lint": "next lint"
   },
@@ -18,6 +21,7 @@
     "@ai-sdk/anthropic": "^1.2.12",
     "@ai-sdk/openai": "^1.3.22",
     "@ai-sdk/react": "^1.2.12",
+    "@pinecone-database/pinecone": "^4.0.0",
     "@radix-ui/react-slot": "^1.2.3",
     "ai": "^4.3.16",
     "class-variance-authority": "^0.7.1",
@@ -26,6 +30,7 @@
     "lucide-react": "^0.511.0",
     "motion": "^12.15.0",
     "next": "15.3.2",
+    "openai": "^5.0.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwind-merge": "^3.3.0",
