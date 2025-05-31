@@ -3,6 +3,7 @@
 import { useChat } from "@ai-sdk/react";
 import ChatMessage from "../components/ChatMessage";
 import ChatInput from "../components/ChatInput";
+import HamburgerMenu from "../components/HamburgerMenu";
 import { ppMori } from "./lib/fonts";
 import { TextHoverEffect } from "@/components/ui/text-hover-effect";
 import {
@@ -22,6 +23,7 @@ export default function Chat() {
     addToolResult,
     isLoading,
     stop,
+    setMessages,
   } = useChat({
     maxSteps: 5,
 
@@ -91,6 +93,12 @@ export default function Chat() {
 
   return (
     <div className="flex flex-col h-[100dvh] max-h-[100dvh]">
+      {/* Hamburger Menu */}
+      <HamburgerMenu
+        onPromptClick={handlePromptClick}
+        onResetChat={() => setMessages([])}
+      />
+
       <div className="flex-1 overflow-y-auto min-h-0">
         {messages.length === 0 ? (
           <div className="flex items-center justify-center min-h-full p-4">
