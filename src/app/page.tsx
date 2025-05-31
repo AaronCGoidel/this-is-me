@@ -27,6 +27,7 @@ export default function Chat() {
 
     // run client-side tools that are automatically executed:
     async onToolCall({ toolCall }) {
+      console.log(`toolCall: ${JSON.stringify(toolCall)}`);
       if (toolCall.toolName === "getLocation") {
         const cities = ["New York", "Los Angeles", "Chicago", "San Francisco"];
         const city = cities[Math.floor(Math.random() * cities.length)];
@@ -34,16 +35,38 @@ export default function Chat() {
       }
 
       if (toolCall.toolName === "showResume") {
+        // Return immediately so the tool doesn't block subsequent messages
         return "Resume displayed successfully";
+      }
+
+      if (toolCall.toolName === "showSocialLinks") {
+        // Return immediately so the tool doesn't block subsequent messages
+        const args = toolCall.args as { platforms?: string[] };
+        const platforms = args.platforms || [
+          "github",
+          "linkedin",
+          "instagram",
+          "email",
+        ];
+        return `The chat ui has been updated to display Aaron's social links: ${platforms.join(
+          ", "
+        )}`;
+      }
+
+      if (toolCall.toolName === "showCalendly") {
+        // Return immediately so the tool doesn't block subsequent messages
+        return "Calendly booking widget displayed successfully";
       }
     },
   });
 
   const cannedPrompts = [
     "Give me a brief bio for Aaron",
-    "What is Aaron's favorite book?",
+    "How can I connect with Aaron?",
     "What does Aaron like to do outside of work?",
     "Can I have a copy of Aaron's resume?",
+    "Schedule a meeting with Aaron",
+    "What is Aaron's favorite book?",
     "Write me a poem about Aaron",
   ];
 
