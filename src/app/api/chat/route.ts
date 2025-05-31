@@ -103,34 +103,22 @@ FAIL-SAFES
     model: openai("o4-mini"),
     messages: llmMessages,
     tools: {
-      // server-side tool with execute function:
-      getWeatherInformation: {
-        description: "show the weather in a given city to the user",
-        parameters: z.object({ city: z.string() }),
-        execute: async ({}: { city: string }) => {
-          const weatherOptions = ["sunny", "cloudy", "rainy", "snowy", "windy"];
-          return weatherOptions[
-            Math.floor(Math.random() * weatherOptions.length)
-          ];
-        },
-      },
-      // client-side tool that starts user interaction:
-      askForConfirmation: {
-        description: "Ask the user for confirmation.",
-        parameters: z.object({
-          message: z.string().describe("The message to ask for confirmation."),
-        }),
-      },
-      // client-side tool that is automatically executed on the client:
-      getLocation: {
-        description:
-          "Get the user location. Always ask for confirmation before using this tool.",
-        parameters: z.object({}),
-      },
       // client-side tool to show Aaron's resume:
       showResume: {
         description:
           "Display Aaron's resume inline in the chat with a download option. Use this when users ask for Aaron's resume, CV, or want to see his professional background.",
+        parameters: z.object({}),
+      },
+      // client-side tool to show social links:
+      showSocialLinks: {
+        description:
+          "Display Aaron's social media profiles and contact information. Use this when users ask for social media, contact info, GitHub, LinkedIn, Instagram, or email.",
+        parameters: z.object({}),
+      },
+      // client-side tool to show Calendly booking:
+      showCalendly: {
+        description:
+          "Display Aaron's Calendly booking widget for scheduling meetings or calls. Use this when users want to schedule a meeting, book a call, set up an appointment, or ask about availability.",
         parameters: z.object({}),
       },
     },
