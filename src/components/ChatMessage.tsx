@@ -122,7 +122,7 @@ const ResumeTool = ({ invocation }: ToolComponentProps) => {
             <h3
               className={`text-lg font-semibold text-white ${ppMori.semiBold}`}
             >
-              Aaron's Resume
+              Aaron&apos;s Resume
             </h3>
             <a
               href="/resume.pdf"

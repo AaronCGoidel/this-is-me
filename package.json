@@ -11,9 +11,9 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
-    "build:kb": "tsx scripts/build-knowledge-base.ts",
-    "test:rag": "tsx scripts/test-rag.ts",
-    "prebuild": "npm run build:kb",
+    "build:kb": "bun scripts/build-knowledge-base.ts",
+    "test:rag": "bun scripts/test-rag.ts",
+    "prebuild": "bun run build:kb",
     "start": "next start",
     "lint": "next lint"
   },

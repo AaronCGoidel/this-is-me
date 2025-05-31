@@ -5,7 +5,6 @@ import OpenAI from "openai";
 const PINECONE_INDEX_NAME = process.env.PINECONE_INDEX_NAME || "knowledge-base";
 const PINECONE_NAMESPACE = process.env.PINECONE_NAMESPACE || "knowledge";
 const MAX_RESULTS = 5; // Number of relevant chunks to retrieve
-const SIMILARITY_THRESHOLD = 0.3; // Minimum similarity score
 const OPENAI_EMBEDDING_MODEL = "text-embedding-3-small"; // Must match build script
 
 interface RetrievedChunk {
@@ -28,7 +27,7 @@ interface RAGContext {
 class RAGRetriever {
   private pc: Pinecone | null = null;
   private openai: OpenAI | null = null;
-  private index: any;
+  private index: ReturnType<Pinecone["index"]> | null = null;
   private initialized = false;
 
   constructor() {
@@ -124,19 +123,22 @@ class RAGRetriever {
 
       // Filter results by similarity threshold and extract relevant data
       const relevantChunks: RetrievedChunk[] = queryResponse.matches
-        .sort((a: any, b: any) => b.score - a.score)
+        .filter((record) => record.score !== undefined && record.score > 0)
+        .sort((a, b) => (b.score || 0) - (a.score || 0))
         .slice(0, MAX_RESULTS)
-        .map((record: any) => ({
-          content: record.metadata?.chunk_text || "",
+        .map((record) => ({
+          content: String(record.metadata?.chunk_text || ""),
           metadata: {
-            source_file: record.metadata?.source_file || "",
-            category: record.metadata?.category,
-            chunk_index: record.metadata?.chunk_index || 0,
-            total_chunks: record.metadata?.total_chunks || 1,
+            source_file: String(record.metadata?.source_file || ""),
+            category: record.metadata?.category
+              ? String(record.metadata.category)
+              : undefined,
+            chunk_index: Number(record.metadata?.chunk_index) || 0,
+            total_chunks: Number(record.metadata?.total_chunks) || 1,
           },
-          score: record.score,
+          score: record.score || 0,
         }))
-        .filter((chunk: RetrievedChunk) => chunk.content.length > 0);
+        .filter((chunk) => chunk.content.length > 0);
 
       // Extract unique sources
       const sources = [

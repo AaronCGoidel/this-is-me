@@ -19,6 +19,7 @@ export interface QueryResult {
 
 export class KnowledgeBaseQuery {
   private pc: Pinecone;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private index: any;
   private config: KnowledgeBaseConfig;
 
@@ -72,13 +73,14 @@ export class KnowledgeBaseQuery {
 
       // Transform results
       const results: QueryResult[] =
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         queryResponse.matches?.map((match: any) => ({
-          content: match.metadata?.chunk_text || "",
+          content: String(match.metadata?.chunk_text || ""),
           metadata: {
-            source_file: match.metadata?.source_file || "",
-            category: match.metadata?.category || "",
-            chunk_index: match.metadata?.chunk_index || 0,
-            total_chunks: match.metadata?.total_chunks || 1,
+            source_file: String(match.metadata?.source_file || ""),
+            category: String(match.metadata?.category || ""),
+            chunk_index: Number(match.metadata?.chunk_index) || 0,
+            total_chunks: Number(match.metadata?.total_chunks) || 1,
           },
           score: match.score || 0,
         })) || [];
@@ -99,17 +101,19 @@ export class KnowledgeBaseQuery {
       // you might want to maintain a separate index of categories
       // or use Pinecone's metadata filtering capabilities more extensively
 
-      const queryResponse = await this.index.query({
-        queryText: "category",
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const queryResponse = await (this.index as any).query({
+        vector: new Array(1536).fill(0), // Use dummy vector instead of queryText
         topK: 100,
         namespace: this.config.namespace,
         includeMetadata: true,
       });
 
       const categories = new Set<string>();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       queryResponse.matches?.forEach((match: any) => {
         if (match.metadata?.category) {
-          categories.add(match.metadata.category);
+          categories.add(String(match.metadata.category));
         }
       });
 
