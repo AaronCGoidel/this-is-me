@@ -1,9 +1,11 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --bot-message-bg: #020203;
+@layer base {
+  :root {
+    --background: #131314;
+    --foreground: #ededed;
+    --bot-message-bg: #020203;
+  }
 }
 
 @theme inline {
