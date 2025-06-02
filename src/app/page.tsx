@@ -3,7 +3,6 @@
 import { useChat } from "@ai-sdk/react";
 import ChatInput from "../components/ChatInput";
 import ChatMessages from "../components/ChatMessages";
-import HamburgerMenu from "../components/HamburgerMenu";
 import WelcomeScreen from "../components/WelcomeScreen";
 import LoadingIndicator from "../components/LoadingIndicator";
 import Header from "@/components/Header";
