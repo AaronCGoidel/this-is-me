@@ -10,6 +10,9 @@ import {
   Calendar,
 } from "lucide-react";
 import CalendlyEmbed from "./CalendlyEmbed";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeHighlight from "rehype-highlight";
 
 interface ChatMessageProps {
   message: Message;
@@ -310,9 +313,104 @@ const MessageContent = ({ message, onToolResult }: ChatMessageProps) => {
             case "text":
               return (
                 <div key={index} className="prose prose-invert max-w-none">
-                  <p className={`whitespace-pre-wrap ${ppMori.regular}`}>
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    rehypePlugins={[rehypeHighlight]}
+                    components={{
+                      // Custom styling for markdown elements
+                      p: ({ children }) => (
+                        <p className={`mb-4 last:mb-0 ${ppMori.regular}`}>
+                          {children}
+                        </p>
+                      ),
+                      h1: ({ children }) => (
+                        <h1
+                          className={`text-2xl font-bold mb-4 ${ppMori.semiBold}`}
+                        >
+                          {children}
+                        </h1>
+                      ),
+                      h2: ({ children }) => (
+                        <h2
+                          className={`text-xl font-bold mb-3 ${ppMori.semiBold}`}
+                        >
+                          {children}
+                        </h2>
+                      ),
+                      h3: ({ children }) => (
+                        <h3
+                          className={`text-lg font-bold mb-2 ${ppMori.semiBold}`}
+                        >
+                          {children}
+                        </h3>
+                      ),
+                      code: ({ children, className, ...props }) => {
+                        const isInline = !className?.includes("language-");
+                        return isInline ? (
+                          <code
+                            className="bg-gray-700 text-gray-100 px-1.5 py-0.5 rounded text-sm font-mono"
+                            {...props}
+                          >
+                            {children}
+                          </code>
+                        ) : (
+                          <code
+                            className="block bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm font-mono"
+                            {...props}
+                          >
+                            {children}
+                          </code>
+                        );
+                      },
+                      pre: ({ children }) => (
+                        <pre className="bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto mb-4">
+                          {children}
+                        </pre>
+                      ),
+                      ul: ({ children }) => (
+                        <ul
+                          className={`list-disc list-inside mb-4 space-y-1 ${ppMori.regular}`}
+                        >
+                          {children}
+                        </ul>
+                      ),
+                      ol: ({ children }) => (
+                        <ol
+                          className={`list-decimal list-inside mb-4 space-y-1 ${ppMori.regular}`}
+                        >
+                          {children}
+                        </ol>
+                      ),
+                      li: ({ children }) => (
+                        <li className={`${ppMori.regular}`}>{children}</li>
+                      ),
+                      blockquote: ({ children }) => (
+                        <blockquote className="border-l-4 border-gray-600 pl-4 italic text-gray-300 mb-4">
+                          {children}
+                        </blockquote>
+                      ),
+                      a: ({ children, href }) => (
+                        <a
+                          href={href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-400 hover:text-blue-300 underline transition-colors"
+                        >
+                          {children}
+                        </a>
+                      ),
+                      strong: ({ children }) => (
+                        <strong className={`font-semibold ${ppMori.semiBold}`}>
+                          {children}
+                        </strong>
+                      ),
+                      em: ({ children }) => (
+                        <em className="italic">{children}</em>
+                      ),
+                    }}
+                  >
                     {part.text}
-                  </p>
+                  </ReactMarkdown>
                 </div>
               );
             case "tool-invocation":
@@ -332,7 +430,43 @@ const MessageContent = ({ message, onToolResult }: ChatMessageProps) => {
   }
 
   return (
-    <p className={`whitespace-pre-wrap ${ppMori.regular}`}>{message.content}</p>
+    <div className="prose prose-invert max-w-none">
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        rehypePlugins={[rehypeHighlight]}
+        components={{
+          // Use the same custom components as above
+          p: ({ children }) => (
+            <p className={`mb-4 last:mb-0 ${ppMori.regular}`}>{children}</p>
+          ),
+          code: ({ children, className, ...props }) => {
+            const isInline = !className?.includes("language-");
+            return isInline ? (
+              <code
+                className="bg-gray-700 text-gray-100 px-1.5 py-0.5 rounded text-sm font-mono"
+                {...props}
+              >
+                {children}
+              </code>
+            ) : (
+              <code
+                className="block bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm font-mono"
+                {...props}
+              >
+                {children}
+              </code>
+            );
+          },
+          strong: ({ children }) => (
+            <strong className={`font-semibold ${ppMori.semiBold}`}>
+              {children}
+            </strong>
+          ),
+        }}
+      >
+        {message.content}
+      </ReactMarkdown>
+    </div>
   );
 };
 

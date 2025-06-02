@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useRef } from "react";
 import { ppMori } from "@/app/lib/fonts";
+import { getMenuPrompts } from "@/lib/cannedPrompts";
+import { useBackdrop } from "./BackdropProvider";
 
 interface HamburgerMenuProps {
   className?: string;
@@ -17,6 +19,7 @@ export default function HamburgerMenu({
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const { showBackdrop, hideBackdrop } = useBackdrop();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -25,6 +28,15 @@ export default function HamburgerMenu({
   const closeMenu = () => {
     setIsOpen(false);
   };
+
+  // Handle backdrop when menu opens/closes
+  useEffect(() => {
+    if (isOpen) {
+      showBackdrop();
+    } else {
+      hideBackdrop();
+    }
+  }, [isOpen, showBackdrop, hideBackdrop]);
 
   // Handle keyboard navigation
   useEffect(() => {
@@ -54,33 +66,8 @@ export default function HamburgerMenu({
     };
   }, [isOpen]);
 
-  const menuItems = [
-    {
-      label: "About Aaron",
-      prompt: "Give me a brief bio for Aaron",
-      description: "Learn about Aaron's background",
-    },
-    {
-      label: "Resume",
-      prompt: "Can I have a copy of Aaron's resume?",
-      description: "View and download Aaron's resume",
-    },
-    {
-      label: "Connect",
-      prompt: "How can I connect with Aaron?",
-      description: "Get Aaron's social links and contact info",
-    },
-    {
-      label: "Schedule Meeting",
-      prompt: "Schedule a meeting with Aaron",
-      description: "Book a call with Aaron",
-    },
-    {
-      label: "Projects",
-      prompt: "What are some of Aaron's notable projects?",
-      description: "Explore Aaron's work and projects",
-    },
-  ];
+  // Get menu items from shared canned prompts
+  const menuItems = getMenuPrompts();
 
   const utilityItems = [
     {
@@ -104,12 +91,12 @@ export default function HamburgerMenu({
   };
 
   return (
-    <div ref={menuRef} className={`fixed top-4 right-4 z-50 ${className}`}>
+    <div ref={menuRef} className={`relative ${className}`}>
       {/* Hamburger Button */}
       <button
         ref={buttonRef}
         onClick={toggleMenu}
-        className="w-12 h-12 bg-[#020203] hover:bg-[#020203]/80 rounded-lg flex flex-col items-center justify-center space-y-1.5 transition-all duration-300 shadow-lg border border-gray-700/50 focus:outline-none focus:ring-2 focus:ring-white/20"
+        className="w-12 h-12 bg-[#020203] hover:bg-[#020203]/80 rounded-lg flex flex-col items-center justify-center space-y-1.5 transition-all duration-300 shadow-lg border border-gray-700/50 focus:outline-none focus:ring-2 focus:ring-white/20 hover:cursor-pointer"
         aria-label={isOpen ? "Close menu" : "Open menu"}
         aria-expanded={isOpen}
         aria-haspopup="true"
@@ -133,7 +120,7 @@ export default function HamburgerMenu({
 
       {/* Menu Dropdown */}
       <div
-        className={`absolute top-16 right-0 w-72 bg-white/95 backdrop-blur-md rounded-lg shadow-xl border border-gray-200/20 transition-all duration-300 ${
+        className={`absolute top-full right-0 mt-2 w-72 bg-white/95 backdrop-blur-md rounded-lg shadow-xl border border-gray-200/20 transition-all duration-300 z-50 ${
           isOpen
             ? "opacity-100 translate-y-0 pointer-events-auto"
             : "opacity-0 -translate-y-4 pointer-events-none"
@@ -170,14 +157,6 @@ export default function HamburgerMenu({
 
           {utilityItems.length > 0 && (
             <>
-              <div className="border-t border-gray-200/50 my-2"></div>
-              <div className="px-3 py-2 mb-1">
-                <h3
-                  className={`text-sm font-semibold text-[#020203] ${ppMori.semiBold}`}
-                >
-                  Utilities
-                </h3>
-              </div>
               {utilityItems.map((item, index) => (
                 <button
                   key={`utility-${index}`}
@@ -204,15 +183,6 @@ export default function HamburgerMenu({
           )}
         </div>
       </div>
-
-      {/* Backdrop */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black/20 backdrop-blur-sm -z-10"
-          onClick={closeMenu}
-          aria-hidden="true"
-        />
-      )}
     </div>
   );
 }
