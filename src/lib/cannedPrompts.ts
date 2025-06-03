@@ -15,9 +15,9 @@ export const cannedPrompts: CannedPrompt[] = [
     useInCarousel: true,
   },
   {
-    label: "Resume",
-    prompt: "Can I have a copy of Aaron's resume?",
-    description: "View and download Aaron's resume",
+    label: "Résumé",
+    prompt: "Can I have a copy of Aaron's résumé?",
+    description: "View and download Aaron's résumé",
     useInMenu: true,
     useInCarousel: true,
   },

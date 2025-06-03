@@ -128,11 +128,9 @@ export default function HamburgerMenu({
         role="menu"
         aria-labelledby="menu-button"
       >
-        <div className="p-2">
-          <div className="px-3 py-2 mb-1">
-            <h3
-              className={`text-sm font-semibold text-[#020203] ${ppMori.semiBold}`}
-            >
+        <div className="p-1.5">
+          <div className="px-3 py-3 mb-1 bg-background/75 rounded-lg">
+            <h3 className={`text-sm font-semibold ${ppMori.semiBold}`}>
               Quick Actions
             </h3>
           </div>

@@ -8,7 +8,9 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  useCarousel,
 } from "@/components/ui/carousel";
+import { ArrowRight, MoveRight } from "lucide-react";
 
 interface PromptCarouselProps {
   onPromptClick: (prompt: string) => void;
@@ -44,10 +46,24 @@ export default function PromptCarousel({ onPromptClick }: PromptCarouselProps) {
         </CarouselContent>
         <CarouselPrevious className="hidden md:flex -left-12 lg:-left-16" />
         <CarouselNext className="hidden md:flex -right-12 lg:-right-16" />
-        <p className="text-xs sm:text-sm text-gray-500 mt-2 md:hidden text-center">
-          Swipe to see more
-        </p>
+        <SwipeIndicator />
       </Carousel>
+    </div>
+  );
+}
+
+function SwipeIndicator() {
+  const { scrollNext } = useCarousel();
+
+  return (
+    <div
+      className="md:hidden flex flex-row items-center justify-center mt-2 cursor-pointer hover:opacity-70 transition-opacity"
+      onClick={scrollNext}
+    >
+      <p className="text-xs sm:text-sm text-gray-500 text-center">
+        Swipe to see more
+      </p>
+      <MoveRight className="w-4 h-4 text-gray-500 ml-1 mt-[2px]" />
     </div>
   );
 }
