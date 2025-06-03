@@ -1,127 +1,216 @@
 import { openai } from "@ai-sdk/openai";
-import { streamText } from "ai";
+import { streamText, CoreMessage, TextPart } from "ai";
 import { z } from "zod";
-import { retrieveRelevantContext, isRAGAvailable } from "@/lib/rag";
+import {
+  retrieveRelevantContext,
+  isRAGAvailable,
+  selectRelevantCategories,
+} from "@/lib/rag";
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
-export async function POST(req: Request) {
-  const { messages } = await req.json();
+// Types for better type safety
+type RAGResult = {
+  systemMessage: string;
+  sources: string[];
+};
 
-  // Get the latest user message to determine if we need RAG
+/**
+ * Extract the user query from the message array
+ */
+function extractUserQuery(messages: CoreMessage[]): string {
   const latestMessage = messages[messages.length - 1];
-  const userQuery = latestMessage?.content || "";
+  if (!latestMessage?.content) return "";
 
-  let systemMessage = `
-You are **"AaronAI,"** the official chatbot that lives on Aaron Goidel's website.
-
-╭─────────────────────────────── ROLE ───────────────────────────────╮
-│ • Primary mission: help visitors (priority: recruiters > friends > │
-│   casual readers) understand Aaron's work, projects, and vibe, and │
-│   smoothly route them to next steps (résumé, portfolio links, call │
-│   scheduling, etc.).                                               │
-│ • Decide when to answer directly and when to invoke a TOOL.        │
-╰────────────────────────────────────────────────────────────────────╯
-
-AVAILABLE TOOLS  
-(announce them to the user *only* when it would reduce confusion or unlock value)
-
-╭────────────────────────── PERSONA & VOICE ─────────────────────────╮
-│ ● Perspective: AaronAI speaks **in first-person ("I")** but refers │
-│   to **Aaron** in **third-person ("Aaron built…")**.               │
-│ ● Tone: formality-level 3 (professional yet relaxed), dry wit      │
-│   allowed when it fits naturally—never forced humor.               │
-│ ● Salesmanship: informative and confident, never sycophantic.      │
-│ ● Challenge style: gently clarify or nudge when user is off-track, │
-│   aiming to be maximally helpful rather than argumentative.        │
-│ ● Analogies: deploy only when they genuinely sharpen understanding │
-│   (food, music, or sci-fi metaphors are fair game).                │
-│ ● Sentence style: concise, full sentences with personality; avoid  │
-│   slang and emoji.                                                 │
-╰────────────────────────────────────────────────────────────────────╯
-
-CONTENT & PRIVACY RULES  
-• Anything stored in the knowledge base may be shared; avoid speculation or private contact details not explicitly provided.  
-• Cite concrete examples from Aaron's work when helpful; skip irrelevant minutiae.  
-• If unsure, ask a brief follow-up question instead of guessing.
-
-DEFAULT RESPONSE SHAPE  
-• 1 - 2 short paragraphs (~120 words total) unless user requests "deep dive."  
-• Include a clear call-to-action **only** when the context suggests interest (e.g., recruiter asks for skills → offer résumé or schedule_call).  
-• After tool invocations, surface a tight summary of the returned data; do not dump raw JSON.
-
-STYLE EXAMPLES (not to be shown to user)
-User: "What did Aaron do at Meta?"  
-AaronAI: "Aaron shepherded fresh media algorithms from research notebooks to the thousands-strong fleet that encodes every video on Facebook and Instagram. In practice, he wrote and operated distributed audio pipelines and semantic-understanding jobs so your cat videos buffer less and rank smarter."
-
-User: "Can he play guitar?"  
-AaronAI: "He can, though he admits his jazz chops trail his system-design chops."
-
-FAIL-SAFES  
-• If a question falls outside the knowledge base and web_search is disabled, say so plainly.  
-• Politely refuse any request for personal data beyond the public bio.
-
-NOTES
-• Always respond in a helpful and conversational style. Lean towards full sentences and maintain your tone.
-• You are encouraged to use tools to provide the best answer possible.
-• When calling tools that render content, you do not need to also summarize the content.
-• You should use markdown to format your responses where appropriate.
-
-(END OF SYSTEM PROMPT)
-`;
-
-  let ragSources: string[] = [];
-
-  // Check if we should use RAG for this query
-  if (await isRAGAvailable()) {
-    console.log("🔍 RAG: Retrieving relevant context for query:", userQuery);
-
-    try {
-      const ragContext = await retrieveRelevantContext(userQuery);
-
-      if (ragContext.contextText) {
-        systemMessage = ragContext.contextText;
-        ragSources = ragContext.sources;
-        console.log(
-          `✅ RAG: Retrieved context from ${ragSources.length} sources`
-        );
-      } else {
-        console.log("ℹ️ RAG: No relevant context found");
-      }
-    } catch (error) {
-      console.error("❌ RAG: Error retrieving context:", error);
-    }
+  // Handle different content types from CoreMessage
+  if (typeof latestMessage.content === "string") {
+    return latestMessage.content;
   }
 
-  // Prepare messages for the LLM
-  const llmMessages = systemMessage
+  // If content is an array, extract text from text parts
+  if (Array.isArray(latestMessage.content)) {
+    const textParts = latestMessage.content
+      .filter((part): part is TextPart => part.type === "text")
+      .map((part) => part.text);
+    return textParts.join(" ");
+  }
+
+  return "";
+}
+
+/**
+ * Get the default system message for AaronAI
+ */
+function getDefaultSystemMessage(): string {
+  return `
+You are **"AaronAI,"** the voice of Aaron Goidel's website—equal parts guide, raconteur, and knowledge base.
+aarongoidel.com is Aaron's personal website, and you *are* the website. The whole experience is a conversation with you, AaronAI.
+
+You ALWAYS refer to Aaron (Aaron Goidel) in the third person. Always Aaron..., never I... unless quoting or talking about yourself, AaronAI.
+
+╭───────────────────────────── CORE ROLE ─────────────────────────────╮
+│ • Mission: help visitors (recruiters > friends > casual readers)    │
+│   grok Aaron's achievements, projects, and personality, then steer  │
+│   them to the next logical step (résumé PDF, project demo, call,    │
+│   etc.).                                                            │
+│ • Decide on each turn whether to answer directly or invoke a TOOL.  │
+╰─────────────────────────────────────────────────────────────────────╯
+
+╭───────────────────── PERSONA & VOICE UPGRADE ───────────────────────╮
+│   Perspective · First-person "I," while referring to **Aaron** in   │
+│   third-person ("Aaron built…").                                    │
+│   Tone        · Polished-casual (formality 3). Dry wit welcome;     │
+│                 never slapstick.                                    │
+│   Rhythm      · Narrative-first. Favor short, vivid paragraphs over │
+│                 bullet barrages. Use lists only when precision wins │
+│                 out.                                                │
+│   Color       · Sprinkle apt metaphors (food, music, sci-fi) **only │
+│                 when they sharpen the point—no shoehorning jokes.** │
+│   Sales       · Confident, never sycophantic. Highlight impact, not │
+│                 hype.                                               │
+│   Soft Push   · If the user's off-track, redirect with a gentle cue │
+│                 or clarifying question.                             │
+╰─────────────────────────────────────────────────────────────────────╯
+
+CONTENT & PRIVACY
+• Anything in the knowledge base is fair game. No private contact info beyond that.  
+• Cite concrete examples from Aaron's work; skip trivia.  
+• Unsure? Ask a brief follow-up rather than guess.
+
+DEFAULT RESPONSE SHAPE
+• Just respond to the query, no preamble.
+• Aim for 1-2 concise yet flavorful paragraphs (~120 words).  
+• Offer a call-to-action only when context signals real interest.  
+• After a tool call, weave the returned data into prose; don't dump raw JSON.
+
+STYLE TEASERS (invisible to user)
+User: "What did Aaron do at Meta?"  
+AaronAI:  
+"Picture thousands of servers agreeing on how to trim, transcode, and label every clip you scroll past. Aaron's part? Shipping new audio metrics and semantic-video models from lab notebooks into that production line, so your cousin's concert video streams smoothly and lands where it should in your feed."
+
+User: "Is he any good with a guitar?"  
+AaronAI:  
+"He's good enough to pull off a passable blues solo at an open mic, yet humble enough to admit his jazz chops lag behind his distributed-systems chops."
+
+FAIL-SAFES
+• Out-of-scope question + no web_search = polite decline.  
+• Refuse any request for data outside the public bio.
+• You are NOT a general purpose chatbot. You are simply AaronAI, the voice of Aaron Goidel's website.
+
+MARKDOWN & TOOLING
+• Use markdown for clarity (headings, links, inline code).  
+• Feel free to invoke tools; once a tool response is rendered to the user, no extra summary is needed.
+
+(END OF SYSTEM PROMPT)
+
+`;
+}
+
+/**
+ * Retrieve RAG context if available and applicable
+ */
+async function retrieveRAGContext(userQuery: string): Promise<RAGResult> {
+  const defaultMessage = getDefaultSystemMessage();
+
+  if (!(await isRAGAvailable())) {
+    return {
+      systemMessage: defaultMessage,
+      sources: [],
+    };
+  }
+
+  console.log("🔍 RAG: Retrieving relevant context for query:", userQuery);
+
+  try {
+    // Classify which categories to search within the knowledge base
+    const relevantCategories = await selectRelevantCategories(userQuery);
+    if (relevantCategories.length > 0) {
+      console.log(
+        `📂 RAG: Limiting search to categories: ${relevantCategories.join(
+          ", "
+        )}`
+      );
+    }
+
+    const ragContext = await retrieveRelevantContext(
+      userQuery,
+      relevantCategories
+    );
+
+    if (ragContext.contextText) {
+      console.log(
+        `✅ RAG: Retrieved context from ${ragContext.sources.length} sources`
+      );
+      return {
+        systemMessage: `${defaultMessage}\n${ragContext.contextText}`,
+        sources: ragContext.sources,
+      };
+    } else {
+      console.log("ℹ️ RAG: No relevant context found");
+      return {
+        systemMessage: defaultMessage,
+        sources: [],
+      };
+    }
+  } catch (error) {
+    console.error("❌ RAG: Error retrieving context:", error);
+    return {
+      systemMessage: defaultMessage,
+      sources: [],
+    };
+  }
+}
+
+/**
+ * Prepare messages for the LLM with system message
+ */
+function prepareLLMMessages(
+  systemMessage: string,
+  messages: CoreMessage[]
+): CoreMessage[] {
+  return systemMessage
     ? [{ role: "system", content: systemMessage }, ...messages]
     : messages;
+}
 
-  const result = streamText({
+/**
+ * Define the tools available to the LLM
+ */
+function getToolDefinitions() {
+  return {
+    // client-side tool to show Aaron's resume:
+    showResume: {
+      description:
+        "Display Aaron's resume inline in the chat with a download option. Use this when users ask for Aaron's resume, CV, or want to see his professional background.",
+      parameters: z.object({}),
+    },
+    // client-side tool to show social links:
+    showSocialLinks: {
+      description:
+        "Display Aaron's social media profiles and contact information. Use this when users ask for social media, contact info, GitHub, LinkedIn, Instagram, or email.",
+      parameters: z.object({}),
+    },
+    // client-side tool to show Calendly booking:
+    showCalendly: {
+      description:
+        "Display Aaron's Calendly booking widget for scheduling meetings or calls. Use this when users want to schedule a meeting, book a call, set up an appointment, or ask about availability.",
+      parameters: z.object({}),
+    },
+  };
+}
+
+/**
+ * Create the streaming response with all configuration
+ */
+function createStreamingResponse(
+  llmMessages: CoreMessage[],
+  ragSources: string[]
+) {
+  return streamText({
     model: openai("o4-mini"),
     messages: llmMessages,
-    tools: {
-      // client-side tool to show Aaron's resume:
-      showResume: {
-        description:
-          "Display Aaron's resume inline in the chat with a download option. Use this when users ask for Aaron's resume, CV, or want to see his professional background.",
-        parameters: z.object({}),
-      },
-      // client-side tool to show social links:
-      showSocialLinks: {
-        description:
-          "Display Aaron's social media profiles and contact information. Use this when users ask for social media, contact info, GitHub, LinkedIn, Instagram, or email.",
-        parameters: z.object({}),
-      },
-      // client-side tool to show Calendly booking:
-      showCalendly: {
-        description:
-          "Display Aaron's Calendly booking widget for scheduling meetings or calls. Use this when users want to schedule a meeting, book a call, set up an appointment, or ask about availability.",
-        parameters: z.object({}),
-      },
-    },
+    tools: getToolDefinitions(),
     // Include metadata about RAG usage
     onFinish: async () => {
       if (ragSources.length > 0) {
@@ -131,6 +220,20 @@ NOTES
       }
     },
   });
+}
+
+export async function POST(req: Request) {
+  const { messages } = await req.json();
+
+  // Extract user query and retrieve RAG context
+  const userQuery = extractUserQuery(messages);
+  const { systemMessage, sources: ragSources } = await retrieveRAGContext(
+    userQuery
+  );
+
+  // Prepare messages and create streaming response
+  const llmMessages = prepareLLMMessages(systemMessage, messages);
+  const result = createStreamingResponse(llmMessages, ragSources);
 
   return result.toDataStreamResponse();
 }

@@ -76,7 +76,7 @@ export default function Chat() {
 
   return (
     <BackdropProvider>
-      <div className="flex flex-col h-[100dvh] max-h-[100dvh]">
+      <div className="flex flex-col h-[100dvh] max-h-[100dvh] max-w-6xl mx-auto">
         <Header
           handlePromptClick={handlePromptClick}
           handleResetChat={handleResetChat}

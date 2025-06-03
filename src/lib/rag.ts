@@ -1,5 +1,9 @@
 import { Pinecone } from "@pinecone-database/pinecone";
 import OpenAI from "openai";
+import { zodTextFormat } from "openai/helpers/zod";
+import { z } from "zod";
+import fs from "fs";
+import path from "path";
 
 // Configuration - these should match your build script
 const PINECONE_INDEX_NAME = process.env.PINECONE_INDEX_NAME || "knowledge-base";
@@ -23,6 +27,10 @@ interface RAGContext {
   sources: string[];
   contextText: string;
 }
+
+const CategoryClassificationSchema = z.object({
+  categories: z.array(z.string()),
+});
 
 class RAGRetriever {
   private pc: Pinecone | null = null;
@@ -87,7 +95,10 @@ class RAGRetriever {
     }
   }
 
-  async queryKnowledgeBase(query: string): Promise<RAGContext> {
+  async queryKnowledgeBase(
+    query: string,
+    categories?: string[]
+  ): Promise<RAGContext> {
     if (!this.initialized) {
       await this.initialize();
     }
@@ -111,6 +122,15 @@ class RAGRetriever {
           vector: queryEmbedding,
           topK: MAX_RESULTS,
           includeMetadata: true,
+          // Apply category filtering if categories are provided
+          filter:
+            categories && categories.length > 0
+              ? {
+                  category: {
+                    $in: categories,
+                  },
+                }
+              : undefined,
         });
 
       if (!queryResponse.matches || queryResponse.matches.length === 0) {
@@ -206,9 +226,10 @@ const ragRetriever = new RAGRetriever();
 
 // Main function to retrieve context for a user query
 export async function retrieveRelevantContext(
-  query: string
+  query: string,
+  categories?: string[]
 ): Promise<RAGContext> {
-  return ragRetriever.queryKnowledgeBase(query);
+  return ragRetriever.queryKnowledgeBase(query, categories);
 }
 
 // Helper function to check if RAG is available
@@ -244,3 +265,78 @@ export function shouldUseRAG(query: string): boolean {
 }
 
 export type { RAGContext, RetrievedChunk };
+
+/**
+ * List the top-level directories inside the knowledge-base folder. Each directory represents a category.
+ */
+export function listKnowledgeBaseCategories(): string[] {
+  const kbRoot = path.join(process.cwd(), "knowledge-base");
+  try {
+    const entries = fs.readdirSync(kbRoot, { withFileTypes: true });
+    return entries
+      .filter((dirent) => dirent.isDirectory())
+      .map((dirent) => dirent.name);
+  } catch (error) {
+    console.error("❌ RAG: Failed to list knowledge-base categories:", error);
+    return [];
+  }
+}
+
+/**
+ * Use a lightweight LLM call to select the most relevant categories for the given query.
+ * Falls back to an empty array (no filtering) on failure.
+ */
+export async function selectRelevantCategories(
+  query: string,
+  maxCategories: number = 3
+): Promise<string[]> {
+  const categories = listKnowledgeBaseCategories();
+  if (categories.length === 0) return [];
+
+  if (!process.env.OPENAI_API_KEY) {
+    console.warn("OPENAI_API_KEY not set - skipping category classification");
+    return [];
+  }
+
+  try {
+    const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+    const systemPrompt = `You are a classifier that selects the most relevant knowledge-base categories for a user query.
+    If a category may be relevant at all, add it to the list.
+
+Select up to ${maxCategories} category names from the following list (case-sensitive):
+${categories.join(", ")}
+
+If none are relevant, return an empty array.`;
+
+    const response = await openai.responses.parse({
+      model: "gpt-4o-mini",
+      input: [
+        { role: "system", content: systemPrompt },
+        { role: "user", content: query },
+      ],
+      text: {
+        format: zodTextFormat(CategoryClassificationSchema, "classification"),
+      },
+    });
+
+    const result = response.output_parsed;
+
+    if (!result) {
+      console.warn(
+        "⚠️ RAG: Category classifier returned null result. Falling back to no filter."
+      );
+      return [];
+    }
+
+    // Ensure only known categories are returned
+    const selected = result.categories
+      .filter((c) => categories.includes(c))
+      .slice(0, maxCategories);
+
+    return selected;
+  } catch (error) {
+    console.error("❌ RAG: Category classification failed:", error);
+    return [];
+  }
+}

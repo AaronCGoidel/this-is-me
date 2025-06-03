@@ -478,7 +478,9 @@ export default function ChatMessage({
 
   return (
     <div
-      className={`flex rounded-md gap-4 p-4 ${isUser ? "" : "bg-[#020203]"}`}
+      className={`flex rounded-lg gap-4 p-4 mx-auto ${
+        isUser ? "" : "bg-[#020203]"
+      }`}
     >
       <div className="flex-1 min-w-0">
         <div className="text-gray-100">

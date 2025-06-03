@@ -20,7 +20,7 @@ export default function PromptCarousel({ onPromptClick }: PromptCarouselProps) {
   return (
     <div className="w-full max-w-6xl mx-auto px-4">
       <Carousel
-        className="w-full"
+        className="w-full px-4 max-w-2xl lg:max-w-none mx-auto"
         opts={{
           align: "start",
           loop: true,
@@ -42,11 +42,11 @@ export default function PromptCarousel({ onPromptClick }: PromptCarouselProps) {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <p className="text-xs sm:text-sm text-gray-500 mt-2 sm:hidden text-center">
-          Swipe to see more
-        </p>
         <CarouselPrevious className="hidden md:flex -left-12 lg:-left-16" />
         <CarouselNext className="hidden md:flex -right-12 lg:-right-16" />
+        <p className="text-xs sm:text-sm text-gray-500 mt-2 md:hidden text-center">
+          Swipe to see more
+        </p>
       </Carousel>
     </div>
   );
