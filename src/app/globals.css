@@ -1,67 +1,112 @@
+/* globals.css — all-dark shadcn theme */
 @import "tailwindcss";
 
 @layer base {
   :root {
-    --background: #131314;
-    --foreground: #ededed;
-    --bot-message-bg: #020203;
+    /* --- primitives ---------------------------------------------------- */
+    /* system tells the browser we’re dark-mode only */
+    color-scheme: dark;
+
+    /* radii used by shadcn components */
+    --radius: 0.625rem;
+
+    /* brand palette */
+    --background: #131314;   /* page canvas */
+    --foreground: #ededed;   /* default text */
+    --primary: #020203;
+    --bot-message-bg: #020203;/* chat bubbles / filled buttons */
+
+    /* --- shadcn slots -------------------------------------------------- */
+    --card: #1a1a1b;
+    --card-foreground: var(--foreground);
+
+    --popover: #1a1a1b;
+    --popover-foreground: var(--foreground);
+
+    --primary: var(--bot-message-bg);      /* filled / primary buttons  */
+    --primary-foreground: var(--foreground);
+
+    --secondary: #1e1e1f;                  /* subtle surfaces           */
+    --secondary-foreground: var(--foreground);
+
+    --muted: #1e1e1f;
+    --muted-foreground: #9a9a9a;
+
+    --accent: #1e1e1f;
+    --accent-foreground: var(--foreground);
+
+    --destructive: #b91c1c;                /* red-600                   */
+    --destructive-foreground: #ffffff;
+
+    --border: #2d2d2e;
+    --input: var(--bot-message-bg);        /* inputs match buttons      */
+    --ring: #4a4a4a;
+
+    /* optional data-viz colors */
+    --chart-1: #4f46e5; /* indigo-600 */
+    --chart-2: #0ea5e9; /* sky-500    */
+    --chart-3: #10b981; /* emerald-500*/
+    --chart-4: #f59e0b; /* amber-500  */
+    --chart-5: #ef4444; /* red-500    */
   }
 }
 
+/* shadcn theme-inline hook --------------------------------------------- */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-bot-message-bg: var(--bot-message-bg);
+
   --font-sans: var(--font-pp-mori), ui-sans-serif, system-ui, sans-serif;
   --font-monument: var(--font-pp-monument-extended), ui-sans-serif, system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #131314;
-    --foreground: #ededed;
-  }
-}
-
+/* global element resets ------------------------------------------------- */
 * {
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   overflow: hidden;
 }
 
 body {
+  margin: 0;
+  padding: 0;
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-pp-mori), ui-sans-serif, system-ui, sans-serif;
-  margin: 0;
-  padding: 0;
 }
 
-/* Custom thin scrollbar for chat messages container */
+/* thin scrollbars for chat panes --------------------------------------- */
 .custom-scrollbar {
-  scrollbar-width: thin; /* Firefox */
-  scrollbar-color: #4a4a4a transparent; /* Firefox */
+  scrollbar-width: thin;                      /* Firefox */
+  scrollbar-color: var(--ring) transparent;   /* Firefox */
 }
 
 .custom-scrollbar::-webkit-scrollbar {
-  width: 8px; /* Width of the scrollbar */
-  height: 8px; /* Height for horizontal scrollbars */
+  width: 8px;
+  height: 8px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent; /* Track color */
+  background: transparent;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #4a4a4a; /* Thumb color */
-  border-radius: 4px; /* Rounded corners */
-  border: 2px solid transparent; /* Space around thumb */
-  background-clip: content-box; /* Ensure border works */
+  background-color: var(--ring);
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: content-box;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: #6b6b6b; /* Thumb color on hover */
+  background-color: #6b6b6b;
+}
+
+/* utility class for consistent rounding -------------------------------- */
+.rounded-app {
+  border-radius: var(--radius);
 }

@@ -7,6 +7,8 @@ import WelcomeScreen from "../components/WelcomeScreen";
 import LoadingIndicator from "../components/LoadingIndicator";
 import Header from "@/components/Header";
 import { BackdropProvider } from "@/components/BackdropProvider";
+import { useUser } from "@/contexts/UserContext";
+import { useEffect } from "react";
 
 export default function Chat() {
   const {
@@ -56,6 +58,31 @@ export default function Chat() {
       }
     },
   });
+
+  const { user, updateSession } = useUser();
+
+  // Monitor messages for successful OTP verification
+  useEffect(() => {
+    const latestMessage = messages[messages.length - 1];
+    if (latestMessage && latestMessage.parts) {
+      for (const part of latestMessage.parts) {
+        if (
+          part.type === "tool-invocation" &&
+          part.toolInvocation.toolName === "verifyOtp" &&
+          part.toolInvocation.state === "result"
+        ) {
+          const result = part.toolInvocation.result as any;
+          if (result && result.success && result.session && result.profile) {
+            console.log(
+              "OTP verification successful, updating session:",
+              result.profile
+            );
+            updateSession(result.session, result.profile);
+          }
+        }
+      }
+    }
+  }, [messages, updateSession]);
 
   const handlePromptClick = (prompt: string) => {
     append({

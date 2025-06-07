@@ -10,7 +10,7 @@ import {
   CarouselPrevious,
   useCarousel,
 } from "@/components/ui/carousel";
-import { ArrowRight, MoveRight } from "lucide-react";
+import { MoveRight } from "lucide-react";
 
 interface PromptCarouselProps {
   onPromptClick: (prompt: string) => void;

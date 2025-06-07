@@ -1,3 +1,4 @@
+import { useUser } from "@/contexts/UserContext";
 import HamburgerMenu from "./HamburgerMenu";
 
 export default function Header({
@@ -7,9 +8,18 @@ export default function Header({
   handlePromptClick: (prompt: string) => void;
   handleResetChat: () => void;
 }) {
+  const { user, profile } = useUser();
+
+  const displayName = profile
+    ? `${profile.first_name} ${profile.last_name}`.trim()
+    : user?.phone || user?.email;
+
   return (
     <header className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="flex justify-end items-center h-20 px-4">
+        {displayName && (
+          <p className="text-sm text-gray-400 mr-4">Hi, {displayName}</p>
+        )}
         <HamburgerMenu
           onPromptClick={handlePromptClick}
           onResetChat={handleResetChat}

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { UserProvider } from "@/contexts/UserContext";
 
 const ppMori = localFont({
   src: [
@@ -52,7 +53,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${ppMori.variable} font-sans antialiased`}>
-        {children}
+        <UserProvider>{children}</UserProvider>
       </body>
     </html>
   );
