@@ -1,5 +1,7 @@
 import { useUser } from "@/contexts/UserContext";
 import HamburgerMenu from "./HamburgerMenu";
+import { useState } from "react";
+import { useEffect } from "react";
 
 export default function Header({
   handlePromptClick,
@@ -8,11 +10,17 @@ export default function Header({
   handlePromptClick: (prompt: string) => void;
   handleResetChat: () => void;
 }) {
-  const { user, profile } = useUser();
+  const { user, profile, signOut } = useUser();
 
-  const displayName = profile
-    ? `${profile.first_name} ${profile.last_name}`.trim()
-    : user?.phone || user?.email;
+  const [displayName, setDisplayName] = useState<string | null>();
+
+  useEffect(() => {
+    if (profile) {
+      setDisplayName(`${profile.first_name} ${profile.last_name}`.trim());
+    } else {
+      setDisplayName(null);
+    }
+  }, [profile, user]);
 
   return (
     <header className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -21,8 +29,10 @@ export default function Header({
           <p className="text-sm text-gray-400 mr-4">Hi, {displayName}</p>
         )}
         <HamburgerMenu
+          profile={profile || undefined}
           onPromptClick={handlePromptClick}
           onResetChat={handleResetChat}
+          onLogout={signOut}
           className="relative top-0 right-0"
         />
       </div>

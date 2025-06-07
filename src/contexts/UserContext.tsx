@@ -9,17 +9,17 @@ import {
   ReactNode,
 } from "react";
 import { createClient } from "@/lib/supabase/client";
-import type { User, Session } from "@supabase/supabase-js";
+import type { User, Session, AuthError } from "@supabase/supabase-js";
 import { Database } from "@/database.types";
 
-type Profile = Database["public"]["Tables"]["user_profiles"]["Row"];
+export type Profile = Database["public"]["Tables"]["user_profiles"]["Row"];
 
 type UserContextType = {
   user: User | null;
   session: Session | null;
   profile: Profile | null;
   loading: boolean;
-  signOut: () => Promise<void>;
+  signOut: () => Promise<{ error: AuthError | null }>;
   refreshProfile: () => Promise<void>;
   updateSession: (session: Session, profile: Profile) => void;
 };
@@ -78,10 +78,11 @@ export function UserProvider({ children }: { children: ReactNode }) {
   );
 
   const signOut = async () => {
-    await supabase.auth.signOut();
+    const { error } = await supabase.auth.signOut();
     setUser(null);
     setSession(null);
     setProfile(null);
+    return { error };
   };
 
   useEffect(() => {
@@ -113,6 +114,8 @@ export function UserProvider({ children }: { children: ReactNode }) {
         event,
         session ? "session exists" : "no session"
       );
+
+      console.log("Auth state change:", event, session);
 
       setSession(session);
       setUser(session?.user ?? null);

@@ -3,8 +3,7 @@ import { useUser } from "@/contexts/UserContext";
 import { createUser, getAllUsers } from "./actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { createClient } from "@/lib/supabase/client";
-import { useEffect, useState, Suspense } from "react";
+import { useEffect, useState } from "react";
 import { Tables } from "@/database.types";
 
 const Heading = ({ children }: { children: React.ReactNode }) => (

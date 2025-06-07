@@ -15,6 +15,10 @@ export async function createUser(formData: FormData) {
     phone: phone,
   });
 
+  if (error) {
+    console.error("Error creating user:", error);
+  }
+
   if (data.user?.id) {
     const { data: userProfile, error: insertError } = await supabase
       .from("user_profiles")
@@ -27,6 +31,11 @@ export async function createUser(formData: FormData) {
       .select("id")
       .single();
 
+    if (!userProfile) {
+      console.error("Failed to insert user profile for phone:", phone);
+      return;
+    }
+
     let normalizedPhone = phone.trim().replace(/[^+\d]/g, "");
     if (!normalizedPhone.startsWith("+")) {
       // Assume US number if no country code
@@ -37,7 +46,7 @@ export async function createUser(formData: FormData) {
     const { error: phoneError } = await supabase
       .from("phones")
       .insert({
-        user_profile_id: userProfile?.id!,
+        user_profile_id: userProfile.id,
         phone_hash: phoneHash,
       })
       .select();

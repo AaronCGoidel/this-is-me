@@ -9,8 +9,12 @@ import Header from "@/components/Header";
 import { BackdropProvider } from "@/components/BackdropProvider";
 import { useUser } from "@/contexts/UserContext";
 import { useEffect } from "react";
+import type { Session } from "@supabase/supabase-js";
+import type { Profile } from "@/contexts/UserContext";
 
 export default function Chat() {
+  const { updateSession, signOut } = useUser();
+
   const {
     messages,
     input,
@@ -27,19 +31,11 @@ export default function Chat() {
     // run client-side tools that are automatically executed:
     async onToolCall({ toolCall }) {
       console.log(`toolCall: ${JSON.stringify(toolCall)}`);
-      if (toolCall.toolName === "getLocation") {
-        const cities = ["New York", "Los Angeles", "Chicago", "San Francisco"];
-        const city = cities[Math.floor(Math.random() * cities.length)];
-        return city;
-      }
-
       if (toolCall.toolName === "showResume") {
-        // Return immediately so the tool doesn't block subsequent messages
         return "Resume displayed successfully";
       }
 
       if (toolCall.toolName === "showSocialLinks") {
-        // Return immediately so the tool doesn't block subsequent messages
         const args = toolCall.args as { platforms?: string[] };
         const platforms = args.platforms || [
           "github",
@@ -53,13 +49,18 @@ export default function Chat() {
       }
 
       if (toolCall.toolName === "showCalendly") {
-        // Return immediately so the tool doesn't block subsequent messages
         return "Calendly booking widget displayed successfully";
+      }
+
+      if (toolCall.toolName === "logout") {
+        const { error } = await signOut();
+        if (error) {
+          return "Failed to log out. Please try again.";
+        }
+        return "Logged out successfully";
       }
     },
   });
-
-  const { user, updateSession } = useUser();
 
   // Monitor messages for successful OTP verification
   useEffect(() => {
@@ -71,12 +72,15 @@ export default function Chat() {
           part.toolInvocation.toolName === "verifyOtp" &&
           part.toolInvocation.state === "result"
         ) {
-          const result = part.toolInvocation.result as any;
+          interface VerifyOtpResult {
+            success: boolean;
+            session: Session;
+            profile: Profile;
+          }
+
+          const result = part.toolInvocation.result as VerifyOtpResult;
+
           if (result && result.success && result.session && result.profile) {
-            console.log(
-              "OTP verification successful, updating session:",
-              result.profile
-            );
             updateSession(result.session, result.profile);
           }
         }

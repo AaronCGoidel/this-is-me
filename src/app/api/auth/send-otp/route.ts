@@ -23,9 +23,9 @@ export async function POST(request: NextRequest) {
 
     // Check if a profile exists with this phone number
     const { data: profile, error: profileError } = await supabase
-      .from("profiles")
+      .from("user_profiles")
       .select("*")
-      .eq("phone", normalizedPhone)
+      .eq("phone_number", normalizedPhone)
       .single();
 
     if (profileError && profileError.code !== "PGRST116") {
