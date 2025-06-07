@@ -31,6 +31,9 @@ export async function createUser(formData: FormData) {
       .select("id")
       .single();
 
+    console.log("userProfile", userProfile);
+    console.log("insertError", insertError);
+
     if (!userProfile) {
       console.error("Failed to insert user profile for phone:", phone);
       return;

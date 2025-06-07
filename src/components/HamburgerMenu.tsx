@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { ppMori } from "@/app/lib/fonts";
 import { getMenuPrompts } from "@/lib/cannedPrompts";
 import { useBackdrop } from "./BackdropProvider";
@@ -25,6 +26,7 @@ export default function HamburgerMenu({
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const { showBackdrop, hideBackdrop } = useBackdrop();
+  const router = useRouter();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -90,13 +92,22 @@ export default function HamburgerMenu({
       description: "Log out of your account",
       isDestructive: false,
     });
+    if (profile.is_admin) {
+      utilityItems.push({
+        label: "Admin",
+        action: () => {
+          router.push("/admin");
+        },
+        description: "Admin panel",
+        isDestructive: false,
+      });
+    }
   } else {
-    menuItems.push({
+    utilityItems.push({
       label: "Login",
+      action: () => onPromptClick?.("Login me in"),
       description: "Log in to your account",
-      prompt: "Login me in",
-      useInMenu: true,
-      useInCarousel: false,
+      isDestructive: false,
     });
   }
 
