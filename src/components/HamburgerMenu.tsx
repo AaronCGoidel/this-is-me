@@ -4,17 +4,22 @@ import { useState, useEffect, useRef } from "react";
 import { ppMori } from "@/app/lib/fonts";
 import { getMenuPrompts } from "@/lib/cannedPrompts";
 import { useBackdrop } from "./BackdropProvider";
+import { Profile } from "@/contexts/UserContext";
 
 interface HamburgerMenuProps {
   className?: string;
+  profile?: Profile;
   onPromptClick?: (prompt: string) => void;
   onResetChat?: () => void;
+  onLogout?: () => void;
 }
 
 export default function HamburgerMenu({
   className = "",
+  profile,
   onPromptClick,
   onResetChat,
+  onLogout,
 }: HamburgerMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -77,6 +82,23 @@ export default function HamburgerMenu({
       isDestructive: true,
     },
   ];
+
+  if (profile) {
+    utilityItems.push({
+      label: "Logout",
+      action: () => onLogout?.(),
+      description: "Log out of your account",
+      isDestructive: false,
+    });
+  } else {
+    menuItems.push({
+      label: "Login",
+      description: "Log in to your account",
+      prompt: "Login me in",
+      useInMenu: true,
+      useInCarousel: false,
+    });
+  }
 
   const handleItemClick = (prompt: string) => {
     if (onPromptClick) {

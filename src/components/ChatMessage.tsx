@@ -46,84 +46,6 @@ const ToolResult = ({ label, value }: { label: string; value: string }) => (
   </div>
 );
 
-const ConfirmationTool = ({ invocation, onResult }: ToolComponentProps) => {
-  switch (invocation.state) {
-    case "call":
-      return (
-        <div className="bg-gray-700 rounded-lg p-4 my-2">
-          <p className={`mb-3 ${ppMori.regular}`}>
-            {(invocation.args as { message?: string })?.message}
-          </p>
-          <div className="flex gap-2">
-            <button
-              onClick={() =>
-                onResult?.(invocation.toolCallId, "Yes, confirmed.")
-              }
-              className={`px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors ${ppMori.semiBold}`}
-            >
-              Yes
-            </button>
-            <button
-              onClick={() => onResult?.(invocation.toolCallId, "No, denied")}
-              className={`px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors ${ppMori.semiBold}`}
-            >
-              No
-            </button>
-          </div>
-        </div>
-      );
-    case "result":
-      return (
-        <ToolResult label="Confirmation" value={String(invocation.result)} />
-      );
-    default:
-      return null;
-  }
-};
-
-const LocationTool = ({ invocation }: ToolComponentProps) => {
-  switch (invocation.state) {
-    case "call":
-      return <LoadingIndicator text="Getting location..." />;
-    case "result":
-      return <ToolResult label="Location" value={String(invocation.result)} />;
-    default:
-      return null;
-  }
-};
-
-const WeatherTool = ({ invocation }: ToolComponentProps) => {
-  switch (invocation.state) {
-    case "partial-call":
-      return (
-        <div className="bg-gray-700 rounded-lg p-3 my-2">
-          <pre
-            className={`text-sm text-gray-300 overflow-x-auto ${ppMori.regular}`}
-          >
-            {JSON.stringify(invocation, null, 2)}
-          </pre>
-        </div>
-      );
-    case "call":
-      return (
-        <LoadingIndicator
-          text={`Getting weather information for ${
-            (invocation.args as { city?: string })?.city
-          }...`}
-        />
-      );
-    case "result":
-      return (
-        <ToolResult
-          label={`Weather in ${(invocation.args as { city?: string })?.city}`}
-          value={String(invocation.result)}
-        />
-      );
-    default:
-      return null;
-  }
-};
-
 const ResumeTool = ({ invocation }: ToolComponentProps) => {
   switch (invocation.state) {
     case "call":
@@ -261,8 +183,39 @@ const SocialLinksTool = ({ invocation }: ToolComponentProps) => {
 const CalendlyTool = ({ invocation }: ToolComponentProps) => {
   switch (invocation.state) {
     case "call":
+      return <LoadingIndicator text="Loading Calendly..." />;
     case "result":
       return <CalendlyEmbed url="https://calendly.com/acgoidel" />;
+    default:
+      return null;
+  }
+};
+
+const PhoneLoginTool = ({ invocation }: ToolComponentProps) => {
+  switch (invocation.state) {
+    case "call":
+      return <LoadingIndicator text="Sending you a code..." />;
+    case "result":
+    default:
+      return null;
+  }
+};
+
+const VerifyOtpTool = ({ invocation }: ToolComponentProps) => {
+  switch (invocation.state) {
+    case "call":
+      return <LoadingIndicator text="Verifying your one time passcode..." />;
+    case "result":
+    default:
+      return null;
+  }
+};
+
+const LogoutTool = ({ invocation }: ToolComponentProps) => {
+  switch (invocation.state) {
+    case "call":
+      return <LoadingIndicator text="Logging you out..." />;
+    case "result":
     default:
       return null;
   }
@@ -272,12 +225,12 @@ const TOOL_COMPONENTS: Record<
   string,
   React.ComponentType<ToolComponentProps>
 > = {
-  askForConfirmation: ConfirmationTool,
-  getLocation: LocationTool,
-  getWeatherInformation: WeatherTool,
   showResume: ResumeTool,
   showSocialLinks: SocialLinksTool,
   showCalendly: CalendlyTool,
+  phoneLogin: PhoneLoginTool,
+  verifyOtp: VerifyOtpTool,
+  logout: LogoutTool,
 };
 
 const ToolInvocationRenderer = ({
