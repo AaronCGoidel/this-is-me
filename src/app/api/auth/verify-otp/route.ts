@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
+import { normalizePhoneNumber } from "@/lib/phone";
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,11 +15,13 @@ export async function POST(request: NextRequest) {
 
     const supabase = await createClient();
 
-    // Normalize phone number to E.164 format
-    let normalizedPhone = phone.trim();
-    if (!normalizedPhone.startsWith("+")) {
-      // Assume US number if no country code
-      normalizedPhone = "+1" + normalizedPhone.replace(/\D/g, "");
+    const normalizedPhone = normalizePhoneNumber(phone);
+
+    if (!normalizedPhone) {
+      return NextResponse.json(
+        { success: false, message: "Invalid phone number" },
+        { status: 400 }
+      );
     }
 
     // Verify OTP

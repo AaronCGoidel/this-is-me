@@ -1,11 +1,18 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import {
+  useState,
+  useEffect,
+  Dispatch,
+  SetStateAction,
+  ReactNode,
+} from "react";
 import { useRouter } from "next/navigation";
-import { ppMori } from "@/app/lib/fonts";
-import { getMenuPrompts } from "@/lib/cannedPrompts";
-import { useBackdrop } from "./BackdropProvider";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import { Profile } from "@/contexts/UserContext";
+import { getMenuPrompts } from "@/lib/cannedPrompts";
+import { ppMori } from "@/app/lib/fonts";
+import { useBackdrop } from "./BackdropProvider";
 
 interface HamburgerMenuProps {
   className?: string;
@@ -15,6 +22,56 @@ interface HamburgerMenuProps {
   onLogout?: () => void;
 }
 
+const UNDERLAY_VARIANTS: Variants = {
+  open: {
+    width: "calc(100% - 32px)",
+    height: "calc(100dvh - 32px)",
+    transition: { type: "spring", mass: 3, stiffness: 400, damping: 50 },
+  },
+  closed: {
+    width: "64px",
+    height: "64px",
+    transition: {
+      delay: 0.75,
+      type: "spring",
+      mass: 3,
+      stiffness: 400,
+      damping: 58,
+    },
+  },
+};
+
+const HAMBURGER_VARIANTS: Record<"top" | "middle" | "bottom", Variants> = {
+  top: {
+    open: {
+      rotate: ["0deg", "0deg", "45deg"],
+      top: ["35%", "50%", "50%"],
+    },
+    closed: {
+      rotate: ["45deg", "0deg", "0deg"],
+      top: ["50%", "50%", "35%"],
+    },
+  },
+  middle: {
+    open: {
+      rotate: ["0deg", "0deg", "-45deg"],
+    },
+    closed: {
+      rotate: ["-45deg", "0deg", "0deg"],
+    },
+  },
+  bottom: {
+    open: {
+      rotate: ["0deg", "0deg", "45deg"],
+      bottom: ["35%", "50%", "50%"],
+    },
+    closed: {
+      rotate: ["45deg", "0deg", "0deg"],
+      bottom: ["50%", "50%", "35%"],
+    },
+  },
+};
+
 export default function HamburgerMenu({
   className = "",
   profile,
@@ -22,65 +79,38 @@ export default function HamburgerMenu({
   onResetChat,
   onLogout,
 }: HamburgerMenuProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
-  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [active, setActive] = useState(false);
   const { showBackdrop, hideBackdrop } = useBackdrop();
-  const router = useRouter();
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const closeMenu = () => {
-    setIsOpen(false);
-  };
-
-  // Handle backdrop when menu opens/closes
+  // Keep backdrop in-sync with menu state
   useEffect(() => {
-    if (isOpen) {
+    if (active) {
       showBackdrop();
     } else {
       hideBackdrop();
     }
-  }, [isOpen, showBackdrop, hideBackdrop]);
+  }, [active, showBackdrop, hideBackdrop]);
 
-  // Handle keyboard navigation
+  // Close on ESC key
   useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && isOpen) {
-        closeMenu();
-        buttonRef.current?.focus();
-      }
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setActive(false);
     };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, []);
 
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        isOpen &&
-        menuRef.current &&
-        !menuRef.current.contains(event.target as Node)
-      ) {
-        closeMenu();
-      }
-    };
+  const menuPrompts = getMenuPrompts();
 
-    document.addEventListener("keydown", handleKeyDown);
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isOpen]);
-
-  // Get menu items from shared canned prompts
-  const menuItems = getMenuPrompts();
-
-  const utilityItems = [
+  const router = useRouter();
+  const utilityItems: Array<{
+    label: string;
+    action: () => void;
+    isDestructive?: boolean;
+  }> = [
     {
       label: "Reset Chat",
       action: () => onResetChat?.(),
-      description: "Clear all messages and start fresh",
       isDestructive: true,
     },
   ];
@@ -89,131 +119,223 @@ export default function HamburgerMenu({
     utilityItems.push({
       label: "Logout",
       action: () => onLogout?.(),
-      description: "Log out of your account",
-      isDestructive: false,
     });
     if (profile.is_admin) {
       utilityItems.push({
         label: "Admin",
-        action: () => {
-          router.push("/admin");
-        },
-        description: "Admin panel",
-        isDestructive: false,
+        action: () => router.push("/admin"),
       });
     }
   } else {
     utilityItems.push({
       label: "Login",
       action: () => onPromptClick?.("Login me in"),
-      description: "Log in to your account",
-      isDestructive: false,
     });
   }
 
-  const handleItemClick = (prompt: string) => {
-    if (onPromptClick) {
-      onPromptClick(prompt);
-    }
-    closeMenu();
-  };
-
-  const handleUtilityClick = (action: () => void) => {
-    action();
-    closeMenu();
-  };
-
   return (
-    <div ref={menuRef} className={`relative ${className}`}>
-      {/* Hamburger Button */}
-      <button
-        ref={buttonRef}
-        onClick={toggleMenu}
-        className="w-12 h-12 bg-[#020203] hover:bg-[#020203]/80 rounded-lg flex flex-col items-center justify-center space-y-1.5 transition-all duration-300 shadow-lg border border-gray-700/50 focus:outline-none focus:ring-2 focus:ring-white/20 hover:cursor-pointer"
-        aria-label={isOpen ? "Close menu" : "Open menu"}
-        aria-expanded={isOpen}
-        aria-haspopup="true"
-      >
-        <span
-          className={`w-6 h-0.5 bg-white transition-all duration-300 ${
-            isOpen ? "rotate-45 translate-y-2" : ""
-          }`}
-        />
-        <span
-          className={`w-6 h-0.5 bg-white transition-all duration-300 ${
-            isOpen ? "opacity-0" : ""
-          }`}
-        />
-        <span
-          className={`w-6 h-0.5 bg-white transition-all duration-300 ${
-            isOpen ? "-rotate-45 -translate-y-2" : ""
-          }`}
-        />
-      </button>
+    <div className={`relative ${className}`}>
+      {/* HAMBURGER BUTTON + UNDERLAY */}
+      <HamburgerButton active={active} setActive={setActive} />
 
-      {/* Menu Dropdown */}
-      <div
-        className={`absolute top-full right-0 mt-2 w-72 bg-white/95 backdrop-blur-md rounded-lg shadow-xl border border-gray-200/20 transition-all duration-300 z-50 ${
-          isOpen
-            ? "opacity-100 translate-y-0 pointer-events-auto"
-            : "opacity-0 -translate-y-4 pointer-events-none"
+      {/* LINKS OVERLAY */}
+      <AnimatePresence>
+        {active && (
+          <LinksOverlay
+            key="links-overlay"
+            menuPrompts={menuPrompts}
+            utilityItems={utilityItems}
+            onPromptClick={(prompt: string) => {
+              onPromptClick?.(prompt);
+              setActive(false);
+            }}
+            onUtilityAction={(fn: () => void) => {
+              fn();
+              setActive(false);
+            }}
+          />
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+const HamburgerButton = ({
+  active,
+  setActive,
+}: {
+  active: boolean;
+  setActive: Dispatch<SetStateAction<boolean>>;
+}) => {
+  return (
+    <>
+      <motion.div
+        initial={false}
+        animate={active ? "open" : "closed"}
+        variants={UNDERLAY_VARIANTS}
+        style={{ top: 16, right: 16 }}
+        className="fixed z-10 rounded-xl bg-gradient-to-br bg-bot-message-bg border-2 border-foreground/10 shadow-lg"
+      />
+
+      <motion.button
+        initial={false}
+        animate={active ? "open" : "closed"}
+        onClick={() => setActive((pv) => !pv)}
+        aria-label="Toggle navigation menu"
+        className={`group fixed right-4 top-4 z-50 h-16 w-16 transition-all ${
+          active ? "rounded-bl-xl rounded-tr-xl" : "rounded-xl"
         }`}
-        role="menu"
-        aria-labelledby="menu-button"
       >
-        <div className="p-1.5">
-          <div className="px-3 py-3 mb-1 bg-background/75 rounded-lg">
-            <h3 className={`text-sm font-semibold ${ppMori.semiBold}`}>
-              Quick Actions
-            </h3>
-          </div>
-          {menuItems.map((item, index) => (
-            <button
-              key={index}
-              onClick={() => handleItemClick(item.prompt)}
-              className={`w-full text-left px-3 py-3 text-[#020203] hover:bg-[#020203]/10 rounded-md transition-all duration-200 group focus:outline-none focus:bg-[#020203]/10 ${ppMori.regular}`}
-              role="menuitem"
-              tabIndex={isOpen ? 0 : -1}
-            >
-              <div className="flex flex-col">
-                <span className={`font-medium ${ppMori.semiBold} text-sm`}>
-                  {item.label}
-                </span>
-                <span className="text-xs text-gray-600 mt-0.5">
-                  {item.description}
-                </span>
-              </div>
-            </button>
-          ))}
+        <motion.span
+          variants={HAMBURGER_VARIANTS.top}
+          className="absolute block h-1 w-8 bg-white"
+          style={{ y: "-50%", left: "50%", x: "-50%" }}
+        />
+        <motion.span
+          variants={HAMBURGER_VARIANTS.middle}
+          className="absolute block h-1 w-8 bg-white"
+          style={{ left: "50%", x: "-50%", top: "50%", y: "-50%" }}
+        />
+        <motion.span
+          variants={HAMBURGER_VARIANTS.bottom}
+          className="absolute block h-1 w-8 bg-white"
+          style={{ left: "50%", x: "-50%", y: "50%" }}
+        />
+      </motion.button>
+    </>
+  );
+};
 
-          {utilityItems.length > 0 && (
-            <>
-              {utilityItems.map((item, index) => (
-                <button
-                  key={`utility-${index}`}
-                  onClick={() => handleUtilityClick(item.action)}
-                  className={`w-full text-left px-3 py-3 rounded-md transition-all duration-200 group focus:outline-none ${
-                    item.isDestructive
-                      ? "text-red-600 hover:bg-red-100 focus:bg-red-50"
-                      : "text-[#020203] hover:bg-[#020203]/10 focus:bg-[#020203]/10"
-                  } ${ppMori.regular}`}
-                  role="menuitem"
-                  tabIndex={isOpen ? 0 : -1}
-                >
-                  <div className="flex flex-col">
-                    <span className={`font-medium ${ppMori.semiBold} text-sm`}>
-                      {item.label}
-                    </span>
-                    <span className="text-xs mt-0.5 opacity-70">
-                      {item.description}
-                    </span>
-                  </div>
-                </button>
-              ))}
-            </>
-          )}
-        </div>
-      </div>
+function LinksOverlay({
+  menuPrompts,
+  utilityItems,
+  onPromptClick,
+  onUtilityAction,
+}: {
+  menuPrompts: ReturnType<typeof getMenuPrompts>;
+  utilityItems: Array<{
+    label: string;
+    action: () => void;
+    isDestructive?: boolean;
+  }>;
+  onPromptClick: (prompt: string) => void;
+  onUtilityAction: (fn: () => void) => void;
+}) {
+  return (
+    <motion.nav
+      initial={{ opacity: 0, y: -12 }}
+      animate={{
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.4, ease: "easeInOut" },
+      }}
+      exit={{ opacity: 0, y: -12, transition: { duration: 0.3 } }}
+      className="fixed right-4 top-4 z-40 h-[calc(100dvh_-_64px)] w-[calc(100%_-_32px)] overflow-hidden"
+    >
+      <LinksContainer menuPrompts={menuPrompts} onPromptClick={onPromptClick} />
+      <UtilityFooter
+        utilityItems={utilityItems}
+        onUtilityAction={onUtilityAction}
+      />
+    </motion.nav>
+  );
+}
+
+function LinksContainer({
+  menuPrompts,
+  onPromptClick,
+}: {
+  menuPrompts: ReturnType<typeof getMenuPrompts>;
+  onPromptClick: (prompt: string) => void;
+}) {
+  return (
+    <motion.div className="space-y-4 p-12 pl-4 md:pl-20">
+      {menuPrompts.map((item, idx) => (
+        <NavLink
+          key={item.label}
+          href={"#"}
+          idx={idx}
+          onClick={() => onPromptClick(item.prompt)}
+        >
+          {item.label}
+        </NavLink>
+      ))}
+    </motion.div>
+  );
+}
+
+function NavLink({
+  children,
+  href,
+  idx,
+  onClick,
+}: {
+  children: ReactNode;
+  href: string;
+  idx: number;
+  onClick: () => void;
+}) {
+  return (
+    <motion.a
+      initial={{ opacity: 0, y: -8 }}
+      animate={{
+        opacity: 1,
+        y: 0,
+        transition: {
+          delay: 0.75 + idx * 0.125,
+          duration: 0.5,
+          ease: "easeInOut",
+        },
+      }}
+      exit={{ opacity: 0, y: -8 }}
+      href={href}
+      onClick={onClick}
+      className="block text-5xl font-semibold hover:text-foreground/60 transition-colors md:text-7xl"
+    >
+      {children}.
+    </motion.a>
+  );
+}
+
+function UtilityFooter({
+  utilityItems,
+  onUtilityAction,
+}: {
+  utilityItems: Array<{
+    label: string;
+    action: () => void;
+    isDestructive?: boolean;
+  }>;
+  onUtilityAction: (fn: () => void) => void;
+}) {
+  return (
+    <div className="absolute bottom-6 right-6 flex flex-row gap-4 items-end flex-wrap justify-end">
+      {utilityItems.map((item, idx) => (
+        <motion.button
+          key={idx}
+          initial={{ opacity: 0, y: 8 }}
+          animate={{
+            opacity: 1,
+            y: 0,
+            transition: {
+              delay: 1 + idx * 0.125,
+              duration: 0.5,
+              ease: "easeInOut",
+            },
+          }}
+          exit={{ opacity: 0, y: 8 }}
+          onClick={() => onUtilityAction(item.action)}
+          className={`hover:cursor-pointer rounded-md px-8 py-4 text-lg ${
+            ppMori.regular
+          } ${
+            item.isDestructive
+              ? "bg-red-600 text-white hover:bg-red-700/60"
+              : "bg-background text-foreground hover:bg-background/60"
+          }`}
+        >
+          {item.label}
+        </motion.button>
+      ))}
     </div>
   );
 }

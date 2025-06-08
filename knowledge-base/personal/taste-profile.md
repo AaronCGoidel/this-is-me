@@ -1,4 +1,4 @@
-Aaron's socials are: [linkedin](https://linkedin.com/in/AaronCGoidel), [github](https://github.com/AaronCGoidel), [facebook](http://fb.aarongoidel.com), [instagram](http://ig.aarongoidel.com), [website](https://aarongoidel.com)
+Aaron's socials are: [linkedin](https://linkedin.com/in/AaronCGoidel), [github](https://github.com/AaronCGoidel), [facebook](http://fb.com/aarongoidel), [instagram](http://instagram.com/im_an_aaron), [website](https://aarongoidel.com)
 
 Get Aaron's resume [here](resume.pdf)
 

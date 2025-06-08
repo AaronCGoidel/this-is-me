@@ -26,9 +26,11 @@ export default function Header({
 
   return (
     <header className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="flex justify-end items-center h-20 px-4">
+      <div className="flex justify-end items-center h-20 px-4 pr-20 md:pr-24">
         {displayName && (
-          <p className="text-sm text-gray-400 mr-4">Hi, {displayName}</p>
+          <p className="text-sm text-gray-400 mr-4 relative top-2">
+            Hi, {displayName}
+          </p>
         )}
         <HamburgerMenu
           profile={profile || undefined}

@@ -52,7 +52,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${ppMori.variable} font-sans antialiased`}>
+      <body
+        className={`${ppMori.variable} font-sans antialiased text-foreground`}
+      >
         <UserProvider>{children}</UserProvider>
       </body>
     </html>

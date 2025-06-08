@@ -1,4 +1,5 @@
-Aaron Goidel is a Software Engineer based in Seattle, WA. He was born on March 1, 2001 (24 years old) in Manhattan, New York, NY.
+Aaron Goidel is a Software Engineer based in Seattle, WA. He was born on March 1, 2001 (24 years old) in Manhattan, New York, NY. Aaron grew up in Montclair, NJ.
+
 Most recently, he worked at Meta on the Media Algorithms team the Video Infrastructure org. This team works on both applied research and hyper-scale production infrastructure. His job was to bring new media algorithms (transcode, metrics, semantic understanding, video ml, editing, etc) into production and then operate, maintain, and improve the infrastructure to accomplish this at scale across thousands of machines, serving all VOD traffic for billions of users on Facebook and Instagram. Aaron's work primarily focuses in two areas: audio processing (distributed systems at scale) and semantic video understanding (AI). Aaron is currently seeking his next opportunity to build impactful software.
 
 Aaron earned his B.S. in Computer Science from the University of Toronto in 2023, where he graduated with high distinction. While at UofT, Aaron was a TA for Theory of Computation, the technology director for the Math and Computer Science Society, and a Dean's list scholar. Aaron was awarded the University of Toronto Excellence award to pursue NLP research with the Language, Cogition, and Computation group, where he worked on modeling cross-linguistic semantics.
@@ -6,3 +7,5 @@ Aaron earned his B.S. in Computer Science from the University of Toronto in 2023
 During his studies, Aaron worked developing software. Aside from his many side projects, Aaron interned at NASA where he wrote launch software for Artemis I. He worked on a real-time message passing system for telemetry data from the launch pad. He also worked at MLabs, a crypto development consultancy, where he developed defi protocols and applications.
 
 Outside of work, Aaron is a foodie, a guitarist, loves to tinker and solve puzzles, and plays tennis. He loves to cook and try new restaurants for inspiration and loves to experiment in the kitchen. Aaron loves to read, especially sci-fi. He is particularly a fan of Vonnegut, Asimov, LeGuin and Douglas Adams.
+
+Aaron went to high school at Montclair Kimberley Academy in Montclair, NJ. There, he played tennis, played clarinet in concert band, brought home the school's first 3 competative coding first place trophies as president of the STEM club, and was captain of the mock trial team and regional champ.

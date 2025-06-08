@@ -2,18 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import bcrypt from "bcrypt";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { Database } from "@/database.types";
-
-/**
- * Normalize a phone number to E.164 format.
- * If no country code is provided, assume US (+1).
- */
-export function normalizePhoneNumber(phone: string): string {
-  let normalized = phone.trim().replace(/[^+\d]/g, "");
-  if (!normalized.startsWith("+")) {
-    normalized = "+1" + normalized;
-  }
-  return normalized;
-}
+export { normalizePhoneNumber } from "@/lib/phone";
 
 /**
  * Find a phone profile record that matches the hashed phone number.

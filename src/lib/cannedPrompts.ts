@@ -50,13 +50,6 @@ export const cannedPrompts: CannedPrompt[] = [
     useInCarousel: true,
   },
   {
-    label: "Favorite Book",
-    prompt: "What is Aaron's favorite book?",
-    description: "Discover Aaron's reading preferences",
-    useInMenu: false,
-    useInCarousel: true,
-  },
-  {
     label: "Write a Poem",
     prompt: "Write me a poem about Aaron",
     description: "Get creative with AI poetry",

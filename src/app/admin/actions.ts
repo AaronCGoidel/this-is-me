@@ -4,10 +4,12 @@ import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
+import { toE164 } from "@/lib/phone";
 
 export async function createUser(formData: FormData) {
   const supabase = await createClient();
-  const phone = formData.get("phone") as string;
+  const rawPhone = formData.get("phone") as string;
+  const phone = toE164(rawPhone) as string;
   const firstName = formData.get("firstName") as string;
   const lastName = (formData.get("lastName") as string) || null;
 
@@ -39,12 +41,7 @@ export async function createUser(formData: FormData) {
       return;
     }
 
-    let normalizedPhone = phone.trim().replace(/[^+\d]/g, "");
-    if (!normalizedPhone.startsWith("+")) {
-      // Assume US number if no country code
-      normalizedPhone = "+1" + normalizedPhone;
-    }
-    const phoneHash = await bcrypt.hash(normalizedPhone, 10);
+    const phoneHash = await bcrypt.hash(phone, 10);
 
     const { error: phoneError } = await supabase
       .from("phones")
