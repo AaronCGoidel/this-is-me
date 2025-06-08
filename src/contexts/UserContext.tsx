@@ -64,14 +64,12 @@ export function UserProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  // New method to manually update session after OTP verification
   const updateSession = useCallback(
     (newSession: Session, newProfile: Profile) => {
       setSession(newSession);
       setUser(newSession.user);
       setProfile(newProfile);
 
-      // Set the session in Supabase client
       supabase.auth.setSession(newSession);
     },
     [supabase.auth]
@@ -86,26 +84,6 @@ export function UserProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
-    // Get initial session
-    const getInitialSession = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-
-      setSession(session);
-      setUser(session?.user ?? null);
-
-      if (session?.user) {
-        const profileData = await fetchProfile(session.user.id);
-        setProfile(profileData);
-      }
-
-      setLoading(false);
-    };
-
-    getInitialSession();
-
-    // Listen for auth changes
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
@@ -114,8 +92,6 @@ export function UserProvider({ children }: { children: ReactNode }) {
         event,
         session ? "session exists" : "no session"
       );
-
-      console.log("Auth state change:", event, session);
 
       setSession(session);
       setUser(session?.user ?? null);
@@ -127,8 +103,24 @@ export function UserProvider({ children }: { children: ReactNode }) {
         setProfile(null);
       }
 
-      setLoading(false);
+      if (event === "INITIAL_SESSION") {
+        setLoading(false);
+      }
     });
+
+    (async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (session) {
+        setSession(session);
+        setUser(session.user);
+
+        const profileData = await fetchProfile(session.user.id);
+        setProfile(profileData);
+      }
+    })();
 
     return () => subscription.unsubscribe();
   }, [fetchProfile, supabase.auth]);

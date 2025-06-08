@@ -3,15 +3,17 @@
 import { ppMori } from "@/app/lib/fonts";
 import { TextHoverEffect } from "@/components/ui/text-hover-effect";
 import PromptCarousel from "./PromptCarousel";
-import { useUser } from "@/contexts/UserContext";
+import { type Profile } from "@/contexts/UserContext";
 
 interface WelcomeScreenProps {
   onPromptClick: (prompt: string) => void;
+  profile: Profile | null;
 }
 
-export default function WelcomeScreen({ onPromptClick }: WelcomeScreenProps) {
-  const { profile } = useUser();
-
+export default function WelcomeScreen({
+  onPromptClick,
+  profile,
+}: WelcomeScreenProps) {
   const IntroText = (
     <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl mb-4 sm:mb-6 lg:mb-8 leading-tight break-words">
       {profile ? `Hi ${profile.first_name}, I'm` : "Hi, I'm"}

@@ -1,4 +1,4 @@
-import { useUser } from "@/contexts/UserContext";
+import { type Profile } from "@/contexts/UserContext";
 import HamburgerMenu from "./HamburgerMenu";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -6,12 +6,14 @@ import { useEffect } from "react";
 export default function Header({
   handlePromptClick,
   handleResetChat,
+  profile,
+  signOut,
 }: {
   handlePromptClick: (prompt: string) => void;
   handleResetChat: () => void;
+  profile: Profile | null;
+  signOut: () => void;
 }) {
-  const { user, profile, signOut } = useUser();
-
   const [displayName, setDisplayName] = useState<string | null>();
 
   useEffect(() => {
@@ -20,7 +22,7 @@ export default function Header({
     } else {
       setDisplayName(null);
     }
-  }, [profile, user]);
+  }, [profile]);
 
   return (
     <header className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">

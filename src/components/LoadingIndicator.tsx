@@ -1,6 +1,7 @@
 "use client";
 
 import { ppMori } from "@/app/lib/fonts";
+import Loader from "./Loader";
 
 interface LoadingIndicatorProps {
   onStop: () => void;
@@ -13,7 +14,7 @@ export default function LoadingIndicator({ onStop }: LoadingIndicatorProps) {
         onClick={onStop}
         className={`flex items-center gap-2 px-4 py-2 text-sm text-gray-300 hover:text-white transition-colors ${ppMori.regular}`}
       >
-        <div className="w-4 h-4 border-2 border-gray-300 border-t-transparent rounded-full animate-spin"></div>
+        <Loader />
         Stop generating
       </button>
     </div>

@@ -11,9 +11,10 @@ import { useUser } from "@/contexts/UserContext";
 import { useEffect } from "react";
 import type { Session } from "@supabase/supabase-js";
 import type { Profile } from "@/contexts/UserContext";
+import Loader from "@/components/Loader";
 
 export default function Chat() {
-  const { updateSession, signOut } = useUser();
+  const { profile, loading, updateSession, signOut } = useUser();
 
   const {
     messages,
@@ -105,17 +106,30 @@ export default function Chat() {
 
   const isEmptyChat = messages.length === 0;
 
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-[100dvh] w-full">
+        <Loader size="xl" />
+      </div>
+    );
+  }
+
   return (
     <BackdropProvider>
       <div className="flex flex-col h-[100dvh] max-h-[100dvh] max-w-6xl mx-auto">
         <Header
           handlePromptClick={handlePromptClick}
           handleResetChat={handleResetChat}
+          profile={profile}
+          signOut={signOut}
         />
 
         <div className="flex-1 overflow-y-auto min-h-0 custom-scrollbar">
           {isEmptyChat ? (
-            <WelcomeScreen onPromptClick={handlePromptClick} />
+            <WelcomeScreen
+              onPromptClick={handlePromptClick}
+              profile={profile}
+            />
           ) : (
             <ChatMessages messages={messages} onToolResult={handleToolResult} />
           )}
