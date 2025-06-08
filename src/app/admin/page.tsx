@@ -133,10 +133,10 @@ const UserList = () => {
 };
 
 export default function Admin() {
-  const { user, profile, loading, signOut } = useUser();
+  const { user, profile, loading, profileLoading, signOut } = useUser();
 
   // Show loading state while checking authentication
-  if (loading) {
+  if (loading || profileLoading) {
     return (
       <div className="px-24 max-w-screen-lg mx-auto py-12">
         <div className="flex items-center justify-center h-64">

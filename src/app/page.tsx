@@ -11,10 +11,11 @@ import { useUser } from "@/contexts/UserContext";
 import { useEffect } from "react";
 import type { Session } from "@supabase/supabase-js";
 import type { Profile } from "@/contexts/UserContext";
-import Loader from "@/components/Loader";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Chat() {
-  const { profile, loading, updateSession, signOut } = useUser();
+  const { profile, loading, profileLoading, updateSession, signOut } =
+    useUser();
 
   const {
     messages,
@@ -106,11 +107,17 @@ export default function Chat() {
 
   const isEmptyChat = messages.length === 0;
 
-  if (loading) {
+  if (loading || profileLoading) {
     return (
-      <div className="flex items-center justify-center h-[100dvh] w-full">
-        <Loader size="xl" />
-      </div>
+      <BackdropProvider>
+        <div className="flex flex-col h-[100dvh] max-w-6xl mx-auto p-4 space-y-4">
+          <Skeleton className="h-10 w-full" />
+          <div className="flex-1 space-y-4 overflow-hidden">
+            <Skeleton className="h-full w-full" />
+          </div>
+          <Skeleton className="h-12 w-full" />
+        </div>
+      </BackdropProvider>
     );
   }
 

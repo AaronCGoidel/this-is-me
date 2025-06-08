@@ -20,6 +20,7 @@ type UserContextType = {
   session: Session | null;
   profile: Profile | null;
   loading: boolean;
+  profileLoading: boolean;
   signOut: () => Promise<{ error: AuthError | null }>;
   refreshProfile: () => Promise<void>;
   updateSession: (session: Session, profile: Profile) => void;
@@ -32,9 +33,8 @@ export function UserProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
+  const [profileLoading, setProfileLoading] = useState(false);
 
-  // Create the Supabase client once. Re-creating it on every render causes
-  // new auth subscriptions and can lead to race-conditions or flakiness.
   const supabase = useMemo(() => createClient(), []);
 
   const fetchProfile = useCallback(
@@ -62,8 +62,15 @@ export function UserProvider({ children }: { children: ReactNode }) {
 
   const refreshProfile = async () => {
     if (user) {
+      setProfileLoading(true);
       const profileData = await fetchProfile(user.id);
-      setProfile(profileData);
+      if (profileData) {
+        setProfile(profileData);
+        setProfileLoading(false);
+      } else {
+        setProfile(null);
+        setProfileLoading(false);
+      }
     }
   };
 
@@ -83,6 +90,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
     setUser(null);
     setSession(null);
     setProfile(null);
+    setProfileLoading(false);
     return { error };
   };
 
@@ -99,14 +107,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
       setSession(session);
       setUser(session?.user ?? null);
 
-      if (session?.user) {
-        const profileData = await fetchProfile(session.user.id);
-        setProfile(profileData);
-      } else {
-        setProfile(null);
-      }
-
-      // Ensure the loading state is cleared once the initial session check completes (whether or not a session exists)
+      // auth event handled; unblock initial loading regardless of profile
       setLoading(false);
     });
 
@@ -118,9 +119,6 @@ export function UserProvider({ children }: { children: ReactNode }) {
       if (session) {
         setSession(session);
         setUser(session.user);
-
-        const profileData = await fetchProfile(session.user.id);
-        setProfile(profileData);
       }
 
       // Ensure the loading state is cleared once the initial session check completes (whether or not a session exists)
@@ -130,6 +128,31 @@ export function UserProvider({ children }: { children: ReactNode }) {
     return () => subscription.unsubscribe();
   }, [fetchProfile]);
 
+  // Fetch profile whenever a valid user object is present or changes
+  useEffect(() => {
+    let isMounted = true;
+    const loadProfile = async () => {
+      if (user) {
+        console.log(`Fetching profile for user ${user.id}`);
+        setProfileLoading(true);
+        const profileData = await fetchProfile(user.id);
+        if (isMounted) {
+          setProfile(profileData);
+          setProfileLoading(false);
+        }
+      } else {
+        setProfile(null);
+        setProfileLoading(false);
+      }
+    };
+
+    loadProfile();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [user, fetchProfile]);
+
   return (
     <UserContext.Provider
       value={{
@@ -137,6 +160,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
         session,
         profile,
         loading,
+        profileLoading,
         signOut,
         refreshProfile,
         updateSession,

@@ -3,9 +3,9 @@
 import { useUser } from "@/contexts/UserContext";
 
 export function AuthStatus() {
-  const { user, profile, loading, signOut } = useUser();
+  const { user, profile, loading, profileLoading, signOut } = useUser();
 
-  if (loading) {
+  if (loading || profileLoading) {
     return (
       <div className="text-sm text-gray-500">
         Loading authentication status...
