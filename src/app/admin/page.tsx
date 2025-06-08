@@ -125,7 +125,7 @@ const UserListContent = () => {
 
 const UserList = () => {
   return (
-    <div className="bg-bot-message-bg p-4 rounded-md w-xl">
+    <div className="bg-bot-message-bg p-4 rounded-md max-w-2xl">
       <Heading>All Users</Heading>
       <UserListContent />
     </div>
@@ -186,7 +186,7 @@ export default function Admin() {
             Logout
           </Button>
         </div>
-        <div className="flex justify-between gap-4">
+        <div className="flex flex-col lg:flex-row justify-between gap-4">
           <CreateUserForm />
           <UserList />
         </div>

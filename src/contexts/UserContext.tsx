@@ -7,6 +7,7 @@ import {
   useState,
   useCallback,
   ReactNode,
+  useMemo,
 } from "react";
 import { createClient } from "@/lib/supabase/client";
 import type { User, Session, AuthError } from "@supabase/supabase-js";
@@ -32,7 +33,9 @@ export function UserProvider({ children }: { children: ReactNode }) {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const supabase = createClient();
+  // Create the Supabase client once. Re-creating it on every render causes
+  // new auth subscriptions and can lead to race-conditions or flakiness.
+  const supabase = useMemo(() => createClient(), []);
 
   const fetchProfile = useCallback(
     async (userId: string) => {
@@ -72,7 +75,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
 
       supabase.auth.setSession(newSession);
     },
-    [supabase.auth]
+    [supabase]
   );
 
   const signOut = async () => {
@@ -103,9 +106,8 @@ export function UserProvider({ children }: { children: ReactNode }) {
         setProfile(null);
       }
 
-      if (event === "INITIAL_SESSION") {
-        setLoading(false);
-      }
+      // Ensure the loading state is cleared once the initial session check completes (whether or not a session exists)
+      setLoading(false);
     });
 
     (async () => {
@@ -120,10 +122,13 @@ export function UserProvider({ children }: { children: ReactNode }) {
         const profileData = await fetchProfile(session.user.id);
         setProfile(profileData);
       }
+
+      // Ensure the loading state is cleared once the initial session check completes (whether or not a session exists)
+      setLoading(false);
     })();
 
     return () => subscription.unsubscribe();
-  }, [fetchProfile, supabase.auth]);
+  }, [fetchProfile]);
 
   return (
     <UserContext.Provider
