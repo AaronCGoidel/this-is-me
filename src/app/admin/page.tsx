@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Tables } from "@/database.types";
 import { useCallback, useEffect, useState, useTransition } from "react";
 import { toE164 } from "@/lib/phone";
+import { AuthError } from "@supabase/supabase-js";
 
 type User = Tables<"user_profiles">;
 
@@ -35,7 +36,7 @@ const AdminHeader = ({
 }: {
   profile: NonNullable<ReturnType<typeof useUser>["profile"]>;
   user: NonNullable<ReturnType<typeof useUser>["user"]>;
-  signOut: () => void;
+  signOut: () => Promise<{ error: AuthError | null }>;
 }) => (
   <header className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
     <p className="text-sm text-gray-300">

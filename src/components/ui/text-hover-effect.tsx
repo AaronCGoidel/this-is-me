@@ -5,10 +5,12 @@ import { motion } from "motion/react";
 export const TextHoverEffect = ({
   text,
   duration,
+  delay,
 }: {
   text: string;
   duration?: number;
   automatic?: boolean;
+  delay?: number;
 }) => {
   const svgRef = useRef<SVGSVGElement>(null);
   const [cursor, setCursor] = useState({ x: 0, y: 0 });
@@ -112,6 +114,7 @@ export const TextHoverEffect = ({
         transition={{
           duration: 4,
           ease: "easeInOut",
+          delay: delay ?? 0,
         }}
       >
         {text}

@@ -13,30 +13,31 @@ import { Profile } from "@/contexts/UserContext";
 import { getMenuPrompts } from "@/lib/cannedPrompts";
 import { ppMori } from "@/app/lib/fonts";
 import { useBackdrop } from "./BackdropProvider";
+import { AuthError } from "@supabase/supabase-js";
 
 interface HamburgerMenuProps {
   className?: string;
   profile?: Profile;
   onPromptClick?: (prompt: string) => void;
   onResetChat?: () => void;
-  onLogout?: () => void;
+  onLogout?: () => Promise<{ error: AuthError | null }>;
 }
 
 const UNDERLAY_VARIANTS: Variants = {
   open: {
     width: "calc(100% - 32px)",
     height: "calc(100dvh - 32px)",
-    transition: { type: "spring", mass: 3, stiffness: 400, damping: 50 },
+    transition: { type: "spring", mass: 2, stiffness: 500, damping: 60 },
   },
   closed: {
     width: "64px",
     height: "64px",
     transition: {
-      delay: 0.75,
+      delay: 0.3,
       type: "spring",
-      mass: 3,
-      stiffness: 400,
-      damping: 58,
+      mass: 2,
+      stiffness: 420,
+      damping: 60,
     },
   },
 };
@@ -46,28 +47,34 @@ const HAMBURGER_VARIANTS: Record<"top" | "middle" | "bottom", Variants> = {
     open: {
       rotate: ["0deg", "0deg", "45deg"],
       top: ["35%", "50%", "50%"],
+      transition: { duration: 0.25, ease: "easeInOut" },
     },
     closed: {
       rotate: ["45deg", "0deg", "0deg"],
       top: ["50%", "50%", "35%"],
+      transition: { duration: 0.35, ease: "easeInOut" },
     },
   },
   middle: {
     open: {
       rotate: ["0deg", "0deg", "-45deg"],
+      transition: { duration: 0.25, ease: "easeInOut" },
     },
     closed: {
       rotate: ["-45deg", "0deg", "0deg"],
+      transition: { duration: 0.35, ease: "easeInOut" },
     },
   },
   bottom: {
     open: {
       rotate: ["0deg", "0deg", "45deg"],
       bottom: ["35%", "50%", "50%"],
+      transition: { duration: 0.25, ease: "easeInOut" },
     },
     closed: {
       rotate: ["45deg", "0deg", "0deg"],
       bottom: ["50%", "50%", "35%"],
+      transition: { duration: 0.35, ease: "easeInOut" },
     },
   },
 };
@@ -282,7 +289,7 @@ function NavLink({
         opacity: 1,
         y: 0,
         transition: {
-          delay: 0.75 + idx * 0.125,
+          delay: 0.25 + idx * 0.125,
           duration: 0.5,
           ease: "easeInOut",
         },
@@ -309,7 +316,7 @@ function UtilityFooter({
   onUtilityAction: (fn: () => void) => void;
 }) {
   return (
-    <div className="absolute bottom-6 right-6 flex flex-row gap-4 items-end flex-wrap justify-end">
+    <div className="absolute bottom-6 right-6 md:right-12 flex flex-row gap-4 items-end justify-end">
       {utilityItems.map((item, idx) => (
         <motion.button
           key={idx}
@@ -318,14 +325,14 @@ function UtilityFooter({
             opacity: 1,
             y: 0,
             transition: {
-              delay: 1 + idx * 0.125,
+              delay: 0.5 + idx * 0.125,
               duration: 0.5,
               ease: "easeInOut",
             },
           }}
           exit={{ opacity: 0, y: 8 }}
           onClick={() => onUtilityAction(item.action)}
-          className={`hover:cursor-pointer rounded-md px-8 py-4 text-lg ${
+          className={`hover:cursor-pointer rounded-md px-8 py-4 text-lg flex-shrink-0 ${
             ppMori.regular
           } ${
             item.isDestructive

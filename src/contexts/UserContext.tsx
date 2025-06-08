@@ -76,13 +76,21 @@ export function UserProvider({ children }: { children: ReactNode }) {
 
   const updateSession = useCallback(
     (newSession: Session, newProfile: Profile) => {
+      // Avoid expensive updates if we already have this session
+      if (session?.access_token === newSession.access_token) {
+        return;
+      }
+
       setSession(newSession);
       setUser(newSession.user);
       setProfile(newProfile);
 
+      // Persist the session inside the Supabase client so that subsequent
+      // requests are authenticated. This is only called when the session
+      // actually changes to prevent an onAuthStateChange loop.
       supabase.auth.setSession(newSession);
     },
-    [supabase]
+    [session, supabase]
   );
 
   const signOut = async () => {
@@ -133,6 +141,12 @@ export function UserProvider({ children }: { children: ReactNode }) {
     let isMounted = true;
     const loadProfile = async () => {
       if (user) {
+        // If we already have the profile for this user, avoid refetching to
+        // prevent a transient loading state that causes the entire app to flash.
+        if (profile && profile.user_id === user.id) {
+          return;
+        }
+
         console.log(`Fetching profile for user ${user.id}`);
         setProfileLoading(true);
         const profileData = await fetchProfile(user.id);
@@ -151,7 +165,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
     return () => {
       isMounted = false;
     };
-  }, [user, fetchProfile]);
+  }, [user, profile, fetchProfile]);
 
   return (
     <UserContext.Provider

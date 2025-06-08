@@ -8,4 +8,4 @@ During his studies, Aaron worked developing software. Aside from his many side p
 
 Outside of work, Aaron is a foodie, a guitarist, loves to tinker and solve puzzles, and plays tennis. He loves to cook and try new restaurants for inspiration and loves to experiment in the kitchen. Aaron loves to read, especially sci-fi. He is particularly a fan of Vonnegut, Asimov, LeGuin and Douglas Adams.
 
-Aaron went to high school at Montclair Kimberley Academy in Montclair, NJ. There, he played tennis, played clarinet in concert band, brought home the school's first 3 competative coding first place trophies as president of the STEM club, and was captain of the mock trial team and regional champ.
+Aaron went to high school at Montclair Kimberley Academy in Montclair, NJ. There, he played tennis, brought home the school's first 3 competative coding first place trophies as president of the STEM club, and was captain of the mock trial team and regional champ.

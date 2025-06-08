@@ -185,7 +185,9 @@ const CalendlyTool = ({ invocation }: ToolComponentProps) => {
     case "call":
       return <LoadingIndicator text="Loading Calendly..." />;
     case "result":
-      return <CalendlyEmbed url="https://calendly.com/acgoidel" />;
+      return (
+        <CalendlyEmbed url="https://calendly.com/acgoidel?hide_gdpr_banner=1" />
+      );
     default:
       return null;
   }

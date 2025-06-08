@@ -2,6 +2,7 @@ import { type Profile } from "@/contexts/UserContext";
 import HamburgerMenu from "./HamburgerMenu";
 import { useState } from "react";
 import { useEffect } from "react";
+import { AuthError } from "@supabase/supabase-js";
 
 export default function Header({
   handlePromptClick,
@@ -12,7 +13,7 @@ export default function Header({
   handlePromptClick: (prompt: string) => void;
   handleResetChat: () => void;
   profile: Profile | null;
-  signOut: () => void;
+  signOut: () => Promise<{ error: AuthError | null }>;
 }) {
   const [displayName, setDisplayName] = useState<string | null>();
 

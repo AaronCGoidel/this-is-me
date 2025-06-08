@@ -8,10 +8,11 @@ import LoadingIndicator from "../components/LoadingIndicator";
 import Header from "@/components/Header";
 import { BackdropProvider } from "@/components/BackdropProvider";
 import { useUser } from "@/contexts/UserContext";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import type { Session } from "@supabase/supabase-js";
 import type { Profile } from "@/contexts/UserContext";
 import { Skeleton } from "@/components/ui/skeleton";
+import { motion } from "framer-motion";
 
 export default function Chat() {
   const { profile, loading, profileLoading, updateSession, signOut } =
@@ -55,7 +56,7 @@ export default function Chat() {
       }
 
       if (toolCall.toolName === "logout") {
-        const { error } = await signOut();
+        const { error } = await handleLogout();
         if (error) {
           return "Failed to log out. Please try again.";
         }
@@ -107,6 +108,22 @@ export default function Chat() {
 
   const isEmptyChat = messages.length === 0;
 
+  const fadeUp = {
+    hidden: { opacity: 0, y: 24 },
+    show: { opacity: 1, y: 0 },
+  };
+
+  const headerDelay = 0.1;
+  const contentDelay = 0.25;
+  const inputDelay = 0.4;
+  const textDelay = 0.55;
+
+  const handleLogout = useCallback(async () => {
+    const result = await signOut();
+    setMessages([]);
+    return result;
+  }, [signOut, setMessages]);
+
   if (loading || profileLoading) {
     return (
       <BackdropProvider>
@@ -124,34 +141,54 @@ export default function Chat() {
   return (
     <BackdropProvider>
       <div className="flex flex-col h-[100dvh] max-h-[100dvh] max-w-6xl mx-auto">
-        <Header
-          handlePromptClick={handlePromptClick}
-          handleResetChat={handleResetChat}
-          profile={profile}
-          signOut={signOut}
-        />
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          animate="show"
+          transition={{ duration: 0.6, ease: "easeOut", delay: headerDelay }}
+        >
+          <Header
+            handlePromptClick={handlePromptClick}
+            handleResetChat={handleResetChat}
+            profile={profile}
+            signOut={handleLogout}
+          />
+        </motion.div>
 
-        <div className="flex-1 overflow-y-auto min-h-0 custom-scrollbar">
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          animate="show"
+          transition={{ duration: 0.6, ease: "easeOut", delay: contentDelay }}
+          className="flex-1 overflow-y-auto min-h-0 custom-scrollbar"
+        >
           {isEmptyChat ? (
             <WelcomeScreen
               onPromptClick={handlePromptClick}
               profile={profile}
+              textDelay={textDelay}
             />
           ) : (
             <ChatMessages messages={messages} onToolResult={handleToolResult} />
           )}
-        </div>
+        </motion.div>
 
         {isLoading && <LoadingIndicator onStop={stop} />}
 
-        <div className="flex-shrink-0">
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          animate="show"
+          transition={{ duration: 0.6, ease: "easeOut", delay: inputDelay }}
+          className="flex-shrink-0"
+        >
           <ChatInput
             input={input}
             isLoading={isLoading}
             onInputChange={handleInputChange}
             onSubmit={handleSubmit}
           />
-        </div>
+        </motion.div>
       </div>
     </BackdropProvider>
   );
