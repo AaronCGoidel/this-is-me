@@ -256,7 +256,7 @@ function LinksContainer({
   onPromptClick: (prompt: string) => void;
 }) {
   return (
-    <motion.div className="space-y-4 p-12 pl-4 md:pl-20">
+    <motion.div className="space-y-6 p-12 pl-4 md:pl-20">
       {menuPrompts.map((item, idx) => (
         <NavLink
           key={item.label}
@@ -332,7 +332,7 @@ function UtilityFooter({
           }}
           exit={{ opacity: 0, y: 8 }}
           onClick={() => onUtilityAction(item.action)}
-          className={`hover:cursor-pointer rounded-md px-8 py-4 text-lg flex-shrink-0 ${
+          className={`hover:cursor-pointer rounded-md px-4 py-2 md:px-8 md:py-4 text-lg flex-shrink-0 ${
             ppMori.regular
           } ${
             item.isDestructive
