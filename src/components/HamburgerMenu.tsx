@@ -136,7 +136,7 @@ export default function HamburgerMenu({
   } else {
     utilityItems.push({
       label: "Login",
-      action: () => onPromptClick?.("Login me in"),
+      action: () => onPromptClick?.("Log me in"),
     });
   }
 
@@ -316,33 +316,37 @@ function UtilityFooter({
   onUtilityAction: (fn: () => void) => void;
 }) {
   return (
-    <div className="absolute bottom-6 right-6 md:right-12 flex flex-row gap-4 items-end justify-end">
-      {utilityItems.map((item, idx) => (
-        <motion.button
-          key={idx}
-          initial={{ opacity: 0, y: 8 }}
-          animate={{
-            opacity: 1,
-            y: 0,
-            transition: {
-              delay: 0.5 + idx * 0.125,
-              duration: 0.5,
-              ease: "easeInOut",
-            },
-          }}
-          exit={{ opacity: 0, y: 8 }}
-          onClick={() => onUtilityAction(item.action)}
-          className={`hover:cursor-pointer rounded-md px-4 py-2 md:px-8 md:py-4 text-lg flex-shrink-0 ${
-            ppMori.regular
-          } ${
-            item.isDestructive
-              ? "bg-red-600 text-white hover:bg-red-700/60"
-              : "bg-background text-foreground hover:bg-background/60"
-          }`}
-        >
-          {item.label}
-        </motion.button>
-      ))}
+    <div className="absolute bottom-6 right-6 md:right-12 grid grid-cols-2 gap-4 md:flex md:flex-row md:items-end justify-end">
+      {utilityItems.map((item, idx) => {
+        const isSoloLastRow =
+          utilityItems.length % 2 === 1 && idx === utilityItems.length - 1;
+        return (
+          <motion.button
+            key={idx}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{
+              opacity: 1,
+              y: 0,
+              transition: {
+                delay: 0.5 + idx * 0.125,
+                duration: 0.5,
+                ease: "easeInOut",
+              },
+            }}
+            exit={{ opacity: 0, y: 8 }}
+            onClick={() => onUtilityAction(item.action)}
+            className={`hover:cursor-pointer rounded-md w-full md:w-auto px-4 py-2 md:px-8 md:py-4 text-lg ${
+              ppMori.regular
+            } ${
+              item.isDestructive
+                ? "bg-red-600 text-white hover:bg-red-700/60"
+                : "bg-background text-foreground hover:bg-background/60"
+            } ${isSoloLastRow ? "col-start-2 md:col-start-auto" : ""}`}
+          >
+            {item.label}
+          </motion.button>
+        );
+      })}
     </div>
   );
 }
