@@ -22,7 +22,7 @@ export default function ChatMessages({
   }, [messages]);
 
   return (
-    <div className="px-4 space-y-4">
+    <div className="px-4 space-y-4 pt-4">
       {messages.map((message) => (
         <div
           key={message.id}

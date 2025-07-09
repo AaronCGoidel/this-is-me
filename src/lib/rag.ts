@@ -237,33 +237,6 @@ export async function isRAGAvailable(): Promise<boolean> {
   return ragRetriever.isAvailable();
 }
 
-// Function to determine if a query likely needs personal context
-export function shouldUseRAG(query: string): boolean {
-  const personalKeywords = [
-    "you",
-    "your",
-    "about you",
-    "tell me about",
-    "who are you",
-    "what do you do",
-    "where do you",
-    "experience",
-    "background",
-    "skills",
-    "projects",
-    "work",
-    "career",
-    "education",
-    "interests",
-    "hobbies",
-    "achievements",
-    "portfolio",
-  ];
-
-  const queryLower = query.toLowerCase();
-  return personalKeywords.some((keyword) => queryLower.includes(keyword));
-}
-
 export type { RAGContext, RetrievedChunk };
 
 /**
@@ -310,7 +283,7 @@ ${categories.join(", ")}
 If none are relevant, return an empty array.`;
 
     const response = await openai.responses.parse({
-      model: "gpt-4o-mini",
+      model: "gpt-4.1-nano",
       input: [
         { role: "system", content: systemPrompt },
         { role: "user", content: query },
@@ -338,5 +311,58 @@ If none are relevant, return an empty array.`;
   } catch (error) {
     console.error("❌ RAG: Category classification failed:", error);
     return [];
+  }
+}
+
+export async function shouldUseRAG(query: string): Promise<boolean> {
+  const lowercase = query.toLowerCase();
+
+  const positiveKeywords = [
+    "me",
+    "myself",
+    "family",
+    "bio",
+    "resume",
+    "project",
+    "favorite",
+    "taste",
+    "his",
+    "work",
+    "career",
+  ];
+
+  for (const kw of positiveKeywords) {
+    if (lowercase.includes(kw)) {
+      return true;
+    }
+  }
+
+  if (!process.env.OPENAI_API_KEY) {
+    return false;
+  }
+
+  try {
+    const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+    const completion = await openai.responses.parse({
+      model: "gpt-4.1-nano",
+      input: [
+        {
+          role: "system",
+          content: `Your task is to determine whether we need to do RAG in order to respond to the user's query.
+          Respond with 'true' if the user's query likely requires personalised information about the user in order to answer correctly. Otherwise, respond with 'false'.`,
+        },
+        { role: "user", content: query },
+      ],
+      text: {
+        format: zodTextFormat(z.object({ answer: z.boolean() }), "answer"),
+      },
+    });
+
+    const answer = completion.output_parsed?.answer;
+    return answer ?? false;
+  } catch (error) {
+    console.error("❌ RAG: shouldUseRAG LLM classification failed:", error);
+    return false;
   }
 }

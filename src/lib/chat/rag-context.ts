@@ -2,6 +2,7 @@ import {
   retrieveRelevantContext,
   isRAGAvailable,
   selectRelevantCategories,
+  shouldUseRAG,
 } from "@/lib/rag";
 import { getSystemMessage } from "./system-message";
 import { Profile } from "@/contexts/UserContext";
@@ -41,7 +42,10 @@ export async function retrieveRAGContext(
   const user_profile = await getUserProfile(user_id);
   const defaultMessage = getSystemMessage(user_profile);
 
-  if (!(await isRAGAvailable())) {
+  const ragAvailable = await isRAGAvailable();
+  const useRag = ragAvailable && (await shouldUseRAG(userQuery));
+
+  if (!useRag) {
     return {
       systemMessage: defaultMessage,
       sources: [],

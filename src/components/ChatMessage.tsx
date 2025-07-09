@@ -433,8 +433,8 @@ export default function ChatMessage({
 
   return (
     <div
-      className={`flex rounded-lg gap-4 p-4 mx-auto ${
-        isUser ? "" : "bg-[#020203]"
+      className={`flex rounded-lg gap-4 p-4 ${
+        isUser ? "bg-[#020203] w-[80%] lg:w-[60%] ml-auto" : "mx-auto"
       }`}
     >
       <div className="flex-1 min-w-0">
