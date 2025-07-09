@@ -1,4 +1,4 @@
-import { FormEvent } from "react";
+import { FormEvent, useEffect, useRef } from "react";
 import { ppMori } from "../app/lib/fonts";
 import { Send } from "lucide-react";
 
@@ -19,11 +19,20 @@ export default function ChatInput({
   placeholder = "Let the magic begin, ask a question",
   disabled = false,
 }: ChatInputProps) {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (!isLoading && !disabled) {
+      inputRef.current?.focus();
+    }
+  }, [isLoading, disabled]);
+
   return (
     <div className="p-4">
       <form onSubmit={onSubmit} className="flex gap-3">
         <div className="flex-1 relative">
           <input
+            ref={inputRef}
             value={input}
             onChange={onInputChange}
             placeholder={placeholder}

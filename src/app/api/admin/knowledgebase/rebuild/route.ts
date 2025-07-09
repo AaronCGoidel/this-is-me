@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { buildFromDatabase } from "@/lib/knowledgebase/builder";
+import { buildFromDatabase, wipeNamespace } from "@/lib/knowledgebase/builder";
 import { createClient } from "@/lib/supabase/server";
 
 // NOTE: The `request` parameter is unused, so we omit it to satisfy the ESLint `no-unused-vars` rule
@@ -25,6 +25,7 @@ export async function POST() {
   }
 
   try {
+    await wipeNamespace();
     await buildFromDatabase();
     return NextResponse.json({ success: true });
   } catch (error: unknown) {

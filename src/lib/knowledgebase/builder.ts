@@ -588,3 +588,29 @@ export async function buildFromDatabase(config: KnowledgeBaseConfig = {}) {
   const builder = new KnowledgeBaseBuilder(config);
   await builder.buildFromDatabase();
 }
+
+export async function wipeNamespace() {
+  const apiKey = process.env.PINECONE_API_KEY;
+  if (!apiKey) {
+    throw new Error("PINECONE_API_KEY environment variable is required");
+  }
+
+  const indexName = process.env.PINECONE_INDEX_NAME ?? "knowledge-base";
+  const namespace = process.env.PINECONE_NAMESPACE ?? "knowledge";
+
+  const pc = new Pinecone({ apiKey });
+  const index = pc.index(indexName);
+
+  console.log(
+    `🗑️  Deleting all vectors in namespace "${namespace}" of index "${indexName}"...`
+  );
+
+  try {
+    // Delete every vector in the namespace before rebuilding
+    await index.namespace(namespace).deleteAll();
+    console.log("✅ Namespace cleared successfully");
+  } catch (error) {
+    console.error("❌ Failed to clear namespace:", error);
+    throw error;
+  }
+}
