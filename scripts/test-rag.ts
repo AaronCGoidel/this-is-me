@@ -35,7 +35,7 @@ async function testRAGSystem() {
 
   // Test 2: Query detection
   for (const query of testQueries) {
-    const shouldUse = shouldUseRAG(query);
+    const shouldUse = await shouldUseRAG(query);
     const indicator = shouldUse ? "🎯" : "⏭️";
     console.log(
       `   ${indicator} "${query}" -> ${shouldUse ? "Use RAG" : "Skip RAG"}`
@@ -45,7 +45,12 @@ async function testRAGSystem() {
   console.log("\n3. Testing Context Retrieval...");
 
   // Test 3: Actual retrieval
-  const personalQueries = testQueries.filter((q) => shouldUseRAG(q));
+  const personalQueries: string[] = [];
+  for (const query of testQueries) {
+    if (await shouldUseRAG(query)) {
+      personalQueries.push(query);
+    }
+  }
 
   for (const query of personalQueries) {
     console.log(`\n   🔍 Testing: "${query}"`);

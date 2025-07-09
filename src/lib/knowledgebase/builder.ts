@@ -130,7 +130,8 @@ export class KnowledgeBaseBuilder {
         .map((file) => path.join(this.KNOWLEDGE_BASE_DIR, file));
     } catch (error) {
       console.warn(
-        `⚠️  Knowledge base directory not found: ${this.KNOWLEDGE_BASE_DIR}`
+        `⚠️  Knowledge base directory not found: ${this.KNOWLEDGE_BASE_DIR}`,
+        error
       );
       return [];
     }
@@ -226,22 +227,30 @@ export class KnowledgeBaseBuilder {
 
       if (listResponse.vectors && listResponse.vectors.length > 0) {
         // Fetch metadata for existing records using correct namespace().fetch() syntax
+        const vectorIds = (listResponse.vectors as Array<{ id: string }>).map(
+          (v) => v.id
+        );
+
         const fetchResponse = await this.index
           .namespace(this.PINECONE_NAMESPACE)
-          .fetch(listResponse.vectors.map((v: any) => v.id));
+          .fetch(vectorIds);
 
         for (const [id, record] of Object.entries(
-          fetchResponse.records || {}
+          (fetchResponse.records ?? {}) as Record<
+            string,
+            { metadata?: ExistingRecord["metadata"] }
+          >
         )) {
           existingRecords.set(id, {
             id,
-            metadata: (record as any)?.metadata || {},
+            metadata: record.metadata ?? {},
           });
         }
       }
     } catch (error) {
       console.warn(
-        "⚠️  Could not fetch existing records, will proceed with fresh upload"
+        "⚠️  Could not fetch existing records, will proceed with fresh upload",
+        error
       );
     }
 

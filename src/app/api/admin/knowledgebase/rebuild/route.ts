@@ -1,8 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { buildFromDatabase } from "@/lib/knowledgebase/builder";
 import { createClient } from "@/lib/supabase/server";
 
-export async function POST(request: NextRequest) {
+// NOTE: The `request` parameter is unused, so we omit it to satisfy the ESLint `no-unused-vars` rule
+export async function POST() {
   const supabase = await createClient();
 
   // Verify user session
@@ -26,10 +27,12 @@ export async function POST(request: NextRequest) {
   try {
     await buildFromDatabase();
     return NextResponse.json({ success: true });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    // Narrow the unknown error type at runtime to preserve type-safety while still logging the original object
+    const message = error instanceof Error ? error.message : "unknown";
     console.error("KB rebuild failed", error);
     return NextResponse.json(
-      { success: false, error: error?.message ?? "unknown" },
+      { success: false, error: message },
       { status: 500 }
     );
   }
