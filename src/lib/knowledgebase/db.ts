@@ -2,7 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 
 // Row shape for knowledge_files. Update database.types.ts later for full typing.
 export interface KnowledgeFile {
-  id: number;
+  id: string;
   slug: string;
   content: string;
   category: string | null;
@@ -25,7 +25,7 @@ export class KnowledgeBaseDB {
       .order("slug", { ascending: true });
 
     if (error) throw error;
-    return data as KnowledgeFile[];
+    return data;
   }
 
   /**
@@ -40,7 +40,7 @@ export class KnowledgeBaseDB {
       .single();
 
     if (error && error.code !== "PGRST116") throw error; // PGRST116: no rows
-    return data as KnowledgeFile | null;
+    return data;
   }
 
   /**

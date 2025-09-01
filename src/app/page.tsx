@@ -8,14 +8,14 @@ import LoadingIndicator from "../components/LoadingIndicator";
 import Header from "@/components/Header";
 import { BackdropProvider } from "@/components/BackdropProvider";
 import { useUser } from "@/contexts/UserContext";
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import type { Session } from "@supabase/supabase-js";
 import type { Profile } from "@/contexts/UserContext";
 import { Skeleton } from "@/components/ui/skeleton";
 import { motion } from "framer-motion";
 
-export default function Chat() {
+function ChatContent() {
   const { profile, loading, profileLoading, updateSession, signOut } =
     useUser();
   const searchParams = useSearchParams();
@@ -214,5 +214,13 @@ export default function Chat() {
         </motion.div>
       </div>
     </BackdropProvider>
+  );
+}
+
+export default function Chat() {
+  return (
+    <Suspense fallback={<div className="flex h-screen items-center justify-center">Loading...</div>}>
+      <ChatContent />
+    </Suspense>
   );
 }

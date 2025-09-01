@@ -10,15 +10,34 @@ import {
   ACTION_TYPES,
   getActionIcon,
 } from "@/lib/qr/actions";
-import { QR_CATEGORIES } from "@/lib/qr/categories";
+import { QR_CATEGORIES, type ActionType } from "@/lib/qr/categories";
 
 export default function EditQRCodePage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
   const resolvedParams = use(params);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [qrCode, setQRCode] = useState<any>(null);
-  const [actions, setActions] = useState<any[]>([]);
+  const [qrCode, setQRCode] = useState<{
+    id: number;
+    code: string;
+    category: string;
+    name?: string;
+    description?: string;
+    qr_actions?: Array<{
+      id: number;
+      action_type: string;
+      action_data: Record<string, unknown>;
+      priority: number;
+      requires_auth: boolean;
+    }>;
+  } | null>(null);
+  const [actions, setActions] = useState<Array<{
+    id: number;
+    action_type: string;
+    action_data: Record<string, unknown>;
+    priority: number;
+    requires_auth: boolean;
+  }>>([]);
   const [newAction, setNewAction] = useState({
     action_type: "",
     action_data: {},
@@ -28,6 +47,7 @@ export default function EditQRCodePage({ params }: { params: Promise<{ id: strin
 
   useEffect(() => {
     fetchQRCode();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resolvedParams.id]);
 
   const fetchQRCode = async () => {
@@ -35,7 +55,7 @@ export default function EditQRCodePage({ params }: { params: Promise<{ id: strin
       const response = await fetch("/api/admin/qr");
       const data = await response.json();
 
-      const code = data.data?.find((qr: any) => qr.id === parseInt(resolvedParams.id));
+      const code = data.data?.find((qr: { id: number }) => qr.id === parseInt(resolvedParams.id));
       if (code) {
         setQRCode(code);
         setActions(code.qr_actions || []);
@@ -88,6 +108,7 @@ export default function EditQRCodePage({ params }: { params: Promise<{ id: strin
   };
 
   const handleUpdateQRCode = async () => {
+    if (!qrCode) return;
     setSaving(true);
     try {
       await fetch("/api/admin/qr", {
@@ -318,7 +339,7 @@ export default function EditQRCodePage({ params }: { params: Promise<{ id: strin
                 key={action.id}
                 className="flex items-center gap-2 rounded-md border p-3 text-sm"
               >
-                <span>{getActionIcon(action.action_type)}</span>
+                <span>{getActionIcon(action.action_type as ActionType)}</span>
                 <span className="flex-1 font-mono text-xs">{action.action_type}</span>
                 <span className="text-xs text-gray-500">
                   Priority: {action.priority}

@@ -6,7 +6,7 @@ export interface QRAction {
   id: number;
   qr_code_id: number;
   action_type: ActionType;
-  action_data: Record<string, any>;
+  action_data: Record<string, unknown>;
   priority: number;
   valid_from?: string;
   valid_until?: string;
@@ -17,7 +17,7 @@ export interface QRAction {
 export interface ActionResult {
   success: boolean;
   type: 'redirect' | 'wifi' | 'prompt' | 'display' | 'api' | 'error';
-  data?: any;
+  data?: Record<string, unknown>;
   error?: string;
 }
 
@@ -113,9 +113,9 @@ export async function executeAction(action: QRAction, userId?: string): Promise<
         twitter: 'https://twitter.com/',
       };
       
-      const platform = action.action_data.platform;
-      const username = action.action_data.username;
-      const baseUrl = socialUrls[platform];
+      const platform = String(action.action_data.platform || '');
+      const username = String(action.action_data.username || '');
+      const baseUrl = socialUrls[platform as keyof typeof socialUrls];
       
       if (!baseUrl) {
         return { success: false, type: 'error', error: 'Unknown social platform' };

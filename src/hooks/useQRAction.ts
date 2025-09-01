@@ -12,14 +12,23 @@ export function useQRAction() {
   const [result, setResult] = useState<ActionResult | null>(null);
 
   const execute = useCallback(async (
-    action: any,
+    action: {
+      action_type: string;
+      action_data: Record<string, unknown>;
+      priority?: number;
+      requires_auth?: boolean;
+      valid_from?: string;
+      valid_until?: string;
+      max_scans?: number;
+    },
     qrCodeId: number
   ) => {
     setLoading(true);
     setError(null);
     
     try {
-      const actionResult = await executeAction(action, user?.id);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const actionResult = await executeAction(action as any, user?.id);
       setResult(actionResult);
       
       // Record the scan
@@ -35,23 +44,27 @@ export function useQRAction() {
         switch (actionResult.type) {
           case 'redirect':
             if (actionResult.data?.url) {
+              const url = String(actionResult.data.url);
               if (actionResult.data.newTab) {
-                window.open(actionResult.data.url, '_blank');
+                window.open(url, '_blank');
               } else {
-                window.location.href = actionResult.data.url;
+                window.location.href = url;
               }
             }
             break;
             
           case 'prompt':
-            const prompt = encodeURIComponent(actionResult.data?.prompt || '');
+            const prompt = encodeURIComponent(String(actionResult.data?.prompt || ''));
             const autoExecute = actionResult.data?.autoExecute ? '1' : '0';
             router.push(`/?prompt=${prompt}&execute=${autoExecute}`);
             break;
             
           case 'wifi':
             if (/iPhone|iPad|Android/i.test(navigator.userAgent)) {
-              const { ssid, password, security = 'WPA' } = actionResult.data || {};
+              const data = actionResult.data || {};
+              const ssid = String(data.ssid || '');
+              const password = String(data.password || '');
+              const security = String(data.security || 'WPA');
               const wifiString = `WIFI:T:${security};S:${ssid};P:${password};;`;
               window.location.href = wifiString;
             }

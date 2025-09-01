@@ -11,7 +11,7 @@ export interface QRCode {
   is_active: boolean;
   scan_count: number;
   last_scanned_at?: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
   created_at: string;
   updated_at: string;
 }
@@ -59,10 +59,18 @@ export async function recordScan(
   });
   
   // Update scan count and last scanned timestamp
+  // First get current scan count
+  const { data: qrCode } = await supabase
+    .from('qr_codes')
+    .select('scan_count')
+    .eq('id', qrCodeId)
+    .single();
+  
+  // Then update with incremented count
   await supabase
     .from('qr_codes')
     .update({
-      scan_count: supabase.sql`scan_count + 1`,
+      scan_count: (qrCode?.scan_count || 0) + 1,
       last_scanned_at: new Date().toISOString(),
     })
     .eq('id', qrCodeId);

@@ -103,7 +103,7 @@ export async function POST(request: NextRequest) {
     
     // If action data provided, create actions for all codes
     if (action && savedCodes) {
-      const actions = savedCodes.map((code: any) => ({
+      const actions = savedCodes.map((code: { id: number }) => ({
         qr_code_id: code.id,
         action_type: action.type,
         action_data: action.data,

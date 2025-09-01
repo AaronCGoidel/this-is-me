@@ -1,4 +1,4 @@
-import { generateBase58, generateUniqueCode } from './base58';
+import { generateBase58 } from './base58';
 import { QRCategory, isValidCategory } from './categories';
 import { createClient } from '@/lib/supabase/server';
 

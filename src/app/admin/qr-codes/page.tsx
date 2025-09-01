@@ -18,8 +18,14 @@ interface QRCode {
   scan_count: number;
   last_scanned_at?: string;
   created_at: string;
-  qr_actions?: any[];
-  catalogue_items?: any;
+  qr_actions?: Array<{
+    id: number;
+    action_type: string;
+  }>;
+  catalogue_items?: {
+    id: number;
+    title?: string;
+  };
 }
 
 export default function QRCodesAdminPage() {
@@ -38,6 +44,7 @@ export default function QRCodesAdminPage() {
 
   useEffect(() => {
     fetchQRCodes();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCategory]);
 
   const fetchQRCodes = async () => {
@@ -78,33 +85,8 @@ export default function QRCodesAdminPage() {
     }
   };
 
-  const toggleActive = async (id: number, isActive: boolean) => {
-    try {
-      await fetch("/api/admin/qr", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id, is_active: !isActive }),
-      });
-      fetchQRCodes();
-    } catch (error) {
-      console.error("Failed to toggle QR code:", error);
-    }
-  };
-
-  const deleteQRCode = async (id: number) => {
-    if (!confirm("Are you sure you want to delete this QR code?")) return;
-
-    try {
-      await fetch("/api/admin/qr", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id }),
-      });
-      fetchQRCodes();
-    } catch (error) {
-      console.error("Failed to delete QR code:", error);
-    }
-  };
+  // Removed unused functions - toggleActive and deleteQRCode
+  // These can be re-added when needed for the UI
 
   const getQRCodeURL = (code: string) => {
     const baseURL = window.location.origin;

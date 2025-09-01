@@ -13,13 +13,32 @@ interface QRScanResult {
     category: string;
     name?: string;
     description?: string;
-    metadata?: any;
+    metadata?: Record<string, unknown>;
   };
-  catalogueItem?: any;
+  catalogueItem?: {
+    title?: string;
+    artist_creator?: string;
+    year?: number;
+    description?: string;
+    location?: string;
+  };
   action?: {
     success: boolean;
     type: "redirect" | "wifi" | "prompt" | "display" | "api" | "error";
-    data?: any;
+    data?: {
+      url?: string;
+      ssid?: string;
+      password?: string;
+      security?: string;
+      prompt?: string;
+      autoExecute?: boolean;
+      component?: string;
+      props?: Record<string, unknown>;
+      endpoint?: string;
+      method?: string;
+      headers?: Record<string, string>;
+      body?: unknown;
+    };
     error?: string;
   };
   scanCount?: number;
@@ -39,6 +58,7 @@ export default function QRScannerPage({
 
   useEffect(() => {
     handleQRCode(resolvedParams.code);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resolvedParams.code]);
 
   const handleQRCode = async (code: string) => {
@@ -98,7 +118,9 @@ export default function QRScannerPage({
     }
   };
 
-  const handleWiFiConnection = (data: any) => {
+  const handleWiFiConnection = (
+    data: Record<string, unknown> | undefined
+  ) => {
     if (!data) return;
 
     const { ssid, password, security = "WPA" } = data;
@@ -111,7 +133,10 @@ export default function QRScannerPage({
     }
   };
 
-  const handleAPICall = async (data: any) => {
+  const handleAPICall = async (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    data: Record<string, any> | undefined
+  ) => {
     if (!data) return;
 
     try {
@@ -194,12 +219,12 @@ export default function QRScannerPage({
       return (
         <div className="container mx-auto p-6">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-3xl font-bold mb-4">{props?.title}</h1>
-            <p className="text-lg mb-4">{props?.description}</p>
-            {props?.date && <p className="text-md mb-2">📅 {props.date}</p>}
-            {props?.location && (
-              <p className="text-md mb-4">📍 {props.location}</p>
-            )}
+            <h1 className="text-3xl font-bold mb-4">{String(props?.title || '')}</h1>
+            <p className="text-lg mb-4">{String(props?.description || '')}</p>
+            {props?.date ? <p className="text-md mb-2">📅 {String(props.date)}</p> : null}
+            {props?.location ? (
+              <p className="text-md mb-4">📍 {String(props.location)}</p>
+            ) : null}
             <Button className="mr-2">RSVP</Button>
             <Button variant="outline">Add to Calendar</Button>
           </div>

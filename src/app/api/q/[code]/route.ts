@@ -100,14 +100,15 @@ export async function GET(
     }
 
     // Sort actions by priority
-    const actions = qrCode.qr_actions?.sort((a: any, b: any) => 
+    const actions = qrCode.qr_actions?.sort((a, b) => 
       (b.priority || 0) - (a.priority || 0)
     ) || [];
 
     // Execute the highest priority valid action
     let actionResult = null;
     for (const action of actions) {
-      const result = await executeAction(action, userId);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const result = await executeAction(action as any, userId);
       if (result.success) {
         actionResult = result;
         
@@ -136,7 +137,7 @@ export async function GET(
       },
       catalogueItem,
       action: actionResult,
-      scanCount: qrCode.scan_count + 1,
+      scanCount: (qrCode.scan_count || 0) + 1,
     });
 
   } catch (error) {

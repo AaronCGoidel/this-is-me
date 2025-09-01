@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 interface KnowledgeFile {
-  id: number;
+  id: string;
   slug: string;
   category: string | null;
   updated_at: string;
@@ -27,7 +27,7 @@ export default function KnowledgeBasePage() {
         .from("knowledge_files")
         .select("id, slug, category, updated_at")
         .order("slug");
-      if (!error && data) setFiles(data as KnowledgeFile[]);
+      if (!error && data) setFiles(data);
       setLoading(false);
     }
     fetchFiles();
