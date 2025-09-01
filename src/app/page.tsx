@@ -9,6 +9,7 @@ import Header from "@/components/Header";
 import { BackdropProvider } from "@/components/BackdropProvider";
 import { useUser } from "@/contexts/UserContext";
 import { useEffect, useCallback } from "react";
+import { useSearchParams } from "next/navigation";
 import type { Session } from "@supabase/supabase-js";
 import type { Profile } from "@/contexts/UserContext";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -17,6 +18,7 @@ import { motion } from "framer-motion";
 export default function Chat() {
   const { profile, loading, profileLoading, updateSession, signOut } =
     useUser();
+  const searchParams = useSearchParams();
 
   const {
     messages,
@@ -28,6 +30,7 @@ export default function Chat() {
     stop,
     setMessages,
     append,
+    setInput,
   } = useChat({
     maxSteps: 5,
 
@@ -90,6 +93,26 @@ export default function Chat() {
       }
     }
   }, [messages, updateSession]);
+
+  // Handle QR code prompts from URL
+  useEffect(() => {
+    const prompt = searchParams.get('prompt');
+    const execute = searchParams.get('execute');
+    
+    if (prompt) {
+      setInput(decodeURIComponent(prompt));
+      
+      if (execute === '1') {
+        // Auto-execute the prompt
+        setTimeout(() => {
+          append({
+            role: "user",
+            content: decodeURIComponent(prompt),
+          });
+        }, 500);
+      }
+    }
+  }, [searchParams, setInput, append]);
 
   const handlePromptClick = (prompt: string) => {
     append({

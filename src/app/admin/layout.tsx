@@ -32,10 +32,11 @@ export default function AdminLayout({
   const navItems = [
     { name: "Create User", href: "/admin/create-user" },
     { name: "Knowledge Base", href: "/admin/knowledgebase" },
+    { name: "QR Codes", href: "/admin/qr-codes" },
   ];
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex h-screen flex-col">
       <header className="flex items-center justify-between border-b p-4">
         <h1 className="text-lg font-semibold">Admin Panel</h1>
         <div className="flex gap-2">
@@ -51,7 +52,7 @@ export default function AdminLayout({
         </div>
       </header>
 
-      <div className="flex flex-1">
+      <div className="flex flex-1 min-h-0">
         <nav className="w-60 space-y-1 border-r p-4">
           {navItems.map(({ name, href }) => {
             const active = pathname === href;
@@ -69,7 +70,7 @@ export default function AdminLayout({
           })}
         </nav>
 
-        <main className="flex-1 p-6">{children}</main>
+        <main className="flex-1 p-6 overflow-y-auto">{children}</main>
       </div>
     </div>
   );
