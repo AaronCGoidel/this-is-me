@@ -13,7 +13,7 @@ function createStreamingResponse(
   ragSources: string[]
 ) {
   return streamText({
-    model: openai("o4-mini"),
+    model: openai("gpt-5.1"),
     messages: llmMessages,
     tools: getToolDefinitions(),
     onFinish: async () => {
